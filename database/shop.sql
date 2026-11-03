@@ -468,3 +468,5 @@ SELECT
     ) AS total_revenue
 FROM orders
 WHERE status = 'Completed';
+
+
