@@ -1,0 +1,150 @@
+
+/* ===== TRANG ĐĂNG NHẬP ===== */
+
+.login-page {
+    min-height: calc(100vh - 320px);
+    padding: 60px 20px;
+    box-sizing: border-box;
+    flex: 1;
+    background: #ffffff;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.login-box {
+    width: 100%;
+    max-width: 510px;
+    padding: 22px 45px 30px;
+
+    background: #fceced;
+    border: 1px solid #f9d3dc;
+    box-shadow: 0 8px 28px rgba(190, 75, 105, 0.12);
+    border-radius: 6px;
+    box-sizing: border-box;
+}
+
+.login-title {
+    margin: 0 0 20px;
+    text-align: center;
+    font-size: 24px;
+    font-weight: 700;
+    color: #e63b3b;
+}
+
+.login-form {
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+}
+
+.login-field {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.login-field label {
+    font-size: 18px;
+    font-weight: 400;
+    color: #444444;
+}
+
+.login-field input {
+    font: inherit;
+    width: 100%;
+    height: 35px;
+    padding: 7px 10px;
+
+    border: none;
+    border-radius: 0;
+    background: #ffffff;
+    box-sizing: border-box;
+}
+
+.login-field input:focus {
+    outline: 2px solid #F4C6AB;
+}
+
+.login-actions {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    flex-wrap: wrap;
+    margin-top: 5px;
+}
+
+.login-btn {
+    width: 120px;
+    height: 33px;
+    padding: 0 10px;
+
+    background: #c60000;
+    color: #fedcdc;
+    border: none;
+
+    font-size: 13px;
+    font-weight: 600;
+    text-transform: uppercase;
+    cursor: pointer;
+}
+
+.login-btn:hover {
+    background: #aa0000;
+}
+
+.login-register {
+    color: #D83D62;
+    font-size: 13px;
+    text-decoration: none;
+}
+
+.login-register:hover {
+    text-decoration: underline;
+}
+
+@media (max-width: 600px) {
+    .login-page {
+        min-height: 500px;
+        padding: 40px 15px;
+    }
+
+    .login-box {
+        padding: 25px 20px;
+    }
+
+    .login-actions {
+        flex-wrap: wrap;
+    }
+}
+
+/* Bo góc trang Đăng nhập */
+.login-box {
+    border-radius: 16px;
+}
+
+.login-field input {
+    border-radius: 8px;
+}
+
+.login-btn {
+    border-radius: 8px;
+}
+
+body:has(.login-page) footer {
+    flex-shrink: 0;
+}
+
+.login-field input:autofill {
+    box-shadow: 0 0 0 1000px #ffffff inset;
+}
+
+.login-field input:-webkit-autofill,
+.login-field input:-webkit-autofill:hover,
+.login-field input:-webkit-autofill:focus {
+    -webkit-box-shadow: 0 0 0 1000px #ffffff inset;
+    -webkit-text-fill-color: #111111;
+    caret-color: #111111;
+}

@@ -1,0 +1,108 @@
+body:has(.profile-page) {
+    background: #ffffff;
+}
+
+body:has(.profile-page) .profile-page {
+    min-height: calc(100vh - 320px);
+    max-width: none;
+    padding: 60px 20px;
+    flex: 1;
+}
+
+.profile-page .profile-box {
+    width: 100%;
+    max-width: 510px;
+    padding: 0;
+}
+
+#profileContent .card {
+    background: #fceced !important;
+    border: 1px solid #f9d3dc;
+    border-radius: 16px;
+    box-shadow: 0 8px 28px rgba(190, 75, 105, 0.12) !important;
+}
+
+#profileContent .card:hover {
+    transform: none;
+}
+
+#profileContent .card-body {
+    padding: 22px 45px 30px;
+}
+
+.profile-title {
+    margin: 0 0 20px;
+    text-align: center;
+    font-size: 24px;
+    font-weight: 700;
+    color: #A83250;
+}
+
+#profileForm .form-label {
+    font-size: 18px;
+    font-weight: 400;
+    color: #444444;
+    margin-bottom: 5px;
+}
+
+#profileForm .form-control {
+    height: 35px;
+    padding: 7px 10px;
+    border: 0;
+    border-radius: 8px;
+    background: #ffffff;
+    font: inherit;
+}
+
+#profileForm .form-control:focus {
+    outline: 2px solid #f4c6ab;
+    box-shadow: none;
+}
+
+#profileForm input:autofill {
+    box-shadow: 0 0 0 1000px #ffffff inset;
+}
+
+#profileForm input:-webkit-autofill {
+    -webkit-box-shadow: 0 0 0 1000px #ffffff inset;
+    -webkit-text-fill-color: #111111;
+}
+
+#profileContent .btn {
+    min-height: 33px;
+    font-size: 13px;
+    border-radius: 8px;
+}
+
+#profileContent .btn-primary {
+    background-color: #c60000 !important;
+    border-color: #c60000 !important;
+    font-weight: 600;
+    text-transform: uppercase;
+}
+
+#profileContent .btn-primary:hover {
+    background-color: #aa0000 !important;
+    border-color: #aa0000 !important;
+}
+
+#profileContent .btn-secondary {
+    background-color: #FFF0F2 !important;
+    border-color: #f9d3dc !important;
+    color: #D83D62 !important;
+}
+
+body:has(.profile-page) footer {
+    flex-shrink: 0;
+}
+
+@media (max-width: 600px) {
+    body:has(.profile-page) .profile-page {
+        min-height: 500px;
+        padding: 40px 15px;
+    }
+
+    #profileContent .card-body {
+        padding: 25px 20px;
+    }
+}
