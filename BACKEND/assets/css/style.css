@@ -1,0 +1,33 @@
+body{
+    background:#f5f6fa;
+    font-family:'Segoe UI',sans-serif;
+}
+
+.navbar{
+    box-shadow:0 2px 8px rgba(0,0,0,.08);
+}
+
+.card{
+    border:none;
+    border-radius:15px;
+}
+
+.card:hover{
+    transform:translateY(-3px);
+    transition:.3s;
+}
+
+.btn{
+    border-radius:8px;
+}
+
+.table{
+    background:#fff;
+}
+
+footer{
+    background:#212529;
+    color:#fff;
+    padding:20px;
+    text-align:center;
+}

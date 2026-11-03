@@ -1,0 +1,80 @@
+body{
+    background:#f4f6f9;
+    font-family:Segoe UI;
+}
+
+.navbar{
+    height:65px;
+}
+
+.list-group-item{
+
+    border:none;
+
+    padding:16px;
+
+    font-weight:600;
+
+}
+
+.list-group-item:hover{
+
+    background:#0d6efd;
+
+    color:#fff;
+
+}
+
+.list-group-item.active{
+
+    background:#0d6efd;
+
+    color:#fff;
+
+}
+
+.card{
+
+    border:none;
+
+    border-radius:12px;
+
+}
+
+.card-header{
+
+    font-weight:bold;
+
+}
+
+.table th{
+
+    vertical-align:middle;
+
+}
+
+.table td{
+
+    vertical-align:middle;
+
+}
+
+.btn{
+
+    border-radius:8px;
+
+}
+
+.badge{
+
+    padding:8px 12px;
+
+    font-size:13px;
+
+}
+
+img{
+
+    border-radius:8px;
+
+}
