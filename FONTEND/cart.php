@@ -16,6 +16,7 @@ include 'includes/header.php';
 
 <script>
 const formatVND = (price) => new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(price);
+const esc = (t) => String(t ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 
 function showToast(msg, type = 'success') {
     const toast = document.getElementById('toastMessage');
@@ -32,6 +33,12 @@ async function loadCart() {
         const res = await fetchAPI('/cart/index.php');
         const items = res.data.items;
         const total = res.data.total;
+        // Số liệu có voucher do server tính (fallback về total nếu backend cũ)
+        const subtotal = res.data.subtotal ?? total;
+        const shipping = res.data.shipping_fee ?? 0;
+        const discount = res.data.discount ?? 0;
+        const finalTotal = res.data.final_total ?? total;
+        const voucher = res.data.voucher;
         
         if (!items || items.length === 0) {
             container.innerHTML = `
@@ -79,11 +86,37 @@ async function loadCart() {
             <tbody>
                 ${rows}
             <tr>
-                <td colspan="4" class="text-end fw-bold">Tổng cộng</td>
-                <td colspan="2" class="text-danger fw-bold fs-5">${formatVND(total)}</td>
+                <td colspan="4" class="text-end">Tạm tính</td>
+                <td colspan="2">${formatVND(subtotal)}</td>
+            </tr>
+            <tr>
+                <td colspan="4" class="text-end">Phí vận chuyển</td>
+                <td colspan="2">${formatVND(shipping)}</td>
+            </tr>
+            ${discount > 0 ? `
+            <tr class="text-success">
+                <td colspan="4" class="text-end">Giảm giá (${esc(voucher ? voucher.code : '')})</td>
+                <td colspan="2">-${formatVND(discount)}</td>
+            </tr>` : ''}
+            <tr>
+                <td colspan="4" class="text-end fw-bold">Tổng thanh toán</td>
+                <td colspan="2" class="text-danger fw-bold fs-5">${formatVND(finalTotal)}</td>
             </tr>
         </tbody>
     </table>
+
+    <div class="card mb-3">
+        <div class="card-body">
+            <label class="form-label fw-bold" for="voucherInput">🎟️ Mã giảm giá</label>
+            <div class="input-group mb-1">
+                <input type="text" id="voucherInput" class="form-control" placeholder="Nhập mã giảm giá"
+                       value="${voucher ? esc(voucher.code) : ''}">
+                <button type="button" class="btn btn-danger" onclick="applyVoucher()">Áp dụng</button>
+                ${voucher ? '<button type="button" class="btn btn-outline-secondary" onclick="removeVoucher()">Gỡ mã</button>' : ''}
+            </div>
+            <a href="voucher.php" class="small">Xem tất cả voucher</a>
+        </div>
+    </div>
 
     <div class="d-flex justify-content-between cart-action-bar">
         <a href="products.php" class="btn cart-continue-btn">← Tiếp tục mua hàng</a>
@@ -92,6 +125,10 @@ async function loadCart() {
         </div>
     </div>
 `;
+
+        if (res.data.voucher_message) {
+            showToast(res.data.voucher_message, 'warning');
+        }
 
     } catch (err) {
         container.innerHTML = `
@@ -110,6 +147,33 @@ async function updateCart(id) {
             body: { product_id: id, quantity: qty }
         });
         loadCart();
+    } catch (err) {
+        showToast(err.message, 'danger');
+    }
+}
+
+async function applyVoucher() {
+    const code = document.getElementById('voucherInput').value.trim();
+    if (!code) {
+        showToast('Vui lòng nhập mã giảm giá', 'warning');
+        return;
+    }
+    try {
+        const r = await fetchAPI('/voucher/apply.php', {
+            method: 'POST',
+            body: { code: code }
+        });
+        await loadCart();
+        showToast(r.message);
+    } catch (err) {
+        showToast(err.message, 'danger');
+    }
+}
+
+async function removeVoucher() {
+    try {
+        await fetchAPI('/voucher/remove.php', { method: 'POST', body: {} });
+        await loadCart();
     } catch (err) {
         showToast(err.message, 'danger');
     }

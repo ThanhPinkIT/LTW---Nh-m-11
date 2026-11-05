@@ -54,7 +54,10 @@ async function loadHistory() {
                     <td>${index + 1}</td>
                     <td><span class="fw-bold text-primary">#${order.id}</span></td>
                     <td>${date}</td>
-                    <td class="text-danger fw-bold">${formatVND(order.total_money)}</td>
+                    <td class="text-danger fw-bold">
+                        ${formatVND(order.total_money)}
+                        ${Number(order.discount_amount) > 0 ? `<br><small class="text-success fw-normal">Voucher ${String(order.voucher_code ?? '').replace(/[&<>"']/g, '')}: -${formatVND(order.discount_amount)}</small>` : ''}
+                    </td>
                     <td>${order.payment_method}</td>
                     <td>${getStatusBadge(order.status)}</td>
                 </tr>

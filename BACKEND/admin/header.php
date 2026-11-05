@@ -68,6 +68,7 @@ $fullname = $admin['fullname'] ?? $_SESSION['username'];
         <a href="category.php" class="list-group-item list-group-item-action"> 📂 Danh mục </a>
         <a href="product-list.php" class="list-group-item list-group-item-action"> 📦 Sản phẩm </a>
         <a href="order.php" class="list-group-item list-group-item-action"> 🧾 Đơn hàng </a>
+        <a href="voucher.php" class="list-group-item list-group-item-action"> 🎟️ Voucher </a>
         <a href="user_list.php" class="list-group-item list-group-item-action"> 👥 Người dùng </a>
     </div>
 </div>

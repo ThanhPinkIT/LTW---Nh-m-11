@@ -50,6 +50,11 @@ echo json_encode([
             "delete",
             "change-password"
         ],
+        "voucher" => [
+            "index",
+            "apply",
+            "remove"
+        ],
         "dashboard" => [
             "statistic"
         ]

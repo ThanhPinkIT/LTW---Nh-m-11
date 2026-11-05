@@ -1,68 +1,166 @@
-
+// voucher.js - Trang voucher, nối với BACKEND/api (dùng fetchAPI từ api.js)
 document.addEventListener('DOMContentLoaded', function () {
     const voucherInput = document.getElementById('voucherCode');
     const voucherMessage = document.getElementById('voucherMessage');
     const applyButton = document.getElementById('applyVoucherBtn');
+    const removeButton = document.getElementById('removeVoucherBtn');
     const checkoutButton = document.getElementById('voucherCheckoutBtn');
-
-    // Dữ liệu minh họa FE, chưa liên kết giỏ hàng thật
-    const subtotal = 500000;
-    const shippingFee = 30000;
+    const voucherList = document.getElementById('voucherList');
 
     const formatMoney = value =>
-        value.toLocaleString('vi-VN') + 'đ';
+        Number(value || 0).toLocaleString('vi-VN') + 'đ';
 
-    document.querySelectorAll('.choose-voucher-btn').forEach(button => {
-        button.addEventListener('click', function () {
-            voucherInput.value = this.dataset.code;
-            voucherMessage.textContent = '';
-            voucherMessage.className = 'voucher-message';
-        });
+    // Chống chèn HTML từ dữ liệu do admin nhập
+    const esc = text => String(text ?? '').replace(/[&<>"']/g, c => ({
+        '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;'
+    }[c]));
+
+    function setMessage(text, type) {
+        voucherMessage.textContent = text || '';
+        voucherMessage.className = 'voucher-message' + (type ? ' ' + type : '');
+    }
+
+    // Cập nhật phần tổng kết theo số liệu giỏ hàng từ server
+    function renderSummary(cart) {
+        document.getElementById('subtotal').textContent =
+            formatMoney(cart.subtotal);
+
+        document.getElementById('shippingFee').textContent =
+            formatMoney(cart.shipping_fee);
+
+        document.getElementById('discountAmount').textContent =
+            cart.discount > 0 ? '-' + formatMoney(cart.discount) : '0đ';
+
+        document.getElementById('totalAmount').textContent =
+            formatMoney(cart.final_total);
+
+        if (cart.voucher) {
+            voucherInput.value = cart.voucher.code;
+            removeButton.hidden = false;
+        } else {
+            removeButton.hidden = true;
+        }
+    }
+
+    async function loadCart() {
+        try {
+            const res = await fetchAPI('/cart/index.php');
+            const cart = res.data;
+            renderSummary(cart);
+
+            if (cart.voucher_message) {
+                setMessage(cart.voucher_message, 'error');
+            } else if (cart.voucher) {
+                setMessage('Đang áp dụng mã ' + cart.voucher.code, 'success');
+            } else if (!cart.items || cart.items.length === 0) {
+                setMessage('Giỏ hàng đang trống, hãy thêm sản phẩm trước khi áp mã.', '');
+            }
+        } catch (err) {
+            setMessage(err.message, 'error');
+        }
+    }
+
+    function voucherDetail(v) {
+        const parts = [];
+        if (v.min_order > 0) parts.push('Đơn tối thiểu ' + formatMoney(v.min_order));
+        if (v.end_date) parts.push('HSD: ' + new Date(v.end_date.replace(' ', 'T')).toLocaleDateString('vi-VN'));
+        if (v.remaining !== null && v.remaining !== undefined) parts.push('Còn ' + v.remaining + ' lượt');
+        return parts.join(' · ');
+    }
+
+    async function loadVouchers() {
+        try {
+            const res = await fetchAPI('/voucher/index.php');
+            const vouchers = res.data;
+
+            if (!vouchers || vouchers.length === 0) {
+                voucherList.innerHTML =
+                    '<p class="text-muted mb-0">Hiện chưa có voucher nào.</p>';
+                return;
+            }
+
+            voucherList.innerHTML = vouchers.map(v => {
+                const detail = voucherDetail(v);
+                return `
+                    <div class="voucher-item">
+                        <div class="voucher-info">
+                            <strong>Mã: ${esc(v.code)}</strong>
+                            <p>${esc(v.description || '')}</p>
+                            ${detail ? `<p><small>${esc(detail)}</small></p>` : ''}
+                        </div>
+                        <button type="button"
+                                class="choose-voucher-btn"
+                                data-code="${esc(v.code)}"
+                                ${v.available ? '' : 'disabled'}>
+                            ${v.available ? 'Chọn' : 'Đã dùng'}
+                        </button>
+                    </div>
+                `;
+            }).join('');
+        } catch (err) {
+            voucherList.innerHTML =
+                '<p class="text-danger mb-0">Không tải được voucher: ' + esc(err.message) + '</p>';
+        }
+    }
+
+    async function applyCode(code) {
+        code = (code || '').trim().toUpperCase();
+
+        if (!code) {
+            setMessage('Vui lòng nhập mã giảm giá', 'error');
+            return;
+        }
+
+        try {
+            const res = await fetchAPI('/voucher/apply.php', {
+                method: 'POST',
+                body: { code: code }
+            });
+
+            voucherInput.value = code;
+            renderSummary(res.data);
+            setMessage(res.message, 'success');
+        } catch (err) {
+            setMessage(err.message, 'error');
+        }
+    }
+
+    // Bấm "Chọn" trên một voucher -> điền mã và áp dụng luôn
+    voucherList.addEventListener('click', function (e) {
+        const button = e.target.closest('.choose-voucher-btn');
+        if (!button || button.disabled) return;
+
+        voucherInput.value = button.dataset.code;
+        applyCode(button.dataset.code);
     });
 
     applyButton.addEventListener('click', function () {
-        const code = voucherInput.value.trim().toUpperCase();
-        let discount = 0;
+        applyCode(voucherInput.value);
+    });
 
-        switch (code) {
-            case 'GIAM20':
-                discount = Math.min(subtotal * 0.20, 100000);
-                break;
+    voucherInput.addEventListener('keydown', function (e) {
+        if (e.key === 'Enter') applyCode(voucherInput.value);
+    });
 
-            case 'FREESHIP':
-                discount = Math.min(shippingFee, 30000);
-                break;
+    removeButton.addEventListener('click', async function () {
+        try {
+            const res = await fetchAPI('/voucher/remove.php', {
+                method: 'POST',
+                body: {}
+            });
 
-            case 'TECH50K':
-                discount = 50000;
-                break;
-
-            default:
-                voucherMessage.textContent =
-                    'Mã giảm giá không hợp lệ!';
-                voucherMessage.className = 'voucher-message error';
-                return;
+            voucherInput.value = '';
+            renderSummary(res.data);
+            setMessage(res.message, '');
+        } catch (err) {
+            setMessage(err.message, 'error');
         }
-
-        const total = Math.max(
-            0,
-            subtotal + shippingFee - discount
-        );
-
-        document.getElementById('discountAmount').textContent =
-            '-' + formatMoney(discount);
-
-        document.getElementById('totalAmount').textContent =
-            formatMoney(total);
-
-        voucherMessage.textContent =
-            'Đã áp dụng mã ' + code + ' (minh họa FE)';
-        voucherMessage.className = 'voucher-message success';
     });
 
     checkoutButton.addEventListener('click', function () {
-        voucherMessage.textContent =
-            'Chức năng thanh toán cần tích hợp giỏ hàng và Backend.';
-        voucherMessage.className = 'voucher-message error';
+        window.location.href = 'checkout.php';
     });
+
+    loadVouchers();
+    loadCart();
 });

@@ -1,5 +1,6 @@
 <?php
 include 'header.php';
+require_once "../api/helper/voucher.php";
 $message = "";
 
 // Cập nhật trạng thái
@@ -10,6 +11,10 @@ if(isset($_POST['update_status'])){
     $stmt->bind_param("si",$status,$id);
 
     if($stmt->execute()){
+        // Đơn bị hủy -> hoàn lại lượt dùng voucher
+        if($status === 'Cancelled'){
+            voucher_release_usage($conn,$id);
+        }
         $message = "<div class='alert alert-success'>
         Cập nhật trạng thái thành công.
         </div>";
