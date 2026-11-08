@@ -996,34 +996,6 @@ body {
     flex-direction: column;
 }
 
-body .alert {
-    --bs-alert-bg: #FFF0F2;
-    --bs-alert-border-color: #FFE4E8;
-    --bs-alert-color: #70483f;
-    --bs-alert-link-color: #b72e1c;
-    background-color: #FFF0F2;
-    border-color: #FFE4E8;
-    color: #70483f;
-}
-
-body .alert a {
-    color: #b72e1c;
-}
-
-body .alert a:hover {
-    color: #8d291d;
-}
-
-#historyContent .history-empty {
-    background-color: #FFF0F2;
-    border-color: #FFE4E8;
-    color: #70483f;
-}
-
-#historyContent .history-empty .alert-link {
-    color: #b72e1c;
-}
-
 footer.site-pink-footer {
     margin-top: auto !important;
 }
@@ -1133,9 +1105,8 @@ footer.site-pink-footer {
 }
 
 .history-badge-pending {
-    background-color: #FFF0F2 !important;
-    color: #70483f !important;
-    border: 1px solid #FFE4E8;
+    background-color: #ffe7a8 !important;
+    color: #7a5600 !important;
 }
 
 .history-badge-processing {
@@ -1302,3 +1273,9 @@ footer.site-pink-footer {
     border-color: #e7beb5 !important;
     color: #684139 !important;
 }
+
+/* Ô tìm kiếm trên thanh menu */
+.header-search { position: relative; display: flex; max-width: 320px; }
+.header-search .form-control { padding-right: 44px !important; }
+.header-search button { position: absolute; right: 4px; top: 50%; transform: translateY(-50%); width: 30px; height: 30px; border: 0; border-radius: 50%; background: #c80000; color: #fff; font-size: 13px; display: flex; align-items: center; justify-content: center; cursor: pointer; transition: background .2s; }
+.header-search button:hover { background: #8f0000; }

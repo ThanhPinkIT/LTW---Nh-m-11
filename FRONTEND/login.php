@@ -3,7 +3,7 @@
 include 'includes/header.php';
 ?>
 
-<link rel="stylesheet" href="assets/css/login.css?v=<?= filemtime(__DIR__ . '/assets/css/login.css') ?>">
+<link rel="stylesheet" href="assets/css/login.css?v=6">
 
 <main class="login-page">
     <div class="login-box">

@@ -1,12 +1,12 @@
 // api.js - File tiện ích xử lý gọi API
 
-// Trỏ đến BACKEND/api (FE ở /FONTEND/, BE ở /BACKEND/api/)
+// Trỏ đến BACKEND/api (FE ở /FRONTEND/, BE ở /BACKEND/api/)
 const API_BASE_URL = (() => {
     const scriptEl = document.currentScript || document.querySelector('script[src*="api.js"]');
     const currentScriptSrc = scriptEl?.src || '';
     if (currentScriptSrc) {
         const url = new URL(currentScriptSrc, window.location.origin);
-        return url.pathname.replace(/\/FONTEND\/assets\/js\/api\.js(\?.*)?$/i, '/BACKEND/api');
+        return url.pathname.replace(/\/FRONTEND\/assets\/js\/api\.js(\?.*)?$/i, '/BACKEND/api');
     }
     return '/BACKEND/api';
 })();

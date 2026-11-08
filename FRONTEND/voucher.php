@@ -113,7 +113,8 @@ Tiến hành thanh toán
 
 </main>
 
-<link rel="stylesheet" href="assets/css/voucher.css?v=<?= filemtime(__DIR__ . '/assets/css/voucher.css') ?>">
-<script src="assets/js/voucher.js?v=<?= filemtime(__DIR__ . '/assets/js/voucher.js') ?>"></script>
+<link rel="stylesheet" href="assets/css/voucher.css?v=5">
+
+<script src="assets/js/voucher.js?v=2"></script>
 
 <?php include 'includes/footer.php'; ?>

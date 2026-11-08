@@ -3,7 +3,7 @@ include 'includes/header.php';
 ?>
 <div class="container mt-4">
     <div class="d-flex justify-content-between align-items-center mb-4 flex-wrap gap-3">
-        <h2>Tất cả sản phẩm</h2>
+        <h2 id="pageTitle">Tất cả sản phẩm</h2>
         <form class="d-none" id="searchForm">
             <input type="text" id="searchInput" class="form-control me-2" placeholder="Tìm tên sản phẩm...">
             <button class="btn btn-primary" onclick="loadProducts()"> Tìm </button>
@@ -43,14 +43,24 @@ const PER_PAGE = 6;
 let currentPage = 1;
 let currentProducts = [];
 
+// bỏ dấu tiếng Việt để gõ "iphone" hay "may tinh" vẫn tìm ra
+function boDau(s) {
+    return String(s).normalize('NFD').replace(/[\u0300-\u036f]/g, '')
+        .replace(/đ/g, 'd').replace(/Đ/g, 'D').toLowerCase();
+}
+
 async function loadProducts() {
     const list = document.getElementById('productList');   
     const urlParams = new URLSearchParams(window.location.search);
-    const search = (
+    const tuKhoa = (
         urlParams.get('search') ||
         document.getElementById('searchInput')?.value ||
         ''
-        ).trim().toLowerCase();
+        ).trim();
+    const search = boDau(tuKhoa);
+
+    document.getElementById('pageTitle').textContent =
+        tuKhoa ? 'Kết quả tìm kiếm: "' + tuKhoa + '"' : 'Tất cả sản phẩm';
 
     
     list.innerHTML = '<div class="text-center w-100 py-4"><div class="spinner-border text-danger" role="status"></div></div>';
@@ -61,7 +71,7 @@ async function loadProducts() {
 
         let filtered = products;
         if (search) {
-            filtered = products.filter(p => p.name.toLowerCase().includes(search));
+            filtered = products.filter(p => boDau(p.name).includes(search));
         }
 
         if (filtered.length === 0) {
@@ -170,5 +180,5 @@ function renderPage() {
 document.addEventListener('DOMContentLoaded', loadProducts);
 </script>
 
-<script src="assets/js/cart.js?v=<?= filemtime(__DIR__ . '/assets/js/cart.js') ?>"></script>
+<script src="assets/js/cart.js?v=2"></script>
 <?php include 'includes/footer.php'; ?>

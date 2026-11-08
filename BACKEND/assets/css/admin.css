@@ -185,3 +185,29 @@ a:focus-visible, button:focus-visible { outline: 2px solid #bd6251; outline-offs
 
 .admin-dashboard .dashboard-table-heading { color: #303030 !important; }
 .admin-dashboard .table-responsive { border: 1px solid #efd0c8; border-radius: 13px; overflow-x: auto; }
+
+/* Biểu đồ dashboard */
+.chart-card { height: 100%; display: flex; flex-direction: column; padding: 16px 18px; background: #fffdfd; border: 1px solid #efd0c8; border-radius: 13px; }
+.chart-head { display: flex; justify-content: space-between; align-items: flex-start; gap: 12px; margin-bottom: 10px; }
+.chart-label { font-size: 13px; font-weight: 600; color: #70483f; }
+.chart-label span { font-weight: 400; color: #9a7a72; }
+.chart-value { font-size: 26px; font-weight: 700; color: #2b2b2b; line-height: 1.3; font-variant-numeric: tabular-nums; }
+.chart-delta { font-size: 12.5px; color: #8a6d66; min-height: 18px; }
+.chart-delta b { font-weight: 600; }
+.chart-delta .is-up { color: #198754; }
+.chart-delta .is-down { color: #c12a15; }
+.chart-note { font-size: 12px; color: #9a7a72; }
+.chart-box { position: relative; flex: 1; min-height: 250px; }
+.chart-box--donut { flex: none; min-height: 0; height: 190px; }
+.chart-box--short { flex: none; min-height: 0; height: 230px; }
+.status-list { list-style: none; margin: 14px 0 0; padding: 0; font-size: 13px; }
+.status-list li { display: flex; align-items: center; gap: 8px; padding: 6px 0; border-top: 1px solid #f6e4df; color: #4a3430; }
+.status-list i { width: 9px; height: 9px; border-radius: 50%; flex-shrink: 0; }
+.status-list .n { margin-left: auto; font-weight: 600; font-variant-numeric: tabular-nums; }
+.status-list .p { width: 42px; text-align: right; color: #9a7a72; font-variant-numeric: tabular-nums; }
+.status-alert { display: block; margin-top: 12px; padding: 8px 12px; border-radius: 9px; background: #fff0f2; color: #b72e1c; font-size: 13px; text-decoration: none; }
+.status-alert:hover { background: #ffe4e8; color: #b72e1c; }
+.status-alert[hidden] { display: none; }
+.chart-mode .btn { font-size: 13px; padding: 3px 14px; border-color: #efd0c8; }
+.chart-mode .btn-light { background: #fffdfd; color: #70483f; }
+@media (max-width: 767.98px) { .chart-box { min-height: 220px; } .chart-box--short { height: 210px; } .chart-value { font-size: 22px; } }

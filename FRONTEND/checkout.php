@@ -12,26 +12,6 @@ include 'includes/header.php';
     </div>
 </div>
 
-<div class="modal fade" id="checkoutSuccessModal" tabindex="-1" aria-labelledby="checkoutSuccessTitle" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered" style="max-width: 440px;">
-        <div class="modal-content border-0 shadow rounded-4 text-center p-3">
-            <div class="modal-header border-0 pb-0">
-                <h5 class="modal-title w-100 fw-bold text-danger fs-4" id="checkoutSuccessTitle">Đặt hàng thành công!</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Đóng"></button>
-            </div>
-            <div class="modal-body py-3">
-                <div class="text-danger display-5 mb-3" aria-hidden="true">✓</div>
-                <p class="text-secondary">Cảm ơn bạn đã mua hàng tại NexTech.</p>
-                <div id="checkoutSuccessDetails" class="text-secondary small mb-4"></div>
-                <div class="d-flex justify-content-center gap-3">
-                    <a href="products.php" class="btn btn-outline-danger w-50 py-2 fw-semibold rounded-3">Tiếp tục mua sắm</a>
-                    <a href="history.php" class="btn btn-danger w-50 py-2 fw-semibold rounded-3">Xem đơn hàng</a>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-
 <script>
 const formatVND = (price) => new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(price);
 const esc = (t) => String(t ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
@@ -182,12 +162,15 @@ async function loadCheckout() {
                 });
                 
                 const d = orderRes.data || {};
-                document.getElementById('checkoutSuccessDetails').innerHTML = `
+                container.innerHTML = `
+                    <div class='alert alert-success text-center p-4 shadow-sm'>
+                        <h3>🎉 Đặt hàng thành công!</h3>
+                        <p>${esc(orderRes.message)}</p>
                         <p>Mã đơn <strong>#${esc(d.order_id)}</strong> · Tổng thanh toán: <strong>${formatVND(d.total)}</strong></p>
                         ${d.voucher_code ? `<p>Đã áp dụng mã <strong>${esc(d.voucher_code)}</strong>, giảm ${formatVND(d.discount)}</p>` : ''}
+                        <a href='history.php' class='btn btn-primary mt-3'>Xem lịch sử đơn hàng</a>
+                    </div>
                 `;
-                container.innerHTML = `<div class="text-center py-5"><a href="history.php" class="btn btn-outline-danger">Xem đơn hàng đã đặt</a></div>`;
-                bootstrap.Modal.getOrCreateInstance(document.getElementById('checkoutSuccessModal')).show();
             } catch (err) {
                 if (err.message.includes('Auth') || err.message.includes('Unauthorized') || err.message.includes('Login') || err.message.includes('Chưa đăng nhập')) {
                     container.innerHTML = `

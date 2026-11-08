@@ -1,7 +1,7 @@
 <?php
 include 'includes/header.php';
 ?>
-<link rel="stylesheet" href="assets/css/profile.css?v=<?= filemtime(__DIR__ . '/assets/css/profile.css') ?>">
+<link rel="stylesheet" href="assets/css/profile.css?v=3">
 <div class="container profile-page">
     <div id="toastMessage" class="alert d-none fixed-top mt-3 mx-auto shadow" style="max-width: 400px; z-index: 9999;"></div>
 

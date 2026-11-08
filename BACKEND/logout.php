@@ -5,6 +5,6 @@ $_SESSION = [];
 session_unset();
 session_destroy();
 // Chuyển về trang chủ
-header("Location: ../FONTEND/index.php");
+header("Location: ../FRONTEND/index.php");
 exit();
 ?>

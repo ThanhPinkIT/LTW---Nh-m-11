@@ -2,6 +2,8 @@
 error_reporting(E_ALL);
 ini_set('display_errors', 1);
 include 'header.php';
+require_once 'dashboard-data.php';
+$chartData = dashboard_data($conn);
 
 // ======================
 // THỐNG KÊ
@@ -105,6 +107,41 @@ LIMIT 5
         </div>
     </div>
 </div>
+<div class="row g-3 mb-4 dashboard-charts">
+    <div class="col-lg-8">
+        <div class="chart-card">
+            <div class="chart-head">
+                <div>
+                    <div class="chart-label">Doanh thu <span id="revRange">30 ngày gần nhất</span></div>
+                    <div class="chart-value" id="revTotal">0 đ</div>
+                    <div class="chart-delta" id="revDelta"></div>
+                </div>
+                <div class="btn-group btn-group-sm chart-mode">
+                    <button type="button" class="btn btn-primary" data-mode="days">Ngày</button>
+                    <button type="button" class="btn btn-light" data-mode="months">Tháng</button>
+                </div>
+            </div>
+            <div class="chart-box"><canvas id="revenueChart"></canvas></div>
+        </div>
+    </div>
+    <div class="col-lg-4">
+        <div class="chart-card">
+            <div class="chart-head"><div class="chart-label">Đơn hàng theo trạng thái</div></div>
+            <div class="chart-box chart-box--donut"><canvas id="statusChart"></canvas></div>
+            <ul class="status-list" id="statusList"></ul>
+            <a class="status-alert" id="pendingLink" href="order.php" hidden></a>
+        </div>
+    </div>
+    <div class="col-12">
+        <div class="chart-card">
+            <div class="chart-head">
+                <div class="chart-label">Top 5 sản phẩm bán chạy</div>
+                <span class="chart-note" id="updated"></span>
+            </div>
+            <div class="chart-box chart-box--short"><canvas id="topChart"></canvas></div>
+        </div>
+    </div>
+</div>
 <div class="card dashboard-table shadow border-0 mb-4">
     <div class="card-header dashboard-table-heading text-white"> 🛒 5 đơn hàng mới nhất </div>
     <div class="table-responsive">
@@ -197,4 +234,190 @@ LIMIT 5
     </div>
 </div>
 </section>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.3/dist/chart.umd.min.js"></script>
+<script>
+// dữ liệu lần đầu lấy từ PHP, sau đó cứ 10s gọi dashboard-data.php để cập nhật
+let data = <?= json_encode($chartData, JSON_UNESCAPED_UNICODE) ?>;
+let mode = 'days';
+
+const so = (n, d = 0) => Number(n).toLocaleString('vi-VN', { maximumFractionDigits: d });
+const tien = n => so(n) + ' đ';
+const rutGon = n => n >= 1e6 ? so(n / 1e6, 1) + ' tr' : n >= 1e3 ? so(n / 1e3) + 'k' : n;
+
+const font = getComputedStyle(document.body).fontFamily;
+Chart.defaults.font.family = font;
+Chart.defaults.font.size = 12;
+Chart.defaults.color = '#8a6d66';
+const luoi = '#f6e4df';
+
+const trangThai = [
+    ['Pending',    'Chờ xử lý',  '#f0b429'],
+    ['Processing', 'Đang xử lý', '#38b2d8'],
+    ['Shipping',   'Đang giao',  '#4c7cf0'],
+    ['Completed',  'Hoàn thành', '#2f9e6b'],
+    ['Cancelled',  'Đã hủy',     '#d9534f']
+];
+
+// ---------- doanh thu ----------
+const revenueChart = new Chart(document.getElementById('revenueChart'), {
+    type: 'line',
+    data: { labels: [], datasets: [{
+        data: [], borderColor: '#d3351c', borderWidth: 2, tension: 0.3, fill: true,
+        pointRadius: 0, pointHoverRadius: 5, pointHoverBackgroundColor: '#d3351c', pointHoverBorderColor: '#fff', pointHoverBorderWidth: 2,
+        backgroundColor: ctx => {
+            const a = ctx.chart.chartArea;
+            if (!a) return 'rgba(211,53,28,.1)';
+            const g = ctx.chart.ctx.createLinearGradient(0, a.top, 0, a.bottom);
+            g.addColorStop(0, 'rgba(211,53,28,.20)');
+            g.addColorStop(1, 'rgba(211,53,28,0)');
+            return g;
+        }
+    }] },
+    options: {
+        maintainAspectRatio: false,
+        interaction: { mode: 'index', intersect: false },
+        plugins: {
+            legend: { display: false },
+            tooltip: {
+                backgroundColor: '#3b2a26', padding: 10, displayColors: false,
+                callbacks: {
+                    label: c => tien(c.parsed.y),
+                    afterLabel: c => data[mode][c.dataIndex].orders + ' đơn hoàn thành'
+                }
+            }
+        },
+        scales: {
+            x: { grid: { display: false }, border: { display: false }, ticks: { maxRotation: 0, autoSkip: true, maxTicksLimit: 8 } },
+            y: { beginAtZero: true, grid: { color: luoi }, border: { display: false }, ticks: { callback: rutGon, maxTicksLimit: 5 } }
+        }
+    }
+});
+
+// ---------- trạng thái: số tổng nằm giữa vành khuyên ----------
+const soGiua = {
+    id: 'soGiua',
+    afterDraw(chart) {
+        const a = chart.chartArea, ctx = chart.ctx;
+        const tong = chart.data.datasets[0].data.reduce((x, y) => x + y, 0);
+        const x = (a.left + a.right) / 2, y = (a.top + a.bottom) / 2;
+        ctx.save();
+        ctx.textAlign = 'center';
+        ctx.fillStyle = '#2b2b2b';
+        ctx.font = '700 26px ' + font;
+        ctx.fillText(so(tong), x, y + 4);
+        ctx.fillStyle = '#8a6d66';
+        ctx.font = '12px ' + font;
+        ctx.fillText('đơn hàng', x, y + 22);
+        ctx.restore();
+    }
+};
+const statusChart = new Chart(document.getElementById('statusChart'), {
+    type: 'doughnut',
+    data: { labels: trangThai.map(t => t[1]), datasets: [{ data: [], backgroundColor: trangThai.map(t => t[2]), borderWidth: 3, borderColor: '#fffdfd', hoverOffset: 4 }] },
+    options: { maintainAspectRatio: false, cutout: '70%', plugins: { legend: { display: false } } },
+    plugins: [soGiua]
+});
+
+// ---------- top sản phẩm: ghi số lượng cuối mỗi thanh ----------
+const soCuoiThanh = {
+    id: 'soCuoiThanh',
+    afterDatasetsDraw(chart) {
+        const ctx = chart.ctx;
+        ctx.save();
+        ctx.font = '600 12px ' + font;
+        ctx.fillStyle = '#70483f';
+        ctx.textBaseline = 'middle';
+        chart.getDatasetMeta(0).data.forEach((bar, i) => ctx.fillText(chart.data.datasets[0].data[i], bar.x + 8, bar.y));
+        ctx.restore();
+    }
+};
+const topChart = new Chart(document.getElementById('topChart'), {
+    type: 'bar',
+    data: { labels: [], datasets: [{ data: [], backgroundColor: ['#b82612', '#d3351c', '#e5604a', '#ee8d7b', '#f4b5a8'], borderRadius: 4, barThickness: 18 }] },
+    options: {
+        indexAxis: 'y',
+        maintainAspectRatio: false,
+        layout: { padding: { right: 30 } },
+        plugins: {
+            legend: { display: false },
+            tooltip: {
+                backgroundColor: '#3b2a26', padding: 10, displayColors: false,
+                callbacks: {
+                    title: c => data.top[c[0].dataIndex].name,
+                    label: c => 'Đã bán: ' + c.parsed.x + ' sản phẩm',
+                    afterLabel: c => 'Doanh thu: ' + tien(data.top[c.dataIndex].revenue)
+                }
+            }
+        },
+        scales: {
+            x: { display: false, beginAtZero: true },
+            y: { grid: { display: false }, border: { display: false }, ticks: { color: '#4a3430' } }
+        }
+    },
+    plugins: [soCuoiThanh]
+});
+
+// ---------- vẽ lại ----------
+function veBieuDo() {
+    const rows = data[mode];
+    const tong = rows.reduce((t, r) => t + r.revenue, 0);
+    const truoc = data.prev[mode];
+
+    revenueChart.data.labels = rows.map(r => r.label);
+    revenueChart.data.datasets[0].data = rows.map(r => r.revenue);
+    revenueChart.update();
+    document.getElementById('revRange').textContent = mode === 'days' ? '30 ngày gần nhất' : '12 tháng gần nhất';
+    document.getElementById('revTotal').textContent = tien(tong);
+
+    const delta = document.getElementById('revDelta');
+    if (truoc > 0) {
+        const pt = (tong - truoc) / truoc * 100;
+        const kyTruoc = mode === 'days' ? '30 ngày trước' : '12 tháng trước';
+        delta.innerHTML = '<b class="' + (pt >= 0 ? 'is-up' : 'is-down') + '">' + (pt >= 0 ? '▲ ' : '▼ ') + so(Math.abs(pt), 1) + '%</b> so với ' + kyTruoc;
+    } else {
+        delta.textContent = 'Chưa có dữ liệu kỳ trước để so sánh';
+    }
+
+    const dem = trangThai.map(t => data.status[t[0]] || 0);
+    const tongDon = dem.reduce((x, y) => x + y, 0);
+    statusChart.data.datasets[0].data = dem;
+    statusChart.update();
+    document.getElementById('statusList').innerHTML = trangThai.map((t, i) =>
+        '<li><i style="background:' + t[2] + '"></i>' + t[1] +
+        '<span class="n">' + so(dem[i]) + '</span><span class="p">' + (tongDon ? so(dem[i] / tongDon * 100) : 0) + '%</span></li>'
+    ).join('');
+
+    const cho = data.status.Pending || 0;
+    const link = document.getElementById('pendingLink');
+    link.hidden = cho === 0;
+    link.textContent = cho + ' đơn đang chờ xử lý — xem ngay →';
+
+    const maxChu = window.innerWidth < 768 ? 18 : 42;
+    topChart.data.labels = data.top.map(t => t.name.length > maxChu ? t.name.slice(0, maxChu - 2) + '...' : t.name);
+    topChart.data.datasets[0].data = data.top.map(t => t.qty);
+    topChart.update();
+
+    document.getElementById('updated').textContent = 'Cập nhật lúc ' + data.time;
+}
+
+document.querySelectorAll('.chart-mode button').forEach(btn => {
+    btn.addEventListener('click', () => {
+        mode = btn.dataset.mode;
+        document.querySelectorAll('.chart-mode button').forEach(b => {
+            b.className = 'btn ' + (b === btn ? 'btn-primary' : 'btn-light');
+        });
+        veBieuDo();
+    });
+});
+
+setInterval(() => {
+    if (document.hidden) return;
+    fetch('dashboard-data.php')
+        .then(res => res.json())
+        .then(d => { if (!d.error) { data = d; veBieuDo(); } })
+        .catch(() => {});
+}, 10000);
+
+veBieuDo();
+</script>
 <?php include 'footer.php'; ?>
