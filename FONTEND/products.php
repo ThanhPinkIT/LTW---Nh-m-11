@@ -170,5 +170,5 @@ function renderPage() {
 document.addEventListener('DOMContentLoaded', loadProducts);
 </script>
 
-<script src="assets/js/cart.js?v=2"></script>
+<script src="assets/js/cart.js?v=<?= filemtime(__DIR__ . '/assets/js/cart.js') ?>"></script>
 <?php include 'includes/footer.php'; ?>

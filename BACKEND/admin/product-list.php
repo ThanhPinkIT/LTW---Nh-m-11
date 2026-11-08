@@ -91,7 +91,7 @@ Tìm
 
 <a
 href="product-add.php"
-class="btn btn-success">
+class="btn admin-add-product">
 
 ➕ Thêm
 

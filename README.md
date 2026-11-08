@@ -63,5 +63,5 @@ LTW---Nh-m-11/
 ### 4. Tài khoản đăng nhập mẫu
 | Vai trò | Email / Tài khoản | Mật khẩu |
 |---|---|---|
-| **Admin** | `admin@gmail.com` | `admin123` |
-| **Khách hàng** | `user1@gmail.com` | `123456` |
+| **Admin** | `admin@gmail.com` (hoặc `admin`) | `password` |
+| **Khách hàng** | Tự tạo tài khoản tại `FONTEND/register.php` | Mật khẩu đã đăng ký |

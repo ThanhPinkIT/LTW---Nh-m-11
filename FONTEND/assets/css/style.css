@@ -996,6 +996,34 @@ body {
     flex-direction: column;
 }
 
+body .alert {
+    --bs-alert-bg: #FFF0F2;
+    --bs-alert-border-color: #FFE4E8;
+    --bs-alert-color: #70483f;
+    --bs-alert-link-color: #b72e1c;
+    background-color: #FFF0F2;
+    border-color: #FFE4E8;
+    color: #70483f;
+}
+
+body .alert a {
+    color: #b72e1c;
+}
+
+body .alert a:hover {
+    color: #8d291d;
+}
+
+#historyContent .history-empty {
+    background-color: #FFF0F2;
+    border-color: #FFE4E8;
+    color: #70483f;
+}
+
+#historyContent .history-empty .alert-link {
+    color: #b72e1c;
+}
+
 footer.site-pink-footer {
     margin-top: auto !important;
 }
@@ -1105,8 +1133,9 @@ footer.site-pink-footer {
 }
 
 .history-badge-pending {
-    background-color: #ffe7a8 !important;
-    color: #7a5600 !important;
+    background-color: #FFF0F2 !important;
+    color: #70483f !important;
+    border: 1px solid #FFE4E8;
 }
 
 .history-badge-processing {

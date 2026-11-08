@@ -74,7 +74,7 @@ Tìm
 
 <?= $message ?>
 
-<div class="alert alert-info">
+<div class="alert admin-total-bar">
 
 Tổng đơn hàng:
 <strong><?= $total ?></strong>

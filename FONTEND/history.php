@@ -38,7 +38,7 @@ async function loadHistory() {
         
         if (!orders || orders.length === 0) {
             container.innerHTML = `
-                <div class="alert alert-info text-center mt-4">
+                <div class="alert history-empty text-center mt-4">
                     Bạn chưa có đơn hàng nào!
                     <a href="index.php" class="alert-link">Mua sắm ngay</a>
                 </div>

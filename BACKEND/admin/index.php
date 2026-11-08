@@ -53,14 +53,15 @@ ORDER BY orders.created_at DESC
 LIMIT 5
 ");
 ?>
-<h2 class="fw-bold mb-4">
-📊 Dashboard
+<section class="admin-dashboard">
+<h2 class="dashboard-title">
+<span class="dashboard-mark" aria-hidden="true">▦</span> Dashboard
 </h2>
-<div class="row">
+<div class="row dashboard-stats">
     <div class="col-lg-3 col-md-6 mb-4">
         <div class="card shadow border-0">
             <div class="card-body text-center">
-                <div class="display-5 mb-2"> 📦 </div>
+                <svg class="stat-icon" viewBox="0 0 24 26" fill="currentColor" aria-hidden="true"><path d="m12 2 10 5-10 5L2 7Z"/><path d="m2 10 9 5v9l-9-5Zm11 5 9-5v9l-9 5Z"/></svg>
                 <h6 class="text-muted"> Tổng sản phẩm </h6>
                 <h2 class="fw-bold text-primary"> <?= $total_products ?> </h2>
             </div>
@@ -69,7 +70,7 @@ LIMIT 5
     <div class="col-lg-3 col-md-6 mb-4">
         <div class="card shadow border-0">
             <div class="card-body text-center">
-                <div class="display-5 mb-2"> 📂 </div>
+                <svg class="stat-icon" viewBox="0 0 24 26" fill="currentColor" aria-hidden="true"><path d="M2 5h8l3 3h9v3H5l-3 11H0V7a2 2 0 0 1 2-2Z"/><path d="M6 12h18l-4 10H3Z"/></svg>
                 <h6 class="text-muted"> Danh mục </h6>
                 <h2 class="fw-bold text-info"> <?= $total_categories ?> </h2>
             </div>
@@ -78,7 +79,7 @@ LIMIT 5
     <div class="col-lg-3 col-md-6 mb-4">
         <div class="card shadow border-0">
             <div class="card-body text-center">
-                <div class="display-5 mb-2"> 👤 </div>
+                <svg class="stat-icon" viewBox="0 0 24 26" fill="currentColor" aria-hidden="true"><circle cx="12" cy="7" r="5"/><path d="M3 24v-5a9 9 0 0 1 18 0v5Z"/></svg>
                 <h6 class="text-muted"> Khách hàng </h6>
                 <h2 class="fw-bold text-success"> <?= $total_users ?> </h2>
             </div>
@@ -87,16 +88,16 @@ LIMIT 5
     <div class="col-lg-3 col-md-6 mb-4">
         <div class="card shadow border-0">
             <div class="card-body text-center">
-                <div class="display-5 mb-2"> 🛒 </div>
+                <svg class="stat-icon" viewBox="0 0 24 26" fill="currentColor" aria-hidden="true"><path d="M0 2h4l4 15h13l3-12H6v3h14l-2 6H10L7 2Z"/><circle cx="10" cy="22" r="2"/><circle cx="20" cy="22" r="2"/></svg>
                 <h6 class="text-muted"> Đơn hàng </h6>
                 <h2 class="fw-bold text-warning"> <?= $total_orders ?> </h2>
             </div>
         </div>
     </div>
 </div>
-<div class="row">
+<div class="row dashboard-stats">
     <div class="col-12 mb-4">
-        <div class="card bg-success text-white shadow border-0">
+        <div class="card revenue-card text-white shadow border-0">
             <div class="card-body text-center">
                 <h5> 💰 Tổng doanh thu </h5>
                 <h2 class="fw-bold"> <?= number_format($total_money,0,",",".") ?> đ </h2>
@@ -104,8 +105,8 @@ LIMIT 5
         </div>
     </div>
 </div>
-<div class="card shadow border-0 mb-5">
-    <div class="card-header bg-dark text-white"> 🛒 5 đơn hàng mới nhất </div>
+<div class="card dashboard-table shadow border-0 mb-4">
+    <div class="card-header dashboard-table-heading text-white"> 🛒 5 đơn hàng mới nhất </div>
     <div class="table-responsive">
         <table class="table table-hover align-middle mb-0">
             <thead class="table-light">
@@ -159,8 +160,8 @@ LIMIT 5
         </table>
     </div>
 </div>
-<div class="card shadow border-0">
-    <div class="card-header bg-dark text-white"> 👥 Danh sách người dùng </div>
+<div class="card dashboard-table shadow border-0">
+    <div class="card-header dashboard-table-heading text-white"> 👥 Danh sách người dùng </div>
     <div class="table-responsive">
         <table class="table table-hover align-middle mb-0">
             <thead class="table-light">
@@ -183,9 +184,9 @@ LIMIT 5
                     <td>
                         <?php
                         if($row['role']=="admin")
-                            echo '<span class="badge bg-danger">Admin</span>';
+                            echo '<span class="badge role-admin">Admin</span>';
                         else
-                            echo '<span class="badge bg-secondary">User</span>';
+                            echo '<span class="badge role-user">User</span>';
                         ?>
                     </td>
                     <td> <?= date("d/m/Y",strtotime($row['created_at'])) ?> </td>
@@ -195,4 +196,5 @@ LIMIT 5
         </table>
     </div>
 </div>
+</section>
 <?php include 'footer.php'; ?>

@@ -25,7 +25,7 @@ placeholder="Tìm người dùng">
 <button class="btn btn-primary"> Tìm </button>
 </form>
 </div>
-<div class="alert alert-info"> Tổng người dùng: <strong><?= $total ?></strong> </div>
+<div class="alert admin-total-bar"> Tổng người dùng: <strong><?= $total ?></strong> </div>
 <div class="card shadow">
 <div class="table-responsive">
 <table class="table table-hover table-bordered align-middle text-center">
@@ -50,9 +50,9 @@ placeholder="Tìm người dùng">
 <td> <?= htmlspecialchars($row['email']) ?> </td>
 <td>
 <?php
-if($row['role']=="admin"){ echo "<span class='badge bg-danger'> Admin </span>";
+if($row['role']=="admin"){ echo "<span class='badge user-role-admin'> Admin </span>";
 }else{
-echo "<span class='badge bg-success'> Customer </span>";
+echo "<span class='badge user-role-customer'> Customer </span>";
 }
 ?>
 </td>

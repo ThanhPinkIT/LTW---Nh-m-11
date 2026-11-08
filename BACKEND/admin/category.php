@@ -219,7 +219,7 @@ Hủy
 
 <button
 name="add"
-class="btn btn-success w-100">
+class="btn btn-success admin-add-category w-100">
 
 Thêm danh mục
 
@@ -243,7 +243,7 @@ Thêm danh mục
 
 <table class="table table-hover table-bordered mb-0">
 
-<thead class="table-dark">
+<thead class="admin-table-head">
 
 <tr>
 
