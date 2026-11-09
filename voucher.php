@@ -1,5 +1,5 @@
 <?php
-
+$pageTitle = 'Voucher';
 include 'includes/header.php';
 
 ?>

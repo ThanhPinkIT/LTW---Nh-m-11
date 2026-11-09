@@ -1,4 +1,5 @@
 <?php
+$pageTitle = 'Lịch sử mua hàng';
 include 'includes/header.php';
 ?>
 <div class="container mt-5">

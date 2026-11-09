@@ -1,4 +1,5 @@
 <?php
+$pageTitle = 'Thông tin cá nhân';
 include 'includes/header.php';
 ?>
 <link rel="stylesheet" href="assets/css/profile.css?v=3">

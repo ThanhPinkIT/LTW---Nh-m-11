@@ -1,4 +1,5 @@
 <?php
+$pageTitle = 'Chi tiết sản phẩm';
 include 'includes/header.php';
 ?>
 <div class="container mt-5">
@@ -83,6 +84,7 @@ async function loadProductDetail() {
     try {
         const res = await fetchAPI(`/product/detail.php?id=${productId}`);
         const p = res.data;
+        document.title = p.name + ' - NexTech';
         
         
         currentProduct = p;

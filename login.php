@@ -1,5 +1,5 @@
-
 <?php
+$pageTitle = 'Đăng nhập';
 include 'includes/header.php';
 ?>
 

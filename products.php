@@ -1,4 +1,5 @@
 <?php
+$pageTitle = 'Sản phẩm';
 include 'includes/header.php';
 ?>
 <div class="container mt-4">

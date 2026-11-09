@@ -1,4 +1,5 @@
 <?php
+$pageTitle = 'Thanh toán';
 include 'includes/header.php';
 ?>
 <div class="container mt-4 checkout-page">

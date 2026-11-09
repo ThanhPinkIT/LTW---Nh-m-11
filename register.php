@@ -1,4 +1,5 @@
 <?php
+$pageTitle = 'Đăng ký';
 include 'includes/header.php';
 ?>
 

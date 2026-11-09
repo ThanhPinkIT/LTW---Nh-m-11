@@ -1,4 +1,5 @@
 <?php
+$pageTitle = 'Giỏ hàng';
 include 'includes/header.php';
 ?>
 <div class="container mt-4 cart-page">
