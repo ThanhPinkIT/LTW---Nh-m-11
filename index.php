@@ -719,14 +719,15 @@ include 'includes/header.php';
             </div> <!-- Đóng product-store-grid -->
 
             <!-- 2. THANH SỐ BẤM PHÂN TRANG (CÓ ĐỦ KHUNG SỐ Ở GIỮA) -->
-            <<div class="store-pagination">
-                <button type="button" class="page-step-btn" id="prevBtn" onclick="changePage(currentPage - 1)">
-                </button>
-                <div class="page-numbers-list" id="pageNumbers"></div>
-                <button type="button" class="page-step-btn" id="nextBtn" onclick="changePage(currentPage + 1)">
-                    >
-                </button>
-            </div>
+            <div class="store-pagination">
+    <button type="button" class="page-step-btn" id="prevBtn" onclick="changePage(currentPage - 1)">
+        &lsaquo;
+    </button>
+    <div class="page-numbers-list" id="pageNumbers"></div>
+    <button type="button" class="page-step-btn" id="nextBtn" onclick="changePage(currentPage + 1)">
+        &rsaquo;
+    </button>
+</div>
 
         </div> <!-- Đóng col-lg-9 -->
     </div> <!-- Đóng row g-3 -->

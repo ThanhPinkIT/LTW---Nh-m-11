@@ -60,6 +60,11 @@ body { overflow-x: hidden; }
     .cart-action-bar { flex-wrap: wrap; gap: 8px; }
     .cart-action-bar .btn { flex: 1 1 auto; }
 
+    /* ----- Phân trang: luôn nằm giữa, tự xuống dòng nếu nhiều trang ----- */
+    .store-pagination { gap: 6px; flex-wrap: wrap; padding: 0 4px; box-sizing: border-box; }
+    .page-numbers-list { flex-wrap: wrap; justify-content: center; gap: 6px; }
+    .page-num-btn, .page-step-btn { width: 38px; height: 38px; flex: 0 0 auto; }
+
     /* ----- Thông báo nổi (toast) không tràn màn hình ----- */
     .nt-toasts { left: 12px; right: 12px; top: 70px; width: auto; max-width: none; }
 
