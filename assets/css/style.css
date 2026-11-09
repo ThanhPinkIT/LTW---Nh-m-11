@@ -1356,6 +1356,14 @@ footer,
 
 .store-pagination {
 
+    gap: 8px;
+
+    flex-wrap: wrap;
+
+    grid-column: 1 / -1;
+
+    box-sizing: border-box;
+
     display: flex !important;
 
     justify-content: center !important;
@@ -1381,6 +1389,10 @@ footer,
 .page-numbers-list {
 
     display: flex !important;
+
+    flex-wrap: wrap;
+
+    justify-content: center;
 
     gap: 8px;
 
@@ -1974,9 +1986,9 @@ body:has(.profile-page) .profile-page {
 
 /* Footer luôn nằm sát đáy khi nội dung ít */
 
-html, body {
+html {
 
-    height: 100%;
+    height: auto;
 
 }
 
@@ -1986,9 +1998,19 @@ body {
 
     min-height: 100vh;
 
+    height: auto;
+
     display: flex;
 
     flex-direction: column;
+
+}
+
+/* Navbar & footer không bị co lại khi nội dung dài */
+.custom-navbar,
+footer.site-pink-footer {
+
+    flex-shrink: 0;
 
 }
 
@@ -2707,3 +2729,12 @@ body.nt-lock { overflow: hidden; }
 .gallery { max-width: 460px; margin: 0 auto; }
 .gallery-stage { aspect-ratio: 4 / 3; }
 @media (max-width: 767.98px) { .gallery { max-width: 100%; } }
+
+/* ===== Chi tiết đơn hàng (order-detail.php) ===== */
+.order-info { display: grid; grid-template-columns: 120px minmax(0, 1fr); gap: 10px 12px; }
+.order-info dt { font-weight: 600; color: #6b7280; margin: 0; }
+.order-info dd { margin: 0; word-break: break-word; }
+@media (max-width: 575.98px) {
+    .order-info { grid-template-columns: 1fr; gap: 2px; }
+    .order-info dd { margin-bottom: 10px; }
+}

@@ -148,3 +148,14 @@ body:has(.register-page) footer {
     -webkit-text-fill-color: #111111;
     caret-color: #111111;
 }
+
+/* Căn giữa an toàn: nếu form cao hơn khung thì bắt đầu từ trên xuống, không bao giờ bị che dưới navbar / footer */
+.register-page .register-box {
+    margin: auto;
+    flex: 0 0 auto;
+}
+
+.register-page {
+    height: auto;
+    overflow: visible;
+}

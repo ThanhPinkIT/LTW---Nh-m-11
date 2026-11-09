@@ -4,6 +4,7 @@ require_once "../config/auth.php";
 require_once "../config/database.php";
 require_once "../config/response.php";
 require_once "../helper/voucher.php";
+require_once "../helper/order.php";
 
 // Bắt buộc mysqli ném exception để transaction rollback đúng khi có lỗi SQL
 mysqli_report(MYSQLI_REPORT_ERROR | MYSQLI_REPORT_STRICT);
@@ -22,6 +23,16 @@ $payment=$_POST['payment_method'] ?? "COD";
 if(!in_array($payment,["COD","Banking","Momo"],true)){
     error("Invalid payment method");
 }
+
+// Thông tin giao hàng: BẮT BUỘC (họ tên, SĐT, tỉnh/thành, phường/xã, địa chỉ cụ thể)
+list($ship,$shipError)=read_shipping_input($_POST);
+
+if($shipError!==null){
+    error($shipError);
+}
+
+// Tự thêm cột giao hàng nếu DB chưa có (phải chạy TRƯỚC transaction vì ALTER tự commit)
+ensure_order_shipping_columns($conn);
 
 try{
 
@@ -57,18 +68,25 @@ try{
     // 3. Tạo đơn hàng
     $stmt=$conn->prepare("
     INSERT INTO orders
-    (user_id,total_money,shipping_fee,discount_amount,voucher_code,payment_method,status)
-    VALUES(?,?,?,?,?,?,'Pending')
+    (user_id,total_money,shipping_fee,discount_amount,voucher_code,payment_method,
+     receiver_name,receiver_phone,shipping_city,shipping_ward,shipping_address,note,status)
+    VALUES(?,?,?,?,?,?,?,?,?,?,?,?,'Pending')
     ");
 
     $stmt->bind_param(
-    "iddsss",
+    "idddssssssss",
     $user_id,
     $total,
     $shipping,
     $discount,
     $voucherCode,
-    $payment
+    $payment,
+    $ship['receiver_name'],
+    $ship['receiver_phone'],
+    $ship['shipping_city'],
+    $ship['shipping_ward'],
+    $ship['shipping_address'],
+    $ship['note']
     );
 
     $stmt->execute();

@@ -1,6 +1,8 @@
 <?php
 include 'header.php';
 require_once "../api/helper/voucher.php";
+require_once "../api/helper/order.php";
+ensure_order_shipping_columns($conn);
 $message = "";
 
 // Cập nhật trạng thái
@@ -41,6 +43,8 @@ if(isset($_GET['search']) && $_GET['search']!=""){
     $sql.=" WHERE
     u.username LIKE '%$search%'
     OR u.fullname LIKE '%$search%'
+    OR o.receiver_name LIKE '%$search%'
+    OR o.receiver_phone LIKE '%$search%'
     OR o.id LIKE '%$search%'";
 
 }
@@ -61,7 +65,7 @@ $total=$result->num_rows;
 <input
 class="form-control me-2"
 name="search"
-placeholder="Mã đơn hoặc khách hàng"
+placeholder="Mã đơn, khách hàng hoặc SĐT"
 value="<?= htmlspecialchars($search) ?>">
 
 <button class="btn btn-primary">
@@ -93,7 +97,9 @@ Tổng đơn hàng:
 
 <th>ID</th>
 
-<th>Khách hàng</th>
+<th>Tài khoản</th>
+
+<th>Người nhận / Địa chỉ giao</th>
 
 <th>Ngày đặt</th>
 
@@ -104,6 +110,8 @@ Tổng đơn hàng:
 <th>Trạng thái</th>
 
 <th>Lưu</th>
+
+<th>Chi tiết</th>
 
 </tr>
 
@@ -117,7 +125,7 @@ Tổng đơn hàng:
 
 <td>
 
-<strong>#<?= $row['id'] ?></strong>
+<a href="order-detail.php?id=<?= (int)$row['id'] ?>" class="fw-bold text-decoration-none">#<?= $row['id'] ?></a>
 
 </td>
 
@@ -136,6 +144,32 @@ Tổng đơn hàng:
 <?= htmlspecialchars($row['username']) ?>
 
 </small>
+
+</td>
+
+<td class="text-start" style="min-width:220px">
+
+<?php if(trim($row['receiver_name'])!==''): ?>
+
+<strong><?= htmlspecialchars($row['receiver_name']) ?></strong>
+
+<br>
+
+<a href="tel:<?= htmlspecialchars($row['receiver_phone']) ?>">
+<?= htmlspecialchars($row['receiver_phone']) ?>
+</a>
+
+<br>
+
+<small class="text-muted">
+<?= htmlspecialchars(format_order_address($row)) ?>
+</small>
+
+<?php else: ?>
+
+<small class="text-muted">(Đơn cũ, chưa có thông tin giao hàng)</small>
+
+<?php endif; ?>
 
 </td>
 
@@ -212,6 +246,14 @@ Lưu
 
 </td>
 
+<td>
+
+<a href="order-detail.php?id=<?= (int)$row['id'] ?>" class="btn btn-outline-primary btn-sm">
+Xem
+</a>
+
+</td>
+
 </tr>
 
 <?php endwhile; ?>
@@ -220,7 +262,7 @@ Lưu
 
 <tr>
 
-<td colspan="7">
+<td colspan="9">
 
 Không có đơn hàng.
 

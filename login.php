@@ -3,7 +3,7 @@ $pageTitle = 'Đăng nhập';
 include 'includes/header.php';
 ?>
 
-<link rel="stylesheet" href="assets/css/login.css?v=6">
+<link rel="stylesheet" href="assets/css/login.css?v=7">
 
 <main class="login-page">
     <div class="login-box">

@@ -3,8 +3,22 @@
    Nạp SAU style.css (xem includes/header.php)
    ===================================================== */
 
-/* Chống tràn ngang trên điện thoại */
-body { overflow-x: hidden; }
+/* Chống tràn ngang / lắc trái-phải trên điện thoại */
+html { overflow-x: hidden; max-width: 100%; overscroll-behavior-x: none; }
+body { overflow-x: hidden; max-width: 100%; position: relative; overscroll-behavior-x: none; }
+@supports (overflow: clip) {
+    body { overflow-x: clip; }
+}
+img, video, svg, iframe { max-width: 100%; }
+
+/* Footer: khoảng cách cột 7.5rem chỉ hợp màn hình lớn; nhỏ hơn thì thu lại để không tràn ngang */
+@media (max-width: 1199.98px) {
+    .site-pink-footer .row { --bs-gutter-x: 2rem !important; --bs-gutter-y: 1.5rem !important; }
+}
+@media (max-width: 767.98px) {
+    .site-pink-footer .row { --bs-gutter-x: 0 !important; --bs-gutter-y: 1.25rem !important; }
+    .footer-col-title { font-size: 20px !important; }
+}
 
 /* ---------- Máy tính bảng & nhỏ hơn (< 992px) ---------- */
 @media (max-width: 991.98px) {

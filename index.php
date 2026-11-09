@@ -716,22 +716,10 @@ include 'includes/header.php';
                         </button>
                     </div>
 
-            </div> <!-- Đóng product-store-grid -->
+            </div> <!-- Đóng product-store-card (thẻ cuối) -->
+        </div> <!-- Đóng product-store-grid -->
 
-            <!-- 2. THANH SỐ BẤM PHÂN TRANG (CÓ ĐỦ KHUNG SỐ Ở GIỮA) -->
-            <div class="store-pagination">
-    <button type="button" class="page-step-btn" id="prevBtn" onclick="changePage(currentPage - 1)">
-        &lsaquo;
-    </button>
-    <div class="page-numbers-list" id="pageNumbers"></div>
-    <button type="button" class="page-step-btn" id="nextBtn" onclick="changePage(currentPage + 1)">
-        &rsaquo;
-    </button>
-                        </button>
-                    </div>
-                </div> <!-- Đóng product-store-card (thẻ cuối) -->
-            </div> <!-- Đóng product-store-grid -->
-
+            <!-- Thanh phân trang (chỉ 1 thanh, nằm NGOÀI lưới sản phẩm để luôn căn giữa) -->
             <div class="store-pagination">
                 <button type="button" class="page-step-btn" id="prevBtn" onclick="changePage(currentPage - 1)">
                     &lsaquo;
@@ -745,8 +733,6 @@ include 'includes/header.php';
         </div> <!-- Đóng col-lg-9 -->
     </div> <!-- Đóng row g-3 -->
 </div> <!-- Đóng container my-4 -->
-    </div>
-</div>
 
 <div class="container mt-5">
     <div class="d-flex justify-content-between align-items-center mb-4">

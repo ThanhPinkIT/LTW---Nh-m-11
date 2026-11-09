@@ -25,10 +25,59 @@ function showToast(msg, type = 'success') {
     setTimeout(() => toast.classList.add('d-none'), 3000);
 }
 
+
+const SHIPPING_FIELDS = ['receiver_name', 'receiver_phone', 'shipping_city', 'shipping_ward', 'shipping_address', 'note'];
+
+// Đọc các giá trị khách đang gõ (null nếu form chưa được vẽ)
+function readFormValues() {
+    const form = document.getElementById('checkoutForm');
+    if (!form) return null;
+    const v = {};
+    SHIPPING_FIELDS.forEach(n => { v[n] = form.elements[n]?.value ?? ''; });
+    return v;
+}
+
+// Điền form: ưu tiên dữ liệu đang gõ, nếu chưa có thì gợi ý từ đơn gần nhất của chính khách
+async function fillShippingForm(prev) {
+    let values = prev;
+    if (!values || SHIPPING_FIELDS.every(n => !values[n])) {
+        try {
+            const r = await fetchAPI('/order/last-shipping.php');
+            values = r.data || {};
+        } catch (e) {
+            values = {};
+        }
+    }
+    const form = document.getElementById('checkoutForm');
+    SHIPPING_FIELDS.forEach(n => {
+        if (form.elements[n] && values[n]) form.elements[n].value = values[n];
+    });
+}
+
+// Trả về {field, message} cho ô đầu tiên không hợp lệ, hoặc null nếu hợp lệ
+function validateShipping(form) {
+    const el = n => form.elements[n];
+    const phone = el('receiver_phone').value.replace(/[\s.\-()]/g, '')
+        .replace(/^\+84/, '0').replace(/^84(?=\d{9}$)/, '0');
+    if (el('receiver_name').value.trim().length < 2)
+        return { field: el('receiver_name'), message: 'Vui lòng nhập họ và tên người nhận' };
+    if (!/^0\d{9}$/.test(phone))
+        return { field: el('receiver_phone'), message: 'Số điện thoại không hợp lệ (gồm 10 chữ số, bắt đầu bằng 0)' };
+    if (el('shipping_city').value.trim().length < 2)
+        return { field: el('shipping_city'), message: 'Vui lòng nhập Tỉnh / Thành phố' };
+    if (el('shipping_ward').value.trim().length < 2)
+        return { field: el('shipping_ward'), message: 'Vui lòng nhập Phường / Xã' };
+    if (el('shipping_address').value.trim().length < 5)
+        return { field: el('shipping_address'), message: 'Vui lòng nhập địa chỉ cụ thể (số nhà, tên đường...)' };
+    return null;
+}
+
 async function loadCheckout() {
     const container = document.getElementById('checkoutContent');
     // Giữ lại phương thức thanh toán đã chọn khi vẽ lại trang (sau khi áp/gỡ mã)
     const prevPayment = document.querySelector('select[name="payment_method"]')?.value;
+    // Giữ lại những gì khách đã gõ trong form giao hàng khi trang vẽ lại
+    const prevForm = readFormValues();
     
     try {
         const res = await fetchAPI('/cart/index.php');
@@ -81,24 +130,62 @@ async function loadCheckout() {
                         </div>
                     </div>
 
+                    <form id="checkoutForm" novalidate>
                     <div class="card shadow-sm mb-4">
                         <div class="card-header bg-primary text-white">
-                            <h4 class="mb-0"> Thông tin thanh toán </h4>
+                            <h4 class="mb-0"> 📍 Thông tin giao hàng </h4>
                         </div>
                         <div class="card-body">
-                            <form id="checkoutForm">
-                                <div class="mb-3">
-                                    <label class="form-label"> Phương thức thanh toán </label>
-                                    <select name="payment_method" class="form-select">
-                                        <option value="COD">Thanh toán khi nhận hàng (COD)</option>
-                                        <option value="Banking">Chuyển khoản ngân hàng</option>
-                                        <option value="Momo">Ví Momo</option>
-                                    </select>
+                            <div class="row g-3">
+                                <div class="col-12 col-sm-6">
+                                    <label class="form-label" for="receiver_name">Họ và tên người nhận <span class="text-danger">*</span></label>
+                                    <input type="text" class="form-control" id="receiver_name" name="receiver_name"
+                                           maxlength="100" autocomplete="name" placeholder="Nguyễn Văn A" required>
                                 </div>
-                                <button type="submit" class="btn btn-success btn-lg w-100 mt-3"> Xác nhận đặt hàng </button>
-                            </form>
+                                <div class="col-12 col-sm-6">
+                                    <label class="form-label" for="receiver_phone">Số điện thoại <span class="text-danger">*</span></label>
+                                    <input type="tel" class="form-control" id="receiver_phone" name="receiver_phone"
+                                           maxlength="15" inputmode="tel" autocomplete="tel" placeholder="0901234567" required>
+                                </div>
+                                <div class="col-12 col-sm-6">
+                                    <label class="form-label" for="shipping_city">Tỉnh / Thành phố <span class="text-danger">*</span></label>
+                                    <input type="text" class="form-control" id="shipping_city" name="shipping_city"
+                                           maxlength="100" autocomplete="address-level1" placeholder="TP. Hồ Chí Minh" required>
+                                </div>
+                                <div class="col-12 col-sm-6">
+                                    <label class="form-label" for="shipping_ward">Phường / Xã <span class="text-danger">*</span></label>
+                                    <input type="text" class="form-control" id="shipping_ward" name="shipping_ward"
+                                           maxlength="100" autocomplete="address-level2" placeholder="Phường Bến Nghé" required>
+                                </div>
+                                <div class="col-12">
+                                    <label class="form-label" for="shipping_address">Địa chỉ cụ thể <span class="text-danger">*</span></label>
+                                    <input type="text" class="form-control" id="shipping_address" name="shipping_address"
+                                           maxlength="255" autocomplete="street-address" placeholder="Số nhà, tên đường, tòa nhà..." required>
+                                </div>
+                                <div class="col-12">
+                                    <label class="form-label" for="note">Ghi chú cho shop <small class="text-muted">(không bắt buộc)</small></label>
+                                    <textarea class="form-control" id="note" name="note" rows="2" maxlength="500"
+                                              placeholder="Ví dụ: giao giờ hành chính, gọi trước khi giao..."></textarea>
+                                </div>
+                            </div>
                         </div>
                     </div>
+
+                    <div class="card shadow-sm mb-4">
+                        <div class="card-header bg-primary text-white">
+                            <h4 class="mb-0"> 💳 Phương thức thanh toán </h4>
+                        </div>
+                        <div class="card-body">
+                            <select name="payment_method" class="form-select" aria-label="Phương thức thanh toán">
+                                <option value="COD">Thanh toán khi nhận hàng (COD)</option>
+                                <option value="Banking">Chuyển khoản ngân hàng</option>
+                                <option value="Momo">Ví Momo</option>
+                            </select>
+                            <div id="formError" class="alert alert-danger py-2 mt-3 mb-0 d-none" role="alert"></div>
+                            <button type="submit" id="placeOrderBtn" class="btn btn-success btn-lg w-100 mt-3"> Xác nhận đặt hàng </button>
+                        </div>
+                    </div>
+                    </form>
                 </div>
 
                 <div class="col-md-5">
@@ -147,6 +234,7 @@ async function loadCheckout() {
         if (prevPayment) {
             document.querySelector('select[name="payment_method"]').value = prevPayment;
         }
+        await fillShippingForm(prevForm);
 
         if (res.data.voucher_message) {
             showToast(res.data.voucher_message, 'warning');
@@ -154,8 +242,23 @@ async function loadCheckout() {
 
         document.getElementById('checkoutForm').addEventListener('submit', async function(e) {
             e.preventDefault();
+            const errBox = document.getElementById('formError');
+            const btn = document.getElementById('placeOrderBtn');
+            errBox.classList.add('d-none');
+
+            // Kiểm tra bắt buộc ở phía trình duyệt (server vẫn kiểm tra lại)
+            const problem = validateShipping(this);
+            if (problem) {
+                errBox.textContent = problem.message;
+                errBox.classList.remove('d-none');
+                problem.field.focus();
+                return;
+            }
+
             const formData = new FormData(this);
-            
+            btn.disabled = true;
+            btn.textContent = 'Đang xử lý...';
+
             try {
                 const orderRes = await fetchAPI('/order/checkout.php', {
                     method: 'POST',
@@ -163,7 +266,7 @@ async function loadCheckout() {
                 });
                 
                 const d = orderRes.data || {};
-                container.innerHTML = `<div class="text-center py-5"><a href="history.php" class="btn btn-outline-danger">Xem đơn hàng đã đặt</a></div>`;
+                container.innerHTML = `<div class="text-center py-5"><a href="order-detail.php?id=${encodeURIComponent(d.order_id)}" class="btn btn-outline-danger">Xem đơn hàng đã đặt</a></div>`;
                 hienPopupDatHang({
                     orderId: d.order_id,
                     total: d.total,
@@ -171,6 +274,8 @@ async function loadCheckout() {
                     voucher: d.voucher_code
                 });
             } catch (err) {
+                btn.disabled = false;
+                btn.textContent = 'Xác nhận đặt hàng';
                 if (err.message.includes('Auth') || err.message.includes('Unauthorized') || err.message.includes('Login') || err.message.includes('Chưa đăng nhập')) {
                     container.innerHTML = `
                         <div class='alert alert-danger text-center mt-4'>
@@ -178,6 +283,8 @@ async function loadCheckout() {
                         </div>
                     `;
                 } else {
+                    errBox.textContent = err.message;
+                    errBox.classList.remove('d-none');
                     showToast(err.message, 'danger');
                     // Voucher không còn hợp lệ -> tải lại để cập nhật số tiền
                     if (/giảm giá/i.test(err.message)) {

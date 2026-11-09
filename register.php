@@ -3,7 +3,7 @@ $pageTitle = 'Đăng ký';
 include 'includes/header.php';
 ?>
 
-<link rel="stylesheet" href="assets/css/register.css?v22">
+<link rel="stylesheet" href="assets/css/register.css?v=23">
 
 <main class="register-page">
     <div class="register-box">

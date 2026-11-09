@@ -14,19 +14,21 @@ include 'includes/header.php';
 
 <script>
 const formatVND = (price) => new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(price);
+const esc = (v) => String(v ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 
 function getStatusBadge(status) {
     switch (status) {
         case 'Pending':
             return '<span class="badge history-badge history-badge-pending">Chờ xử lý</span>';
         case 'Processing':
+        case 'Shipping':
             return '<span class="badge history-badge history-badge-processing">Đang giao</span>';
         case 'Completed':
             return '<span class="badge history-badge history-badge-completed">Hoàn thành</span>';
         case 'Cancelled':
             return '<span class="badge history-badge history-badge-cancelled">Đã hủy</span>';
         default:
-            return `<span class="badge history-badge history-badge-default">${status}</span>`;
+            return `<span class="badge history-badge history-badge-default">${esc(status)}</span>`;
     }
 }
 
@@ -50,17 +52,23 @@ async function loadHistory() {
         let rows = '';
         orders.forEach((order, index) => {
             const date = new Date(order.created_at).toLocaleString('vi-VN');
+            const detailUrl = `order-detail.php?id=${encodeURIComponent(order.id)}`;
             rows += `
                 <tr>
                     <td>${index + 1}</td>
-                    <td><span class="fw-bold text-primary">#${order.id}</span></td>
+                    <td><a href="${detailUrl}" class="fw-bold text-primary text-decoration-none">#${esc(order.id)}</a></td>
                     <td>${date}</td>
+                    <td class="text-start">
+                        <div class="fw-semibold">${esc(order.receiver_name) || '<span class="text-muted">—</span>'}</div>
+                        ${order.receiver_phone ? `<small class="text-muted">${esc(order.receiver_phone)}</small>` : ''}
+                    </td>
                     <td class="text-danger fw-bold">
                         ${formatVND(order.total_money)}
-                        ${Number(order.discount_amount) > 0 ? `<br><small class="text-success fw-normal">Voucher ${String(order.voucher_code ?? '').replace(/[&<>"']/g, '')}: -${formatVND(order.discount_amount)}</small>` : ''}
+                        ${Number(order.discount_amount) > 0 ? `<br><small class="text-success fw-normal">Voucher ${esc(order.voucher_code)}: -${formatVND(order.discount_amount)}</small>` : ''}
                     </td>
-                    <td>${order.payment_method}</td>
+                    <td>${esc(order.payment_method)}</td>
                     <td>${getStatusBadge(order.status)}</td>
+                    <td><a href="${detailUrl}" class="btn btn-sm btn-outline-danger">Xem</a></td>
                 </tr>
             `;
         });
@@ -73,9 +81,11 @@ async function loadHistory() {
                             <th>STT</th>
                             <th>Mã Đơn Hàng</th>
                             <th>Ngày Đặt</th>
+                            <th>Người Nhận</th>
                             <th>Tổng Tiền</th>
                             <th>Thanh Toán</th>
                             <th>Trạng Thái</th>
+                            <th>Chi Tiết</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -94,10 +104,10 @@ async function loadHistory() {
 
         
     } catch (err) {
-        if (err.message.includes('Auth') || err.message.includes('Login')) {
+        if (/unauthorized|login|đăng nhập/i.test(err.message)) {
             window.location.href = 'login.php';
         } else {
-            container.innerHTML = `<div class="alert alert-danger">Lỗi tải lịch sử đơn hàng: ${err.message}</div>`;
+            container.innerHTML = `<div class="alert alert-danger">Lỗi tải lịch sử đơn hàng: ${esc(err.message)}</div>`;
         }
     }
 }

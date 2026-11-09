@@ -148,3 +148,7 @@ body:has(.login-page) footer {
     -webkit-text-fill-color: #111111;
     caret-color: #111111;
 }
+
+/* Căn giữa an toàn (không bị che bởi navbar / footer khi màn hình thấp) */
+.login-page > * { margin-top: auto; margin-bottom: auto; }
+.login-page { height: auto; overflow: visible; }
