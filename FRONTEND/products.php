@@ -49,6 +49,13 @@ function boDau(s) {
         .replace(/đ/g, 'd').replace(/Đ/g, 'D').toLowerCase();
 }
 
+// ảnh mẫu của cửa hàng nằm trong FRONTEND/uploads, ảnh admin tải lên nằm trong BACKEND/uploads
+function anhDuPhong(img) {
+    img.onerror = null;
+    const ten = decodeURIComponent(img.src.split('/').pop().split('?')[0]);
+    img.src = 'uploads/' + encodeURIComponent(ten);
+}
+
 async function loadProducts() {
     const list = document.getElementById('productList');   
     const urlParams = new URLSearchParams(window.location.search);
@@ -115,7 +122,7 @@ function renderPage() {
             <div class="product-thumb-wrap">
                 <span class="badge-discount">-15%</span>
                 <span class="badge-hot"><i class="bi bi-fire"></i> HOT</span>
-                <img src="${img}" alt="${p.name}" class="product-thumb-img">
+                <img src="${img}" alt="${p.name}" class="product-thumb-img" onerror="anhDuPhong(this)">
             </div>
             <div class="product-card-body">
                 <div class="product-rating">
@@ -128,7 +135,7 @@ function renderPage() {
                     <span class="price-current">${formatVND(p.price)}</span>
                     <span class="price-original">${formatVND(Number(p.price) * 1.15)}</span>
                 </div>
-                <button type="button" class="btn-add-cart" onclick="addToCart(${p.id})">
+                <button type="button" class="btn-add-cart" onclick="addToCart(${p.id}, this)">
                     Thêm vào giỏ
                 </button>
             </div>
@@ -180,5 +187,5 @@ function renderPage() {
 document.addEventListener('DOMContentLoaded', loadProducts);
 </script>
 
-<script src="assets/js/cart.js?v=2"></script>
+<script src="assets/js/cart.js?v=4"></script>
 <?php include 'includes/footer.php'; ?>

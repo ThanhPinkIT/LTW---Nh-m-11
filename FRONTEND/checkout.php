@@ -162,15 +162,13 @@ async function loadCheckout() {
                 });
                 
                 const d = orderRes.data || {};
-                container.innerHTML = `
-                    <div class='alert alert-success text-center p-4 shadow-sm'>
-                        <h3>🎉 Đặt hàng thành công!</h3>
-                        <p>${esc(orderRes.message)}</p>
-                        <p>Mã đơn <strong>#${esc(d.order_id)}</strong> · Tổng thanh toán: <strong>${formatVND(d.total)}</strong></p>
-                        ${d.voucher_code ? `<p>Đã áp dụng mã <strong>${esc(d.voucher_code)}</strong>, giảm ${formatVND(d.discount)}</p>` : ''}
-                        <a href='history.php' class='btn btn-primary mt-3'>Xem lịch sử đơn hàng</a>
-                    </div>
-                `;
+                container.innerHTML = `<div class="text-center py-5"><a href="history.php" class="btn btn-outline-danger">Xem đơn hàng đã đặt</a></div>`;
+                hienPopupDatHang({
+                    orderId: d.order_id,
+                    total: d.total,
+                    discount: d.discount,
+                    voucher: d.voucher_code
+                });
             } catch (err) {
                 if (err.message.includes('Auth') || err.message.includes('Unauthorized') || err.message.includes('Login') || err.message.includes('Chưa đăng nhập')) {
                     container.innerHTML = `

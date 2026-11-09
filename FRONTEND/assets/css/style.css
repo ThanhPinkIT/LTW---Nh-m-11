@@ -1135,9 +1135,9 @@ footer.site-pink-footer {
 
 /* Tiêu đề hai khung */
 .checkout-page .card-header {
-    background-color: #E8BCC3 !important;
+    background-color: #FFF0F2 !important;
     color: #5F3D44 !important;
-    border-color: #E8BCC3 !important;
+    border-color: #FFF0F2 !important;
     font-weight: 700;
 }
 
@@ -1279,3 +1279,55 @@ footer.site-pink-footer {
 .header-search .form-control { padding-right: 44px !important; }
 .header-search button { position: absolute; right: 4px; top: 50%; transform: translateY(-50%); width: 30px; height: 30px; border: 0; border-radius: 50%; background: #c80000; color: #fff; font-size: 13px; display: flex; align-items: center; justify-content: center; cursor: pointer; transition: background .2s; }
 .header-search button:hover { background: #8f0000; }
+
+/* Thông báo nhỏ */
+.nt-toasts { position: fixed; top: 84px; right: 20px; z-index: 2000; display: flex; flex-direction: column; gap: 10px; width: 320px; max-width: calc(100vw - 40px); }
+.nt-toast { padding: 12px 16px; background: #fff; color: #2b2b2b; font-size: 14px; border-radius: 10px; border-left: 4px solid #2f9e6b; box-shadow: 0 8px 24px rgba(60, 20, 10, .16); cursor: pointer; animation: ntIn .25s ease; }
+.nt-toast.nt-danger { border-left-color: #c80000; }
+.nt-toast.nt-warning { border-left-color: #f0b429; }
+.nt-toast.nt-out { opacity: 0; transform: translateX(16px); transition: .25s; }
+@keyframes ntIn { from { opacity: 0; transform: translateX(16px); } to { opacity: 1; transform: none; } }
+
+/* Popup đặt hàng thành công */
+body.nt-lock { overflow: hidden; }
+.nt-overlay { position: fixed; inset: 0; z-index: 3000; display: flex; align-items: center; justify-content: center; padding: 16px; background: rgba(40, 14, 10, .55); animation: ntFade .2s ease; }
+.nt-modal { position: relative; width: 100%; max-width: 420px; background: #fffdfd; border-radius: 18px; overflow: hidden; box-shadow: 0 24px 60px rgba(40, 14, 10, .35); animation: ntPop .3s cubic-bezier(.2, .9, .3, 1.2); }
+.nt-close { position: absolute; top: 8px; right: 12px; z-index: 2; border: 0; background: transparent; color: rgba(255, 255, 255, .85); font-size: 28px; line-height: 1; cursor: pointer; }
+.nt-close:hover { color: #fff; }
+.nt-hero { display: flex; justify-content: center; padding: 30px 0 38px; background: linear-gradient(135deg, #e0381f, #b3200f); }
+.nt-check { width: 76px; height: 76px; padding: 10px; border-radius: 50%; background: #fff; fill: none; stroke: #2f9e6b; stroke-width: 3.4; stroke-linecap: round; stroke-linejoin: round; box-shadow: 0 0 0 8px rgba(255, 255, 255, .22); }
+.nt-ring { stroke-dasharray: 145; stroke-dashoffset: 145; animation: ntDraw .55s .15s ease forwards; }
+.nt-tick { stroke-dasharray: 36; stroke-dashoffset: 36; animation: ntDraw .35s .6s ease forwards; }
+.nt-body { padding: 22px 26px 26px; text-align: center; }
+.nt-body h3 { margin: 0 0 6px; font-size: 22px; font-weight: 700; color: #2b2b2b; }
+.nt-sub { margin: 0 0 18px; font-size: 14px; line-height: 1.5; color: #70483f; }
+.nt-receipt { position: relative; margin: 0 -6px 20px; padding: 14px 18px; background: #fff3f0; border: 1px dashed #e9b4a8; border-radius: 12px; text-align: left; }
+.nt-row { display: flex; justify-content: space-between; gap: 12px; padding: 4px 0; font-size: 14px; color: #70483f; }
+.nt-row strong { color: #2b2b2b; font-variant-numeric: tabular-nums; }
+.nt-total { margin-top: 6px; padding-top: 10px; border-top: 1px dashed #e9b4a8; }
+.nt-total strong { font-size: 18px; color: #c80000; }
+.nt-actions { display: flex; gap: 10px; }
+.nt-btn { flex: 1; padding: 11px 8px; border-radius: 10px; font-size: 14px; font-weight: 600; text-align: center; text-decoration: none; transition: .2s; }
+.nt-ghost { color: #c80000; background: #fff; border: 1px solid #e9b4a8; }
+.nt-ghost:hover { background: #fff3f0; color: #c80000; }
+.nt-main { color: #fff; background: #c80000; border: 1px solid #c80000; }
+.nt-main:hover { background: #9d0000; color: #fff; }
+@keyframes ntFade { from { opacity: 0; } to { opacity: 1; } }
+@keyframes ntPop { from { opacity: 0; transform: translateY(14px) scale(.94); } to { opacity: 1; transform: none; } }
+@keyframes ntDraw { to { stroke-dashoffset: 0; } }
+@media (prefers-reduced-motion: reduce) { .nt-modal, .nt-overlay, .nt-toast { animation: none; } .nt-ring, .nt-tick { animation: none; stroke-dashoffset: 0; } }
+.nt-btn:focus-visible { outline: 2px solid #e9b4a8; outline-offset: 2px; }
+
+/* Popup thêm vào giỏ hàng */
+.nt-btn { cursor: pointer; font-family: inherit; }
+.nt-modal--sm { max-width: 380px; }
+.nt-hero--sm { padding: 24px 0 30px; }
+.nt-cart { position: relative; width: 70px; height: 70px; border-radius: 50%; background: #fff; box-shadow: 0 0 0 8px rgba(255, 255, 255, .22); display: flex; align-items: center; justify-content: center; }
+.nt-cart > svg { width: 36px; height: 36px; fill: none; stroke: #c80000; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
+.nt-badge { position: absolute; right: -4px; bottom: -2px; width: 26px; height: 26px; border-radius: 50%; background: #2f9e6b; border: 3px solid #d3351c; display: flex; align-items: center; justify-content: center; animation: ntBadge .4s .25s cubic-bezier(.2, 1.6, .4, 1) both; }
+.nt-badge svg { width: 14px; height: 14px; fill: none; stroke: #fff; stroke-width: 3; stroke-linecap: round; stroke-linejoin: round; }
+.nt-item { display: flex; align-items: center; gap: 12px; margin: 0 0 18px; padding: 10px; text-align: left; background: #fff3f0; border: 1px dashed #e9b4a8; border-radius: 12px; }
+.nt-item img { width: 56px; height: 56px; object-fit: contain; flex-shrink: 0; background: #fff; border-radius: 8px; }
+.nt-item-name { font-size: 14px; font-weight: 600; line-height: 1.35; color: #2b2b2b; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+.nt-item-price { margin-top: 3px; font-size: 14px; font-weight: 700; color: #c80000; }
+@keyframes ntBadge { from { transform: scale(0); } to { transform: scale(1); } }

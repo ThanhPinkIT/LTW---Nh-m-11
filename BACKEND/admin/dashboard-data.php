@@ -1,7 +1,4 @@
 <?php
-/* Lấy số liệu cho biểu đồ ở trang Dashboard.
-   include từ index.php thì dùng hàm dashboard_data(),
-   gọi trực tiếp thì trả về JSON (chỉ admin). */
 require_once __DIR__ . '/../config/db.php';
 
 function dashboard_data(mysqli $conn): array

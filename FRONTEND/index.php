@@ -172,8 +172,7 @@ include 'includes/header.php';
                             <span class="price-current">29.490.000 đ</span>
                             <span class="price-original">34.990.000 đ</span>
                         </div>
-                        <button type="button" class="btn-add-cart"
-                                onclick="addToCart(1)">
+                        <button type="button" class="btn-add-cart">
                             Thêm vào giỏ
                         </button>
                     </div>
@@ -958,31 +957,65 @@ document.addEventListener('DOMContentLoaded', updatePagination);
 </script>
 
 <script>
-document.addEventListener('DOMContentLoaded', () => {
-    document.querySelectorAll('.product-store-card')
-        .forEach(card => {
-            const button = card.querySelector('.btn-add-cart');
+// Gắn từng thẻ sản phẩm với sản phẩm thật trong database:
+// so khớp theo tên file ảnh + giá, rồi theo ảnh, rồi theo tên
+const chuan = s => String(s || '').normalize('NFC').trim().toLowerCase();
+const tenAnh = s => {
+    let f = String(s || '').split(',')[0].trim().split('/').pop();
+    try { f = decodeURIComponent(f); } catch (e) {}
+    return chuan(f);
+};
+const soTien = s => Number(String(s).replace(/[^\d]/g, ''));
 
-            if (!button) return;
+document.addEventListener('DOMContentLoaded', async () => {
+    const cards = document.querySelectorAll('.product-store-card');
 
-            button.addEventListener('click', async () => {
-                const productId = Number(card.dataset.productId);
+    try {
+        const res = await fetchAPI('/product/index.php');
+        const dbList = (res.data || []).slice().sort((a, b) => a.id - b.id);
+        const daDung = new Set();
 
-                if (!Number.isSafeInteger(productId) || productId <= 0) {
-                    alert('Sản phẩm chưa được liên kết với database.');
-                    return;
-                }
+        cards.forEach(card => {
+            const anh = tenAnh(card.querySelector('.product-thumb-img')?.getAttribute('src'));
+            const ten = chuan(card.querySelector('.product-card-title')?.textContent);
+            const giaEl = card.querySelector('.price-current');
+            const gia = soTien(giaEl?.textContent);
 
-                if (typeof addToCart !== 'function') {
-                    alert('Chức năng giỏ hàng chưa được tải.');
-                    return;
-                }
+            const conLai = dbList.filter(p => !daDung.has(p.id));
+            const sp = conLai.find(p => tenAnh(p.image) === anh && Number(p.price) === gia)
+                    || conLai.find(p => tenAnh(p.image) === anh)
+                    || conLai.find(p => chuan(p.name) === ten)
+                    || dbList.find(p => tenAnh(p.image) === anh);
 
-                await addToCart(productId);
-            });
+            if (!sp) {
+                console.warn('Chưa có trong database:', ten);
+                return;
+            }
+            card.dataset.productId = sp.id;
+            daDung.add(sp.id);
+            // giá hiển thị luôn theo database để khớp với giỏ hàng
+            if (giaEl && Number(sp.price) !== gia) {
+                giaEl.textContent = Number(sp.price).toLocaleString('vi-VN') + ' đ';
+            }
         });
+    } catch (e) {
+        console.error('Không tải được danh sách sản phẩm', e);
+    }
+
+    cards.forEach(card => {
+        const button = card.querySelector('.btn-add-cart');
+        if (!button) return;
+        button.addEventListener('click', () => {
+            const id = Number(card.dataset.productId);
+            if (!id) {
+                thongBao('Sản phẩm này hiện chưa thể đặt mua', 'warning');
+                return;
+            }
+            addToCart(id, button);
+        });
+    });
 });
 </script>
 
-<script src="assets/js/cart.js?v=2"></script>
+<script src="assets/js/cart.js?v=4"></script>
 <?php include 'includes/footer.php'; ?>
