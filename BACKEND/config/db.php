@@ -4,6 +4,9 @@ $user = "root";
 $pass = "";
 $dbname = "web_ban_hang";
 
+// Trên hosting: file env.php (không đưa lên Git) sẽ ghi đè thông tin DB bên trên
+if (file_exists(__DIR__ . "/env.php")) { require __DIR__ . "/env.php"; }
+
 $conn = new mysqli($host, $user, $pass, $dbname);
 
 if ($conn->connect_error) {

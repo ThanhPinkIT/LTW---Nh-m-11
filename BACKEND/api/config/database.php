@@ -24,6 +24,14 @@ $password = "";
 $database = "web_ban_hang";
 $port = 3306;
 
+// Trên hosting: file env.php (không đưa lên Git) sẽ ghi đè thông tin DB bên trên
+$envFile = __DIR__ . "/../../config/env.php";
+if (file_exists($envFile)) {
+    require $envFile;
+    $password = $pass;
+    $database = $dbname;
+}
+
 try {
     $conn = new mysqli(
         $host,
