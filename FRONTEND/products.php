@@ -122,7 +122,7 @@ function renderPage() {
             <div class="product-thumb-wrap">
                 <span class="badge-discount">-15%</span>
                 <span class="badge-hot"><i class="bi bi-fire"></i> HOT</span>
-                <img src="${img}" alt="${p.name}" class="product-thumb-img" onerror="anhDuPhong(this)">
+                <a href="product-detail.php?id=${p.id}" class="product-link"><img src="${img}" alt="${p.name}" class="product-thumb-img" onerror="anhDuPhong(this)"></a>
             </div>
             <div class="product-card-body">
                 <div class="product-rating">
@@ -130,7 +130,7 @@ function renderPage() {
                     <span class="rating-score">4.9</span>
                     <span class="rating-count">(312)</span>
                 </div>
-                <h4 class="product-card-title">${p.name}</h4>
+                <h4 class="product-card-title"><a href="product-detail.php?id=${p.id}">${p.name}</a></h4>
                 <div class="product-price-wrap">
                     <span class="price-current">${formatVND(p.price)}</span>
                     <span class="price-original">${formatVND(Number(p.price) * 1.15)}</span>
@@ -187,5 +187,5 @@ function renderPage() {
 document.addEventListener('DOMContentLoaded', loadProducts);
 </script>
 
-<script src="assets/js/cart.js?v=4"></script>
+<script src="assets/js/cart.js?v=6"></script>
 <?php include 'includes/footer.php'; ?>

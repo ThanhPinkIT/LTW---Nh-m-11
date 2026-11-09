@@ -1,5 +1,7 @@
 <?php
 include 'header.php';
+require_once 'specs-helper.php';
+require_once 'images-helper.php';
 $message = "";
 // Lấy danh mục
 $categories = $conn->query("SELECT * FROM categories ORDER BY name");
@@ -13,6 +15,7 @@ if(isset($_POST['add_product'])){
         $ext = pathinfo($_FILES['image']['name'],PATHINFO_EXTENSION);
         $image = time().".".$ext;
         move_uploaded_file( $_FILES['image']['tmp_name'], "../uploads/".$image );
+        copy_anh_sang_fe($image);
     }
     $stmt=$conn->prepare("
         INSERT INTO products
@@ -28,13 +31,18 @@ if(isset($_POST['add_product'])){
         $image
     );
     if($stmt->execute()){
+        $newId = $stmt->insert_id;
+        luu_anh_phu($conn, $newId);
         $message="<div class='alert alert-success'> Thêm sản phẩm thành công. </div>";
+        if(!luu_thong_so($conn, $newId)){
+            $message.="<div class='alert alert-warning'> Chưa lưu được thông số (kiểm tra đã tạo bảng product_specs chưa). </div>";
+        }
     }else{
         $message="<div class='alert alert-danger'> ".$conn->error." </div>";
     }
 }
 ?>
-    <h2 class="mb-4">➕ Thêm sản phẩm</h2>
+    <h2 class="mb-4">Thêm sản phẩm</h2>
 <?= $message ?>
 <div class="card shadow-sm">
 <div class="card-body">
@@ -68,14 +76,16 @@ name="description"
 rows="5"
 class="form-control"></textarea>
 </div>
+<?php $specs = []; include 'specs-form.php'; ?>
 <div class="mb-4">
-<label>Ảnh</label>
+<label>Ảnh chính</label>
 <input
 type="file"
 name="image"
 class="form-control"
 required>
 </div>
+<?php $anhPhu = []; include 'images-form.php'; ?>
 <button name="add_product" class="btn btn-success"> Lưu sản phẩm </button>
 <a href="product-list.php" class="btn btn-secondary"> Quay lại </a>
 </form>

@@ -1,5 +1,8 @@
 <?php
+ob_start(); // cho phép redirect sau khi header.php đã in HTML
 include 'header.php';
+require_once 'specs-helper.php';
+require_once 'images-helper.php';
 
 if(!isset($_GET['id'])){
     header("Location: product-list.php");
@@ -36,6 +39,7 @@ if(isset($_POST['update_product'])){
         if($image!="" && file_exists("../uploads/".$image)){
             unlink("../uploads/".$image);
         }
+        xoa_anh_fe($image);
 
         $ext=pathinfo($_FILES['image']['name'],PATHINFO_EXTENSION);
 
@@ -45,6 +49,7 @@ if(isset($_POST['update_product'])){
             $_FILES['image']['tmp_name'],
             "../uploads/".$image
         );
+        copy_anh_sang_fe($image);
     }
 
     $stmt=$conn->prepare("
@@ -70,9 +75,17 @@ if(isset($_POST['update_product'])){
 
     if($stmt->execute()){
 
-        header("Location: product-list.php");
+        xoa_anh_phu($conn, $id);
+        luu_anh_phu($conn, $id);
 
-        exit();
+        if(luu_thong_so($conn, $id)){
+            header("Location: product-list.php");
+            exit();
+        }
+
+        $message="<div class='alert alert-warning'>
+        Đã lưu sản phẩm nhưng chưa lưu được thông số (kiểm tra đã tạo bảng product_specs chưa).
+        </div>";
 
     }else{
 
@@ -85,7 +98,7 @@ if(isset($_POST['update_product'])){
 }
 ?>
 
-<h2 class="mb-4">✏️ Chỉnh sửa sản phẩm</h2>
+<h2 class="mb-4">Chỉnh sửa sản phẩm</h2>
 
 <?= $message ?>
 
@@ -127,14 +140,16 @@ value="<?= $c['id'] ?>"
 <label>Mô tả</label>
 <textarea name="description" rows="6" class="form-control"><?= htmlspecialchars($product['description']) ?></textarea>
 </div>
+<?php $specs = lay_thong_so($conn, $id); include 'specs-form.php'; ?>
 <div class="mb-3">
-<label>Ảnh hiện tại</label><br>
+<label>Ảnh chính hiện tại</label><br>
 <img src="../uploads/<?= $product['image'] ?>" width="180" class="img-thumbnail">
 </div>
 <div class="mb-4">
-<label>Đổi ảnh</label>
+<label>Đổi ảnh chính</label>
 <input type="file" name="image" class="form-control">
 </div>
+<?php $anhPhu = lay_anh_phu($conn, $id); include 'images-form.php'; ?>
 <button name="update_product" class="btn btn-primary"> Lưu thay đổi </button>
 <a href="product-list.php" class="btn btn-secondary"> Quay lại </a>
 </form>

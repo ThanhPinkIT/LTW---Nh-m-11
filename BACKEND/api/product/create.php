@@ -22,6 +22,12 @@ if(isset($_FILES['image'])){
         $_FILES['image']['tmp_name'],
         "../../uploads/".$image
     );
+
+    // copy thêm sang FRONTEND/uploads
+    $fe = __DIR__."/../../../FRONTEND/uploads/";
+    if(is_dir($fe)){
+        @copy("../../uploads/".$image, $fe.$image);
+    }
 }
 
 $stmt=$conn->prepare("

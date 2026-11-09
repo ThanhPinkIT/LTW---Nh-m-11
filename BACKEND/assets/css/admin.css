@@ -211,3 +211,9 @@ a:focus-visible, button:focus-visible { outline: 2px solid #bd6251; outline-offs
 .chart-mode .btn { font-size: 13px; padding: 3px 14px; border-color: #efd0c8; }
 .chart-mode .btn-light { background: #fffdfd; color: #70483f; }
 @media (max-width: 767.98px) { .chart-box { min-height: 220px; } .chart-box--short { height: 210px; } .chart-value { font-size: 22px; } }
+
+/* Nhập thông số kỹ thuật (thêm / sửa sản phẩm) */
+.spec-editor > label { font-weight: 600; margin-bottom: 8px; }
+.spec-row { display: grid; grid-template-columns: 1fr 1.6fr auto; gap: 10px; margin-bottom: 8px; }
+.spec-row .btn { white-space: nowrap; }
+@media (max-width: 575.98px) { .spec-row { grid-template-columns: 1fr; } }

@@ -19,6 +19,12 @@ function uploadImage($file,$folder="../../uploads/")
         $folder.$filename
     )){
 
+        // copy thêm sang FRONTEND/uploads
+        $fe = __DIR__."/../../../FRONTEND/uploads/";
+        if(is_dir($fe)){
+            @copy($folder.$filename, $fe.$filename);
+        }
+
         return $filename;
 
     }
@@ -36,6 +42,11 @@ function deleteImage($image,$folder="../../uploads/")
 
         unlink($file);
 
+    }
+
+    $fe = __DIR__."/../../../FRONTEND/uploads/".$image;
+    if($image!="" && file_exists($fe)){
+        unlink($fe);
     }
 
 }

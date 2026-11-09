@@ -1,5 +1,6 @@
 <?php
 include 'header.php';
+require_once 'images-helper.php';
 
 $message="";
 
@@ -21,6 +22,15 @@ if(isset($_GET['delete'])){
 
         if(!empty($img['image']) && file_exists("../uploads/".$img['image'])){
             unlink("../uploads/".$img['image']);
+        }
+        xoa_anh_fe($img['image']);
+
+        // xóa luôn file ảnh phụ (dòng trong DB tự xóa theo sản phẩm)
+        foreach(lay_anh_phu($conn, $id) as $ap){
+            if(file_exists("../uploads/".$ap['image'])){
+                unlink("../uploads/".$ap['image']);
+            }
+            xoa_anh_fe($ap['image']);
         }
 
         $stmt=$conn->prepare("DELETE FROM products WHERE id=?");

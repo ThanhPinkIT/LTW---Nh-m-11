@@ -993,6 +993,21 @@ document.addEventListener('DOMContentLoaded', async () => {
             }
             card.dataset.productId = sp.id;
             daDung.add(sp.id);
+
+            // bấm vào ảnh hoặc tên để xem thông số chi tiết
+            const link = 'product-detail.php?id=' + sp.id;
+            const hinh = card.querySelector('.product-thumb-img');
+            const tieuDe = card.querySelector('.product-card-title');
+            if (hinh) {
+                const a = document.createElement('a');
+                a.href = link;
+                a.className = 'product-link';
+                hinh.parentNode.insertBefore(a, hinh);
+                a.appendChild(hinh);
+            }
+            if (tieuDe) {
+                tieuDe.innerHTML = '<a href="' + link + '">' + tieuDe.innerHTML + '</a>';
+            }
             // giá hiển thị luôn theo database để khớp với giỏ hàng
             if (giaEl && Number(sp.price) !== gia) {
                 giaEl.textContent = Number(sp.price).toLocaleString('vi-VN') + ' đ';
@@ -1017,5 +1032,5 @@ document.addEventListener('DOMContentLoaded', async () => {
 });
 </script>
 
-<script src="assets/js/cart.js?v=4"></script>
+<script src="assets/js/cart.js?v=6"></script>
 <?php include 'includes/footer.php'; ?>
