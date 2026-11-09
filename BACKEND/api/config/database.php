@@ -1,5 +1,6 @@
 <?php
-
+ini_set('display_errors', '0');
+mysqli_report(MYSQLI_REPORT_ERROR | MYSQLI_REPORT_STRICT);
 // Cho phép CORS khi FE và BE gọi chéo nhau hoặc khác port
 $origin = $_SERVER['HTTP_ORIGIN'] ?? '';
 if ($origin) {

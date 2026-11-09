@@ -11,6 +11,7 @@ if (session_status() === PHP_SESSION_NONE) {
     <title>Website Bán Hàng</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="assets/css/style.css?v=121">
+    <link rel="stylesheet" href="assets/css/mobile.css?v=1">
     <script src="assets/js/api.js?v=3" defer></script>
     <script src="assets/js/notify.js?v=2" defer></script>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">

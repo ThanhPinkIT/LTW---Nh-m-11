@@ -1,0 +1,82 @@
+/* =====================================================
+   MOBILE.CSS - giao diện điện thoại / máy tính bảng
+   Nạp SAU style.css (xem includes/header.php)
+   ===================================================== */
+
+/* Chống tràn ngang trên điện thoại */
+body { overflow-x: hidden; }
+
+/* ---------- Máy tính bảng & nhỏ hơn (< 992px) ---------- */
+@media (max-width: 991.98px) {
+    /* Ô tìm kiếm trong menu thu gọn: chiếm hết chiều ngang */
+    .header-search { max-width: 100%; }
+    .custom-navbar .navbar-collapse { padding: 8px 0 12px; }
+}
+
+/* ---------- Điện thoại (< 768px) ---------- */
+@media (max-width: 767.98px) {
+
+    .container { padding-left: 12px; padding-right: 12px; }
+
+    /* Chữ trong ô nhập 16px để iPhone không tự phóng to khi bấm vào */
+    input, select, textarea { font-size: 16px !important; }
+
+    /* ----- Trang chủ: lưới sản phẩm 2 cột ----- */
+    /* minmax(0,1fr): cột không bị nội dung dài làm phình, các cột luôn bằng nhau */
+    .product-store-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+        gap: 10px !important;
+        margin-top: 12px;
+        margin-bottom: 16px;
+    }
+    .product-store-card { min-width: 0; }
+    .product-thumb-wrap { height: 140px; padding: 8px; }
+    .product-card-body { padding: 10px; }
+    .product-card-title { font-size: 13px; }
+    .price-current { font-size: 14px; }
+    .price-original { font-size: 11px; }
+    .product-price-wrap { flex-wrap: wrap; gap: 2px 6px; margin-bottom: 10px; }
+    .btn-add-cart { padding: 10px 0; }
+    .badge-discount, .badge-hot { font-size: 11px; }
+
+    /* ----- 4 ô phân loại dưới banner (2x2) ----- */
+    .deal-feature-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 10px;
+        margin-top: 12px;
+        margin-bottom: 16px;
+    }
+    .deal-feature-card { height: 54px; }
+    .deal-feature-title { font-size: 13px; text-align: center; padding: 0 6px; }
+
+    /* ----- Giỏ hàng, thanh toán: bảng cuộn ngang thay vì vỡ khung ----- */
+    .cart-table,
+    .checkout-page .table {
+        display: block;
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+    }
+    .cart-table td, .cart-table th { padding: 6px 8px; font-size: 13px; }
+    .cart-action-bar { flex-wrap: wrap; gap: 8px; }
+    .cart-action-bar .btn { flex: 1 1 auto; }
+
+    /* ----- Thông báo nổi (toast) không tràn màn hình ----- */
+    .nt-toasts { left: 12px; right: 12px; top: 70px; width: auto; max-width: none; }
+
+    /* ----- Footer ----- */
+    .footer-col-title { font-size: 1.05rem; }
+    .footer-col-text, .footer-links-list li { font-size: 14px; }
+
+    /* ----- Trang đăng nhập / đăng ký ----- */
+    .register-page .register-field label,
+    .login-page .login-field label { font-size: 16px; }
+    .register-page .register-field input,
+    .login-page .login-field input { height: 44px; }
+    .register-page .register-btn,
+    .login-page .login-btn { height: 44px; min-width: 130px; font-size: 14px; }
+}
+
+/* ---------- Điện thoại rất nhỏ (< 360px): 1 cột ---------- */
+@media (max-width: 359.98px) {
+    .product-store-grid { grid-template-columns: minmax(0, 1fr) !important; }
+}

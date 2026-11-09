@@ -129,7 +129,7 @@ body:has(.register-page) {
 }
 
 body:has(.register-page) .register-page {
-    flex: 1;
+    flex: 1 0 auto;
 }
 
 body:has(.register-page) footer {
