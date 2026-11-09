@@ -24,7 +24,7 @@ if(isset($_FILES['image'])){
     );
 
     // copy thêm sang FRONTEND/uploads
-    $fe = __DIR__."/../../../FRONTEND/uploads/";
+    $fe = __DIR__."/../../../uploads/";
     if(is_dir($fe)){
         @copy("../../uploads/".$image, $fe.$image);
     }

@@ -4,7 +4,7 @@
 // ===== Đồng bộ ảnh sang FRONTEND/uploads (khỏi phải copy tay) =====
 function thu_muc_anh_fe()
 {
-    $dir = __DIR__ . "/../../FRONTEND/uploads/";
+    $dir = __DIR__ . "/../../uploads/";
     if (!is_dir($dir)) {
         @mkdir($dir, 0777, true);
     }
@@ -25,7 +25,7 @@ function copy_anh_sang_fe($filename)
 function xoa_anh_fe($filename)
 {
     if ($filename == "") return;
-    $f = __DIR__ . "/../../FRONTEND/uploads/" . $filename;
+    $f = __DIR__ . "/../../uploads/" . $filename;
     if (file_exists($f)) {
         @unlink($f);
     }

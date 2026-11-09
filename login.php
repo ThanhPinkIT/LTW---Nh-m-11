@@ -64,7 +64,7 @@ document.getElementById('loginForm').addEventListener('submit', async function(e
 
         setTimeout(() => {
             if (res.data.role === 'admin') {
-                window.location.href = '../BACKEND/admin/index.php';
+                window.location.href = 'BACKEND/admin/index.php';
             } else {
                 window.location.href = 'index.php';
             }

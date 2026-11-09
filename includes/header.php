@@ -64,7 +64,7 @@ if (session_status() === PHP_SESSION_NONE) {
                 <?php if(isset($_SESSION['user_id'])): ?>
                     <?php if($_SESSION['role'] === 'admin'): ?>
                         <li class="nav-item">
-                            <a class="nav-link text-info" href="../BACKEND/admin/index.php"> ⚙️ Quản trị </a>
+                            <a class="nav-link text-info" href="BACKEND/admin/index.php"> ⚙️ Quản trị </a>
                         </li>
                     <?php endif; ?>
                     <li class="nav-item dropdown">

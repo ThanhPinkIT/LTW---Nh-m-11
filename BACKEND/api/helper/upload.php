@@ -20,7 +20,7 @@ function uploadImage($file,$folder="../../uploads/")
     )){
 
         // copy thêm sang FRONTEND/uploads
-        $fe = __DIR__."/../../../FRONTEND/uploads/";
+        $fe = __DIR__."/../../../uploads/";
         if(is_dir($fe)){
             @copy($folder.$filename, $fe.$filename);
         }
@@ -44,7 +44,7 @@ function deleteImage($image,$folder="../../uploads/")
 
     }
 
-    $fe = __DIR__."/../../../FRONTEND/uploads/".$image;
+    $fe = __DIR__."/../../../uploads/".$image;
     if($image!="" && file_exists($fe)){
         unlink($fe);
     }

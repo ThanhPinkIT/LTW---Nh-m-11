@@ -6,7 +6,7 @@ const API_BASE_URL = (() => {
     const currentScriptSrc = scriptEl?.src || '';
     if (currentScriptSrc) {
         const url = new URL(currentScriptSrc, window.location.origin);
-        return url.pathname.replace(/\/FRONTEND\/assets\/js\/api\.js(\?.*)?$/i, '/BACKEND/api');
+        return url.pathname.replace(/\/assets\/js\/api\.js(\?.*)?$/i, '/BACKEND/api');
     }
     return '/BACKEND/api';
 })();

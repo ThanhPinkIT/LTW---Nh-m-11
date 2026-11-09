@@ -6,13 +6,13 @@ require_once "../config/db.php";
 
 // Kiểm tra đăng nhập
 if (!isset($_SESSION['user_id'])) {
-    header("Location: ../../FRONTEND/login.php");
+    header("Location: ../../login.php");
     exit();
 }
 
 // Kiểm tra quyền Admin
 if ($_SESSION['role'] != 'admin') {
-    header("Location: ../../FRONTEND/index.php");
+    header("Location: ../../index.php");
     exit();
 }
 
@@ -75,7 +75,7 @@ $fullname = $admin['fullname'] ?? $_SESSION['username'];
 </aside>
 <div class="admin-workspace">
     <header class="admin-topbar">
-        <a class="website-button" href="../../FRONTEND/index.php">Xem Website</a>
+        <a class="website-button" href="../../index.php">Xem Website</a>
         <div class="topbar-account dropdown">
             <button class="account-button" type="button" data-bs-toggle="dropdown" aria-expanded="false">
                 <span class="admin-avatar admin-avatar--small" aria-hidden="true">A</span>
@@ -83,8 +83,8 @@ $fullname = $admin['fullname'] ?? $_SESSION['username'];
                 <span class="account-caret" aria-hidden="true">⌄</span>
             </button>
             <ul class="dropdown-menu dropdown-menu-end">
-                <li><a class="dropdown-item" href="../../FRONTEND/profile.php">Hồ sơ</a></li>
-                <li><a class="dropdown-item" href="../../FRONTEND/index.php">Website</a></li>
+                <li><a class="dropdown-item" href="../../profile.php">Hồ sơ</a></li>
+                <li><a class="dropdown-item" href="../../index.php">Website</a></li>
                 <li><hr class="dropdown-divider"></li>
                 <li><a class="dropdown-item text-danger" href="../logout.php">Đăng xuất</a></li>
             </ul>
