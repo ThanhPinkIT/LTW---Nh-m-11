@@ -71,10 +71,15 @@
     align-items: center !important;
     justify-content: center !important;
     cursor: pointer !important;
-    z-index: 999999 !important;
+    z-index: 2147483647 !important;
     border: 3px solid #ffffff !important;
     padding: 0 !important;
     outline: none !important;
+    pointer-events: auto !important;
+    touch-action: manipulation !important;
+    -webkit-tap-highlight-color: transparent !important;
+    transform: translateZ(0) !important;
+    will-change: transform !important;
 }
 #chatbotWindow {
     position: fixed !important;
@@ -90,15 +95,16 @@
     display: none;
     flex-direction: column !important;
     overflow: hidden !important;
-    z-index: 999998 !important;
+    z-index: 2147483646 !important;
     border: 1px solid rgba(0,0,0,0.08) !important;
+    pointer-events: auto !important;
 }
 #chatbotWindow.is-open {
     display: flex !important;
 }
 </style>
 
-<link rel="stylesheet" href="assets/css/chatbot.css?v=20261110_105">
+<link rel="stylesheet" href="assets/css/chatbot.css?v=20261110_200">
 
 <!-- Nút Chatbot nổi -->
 <button id="chatbotLauncher" class="chatbot-launcher" type="button" aria-label="Mở Tech Assistant Chatbot">
@@ -188,7 +194,7 @@
     </form>
 </div>
 
-<script src="assets/js/chatbot.js?v=20261110_105" defer></script>
+<script src="assets/js/chatbot.js?v=20261110_200"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

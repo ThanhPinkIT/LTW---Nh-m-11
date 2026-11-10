@@ -18,13 +18,17 @@
     align-items: center !important;
     justify-content: center !important;
     cursor: pointer !important;
-    z-index: 999999 !important;
+    z-index: 2147483647 !important;
     border: 3px solid #ffffff !important;
     transition: all 0.28s cubic-bezier(0.4, 0, 0.2, 1) !important;
     outline: none !important;
     -webkit-tap-highlight-color: transparent !important;
     padding: 0 !important;
     margin: 0 !important;
+    pointer-events: auto !important;
+    touch-action: manipulation !important;
+    transform: translateZ(0) !important;
+    will-change: transform !important;
 }
 
 .chatbot-launcher:hover {
@@ -71,7 +75,7 @@
     display: none;
     flex-direction: column !important;
     overflow: hidden !important;
-    z-index: 999998 !important;
+    z-index: 2147483646 !important;
     animation: chatbotPopIn 0.25s cubic-bezier(0.16, 1, 0.3, 1) forwards !important;
     border: 1px solid rgba(0, 0, 0, 0.08) !important;
     margin: 0 !important;
@@ -539,7 +543,7 @@
         border-radius: 0 !important;
         margin: 0 !important;
         border: none !important;
-        z-index: 9999999 !important;
+        z-index: 2147483647 !important;
     }
 
     .chatbot-header {
