@@ -29,8 +29,8 @@ $port = 3306;
 $envFile = __DIR__ . "/../../config/env.php";
 if (file_exists($envFile)) {
     require $envFile;
-    if (isset($pass)) $password = $pass;
-    if (isset($dbname)) $database = $dbname;
+    $password = $pass;
+    $database = $dbname;
 }
 
 try {

@@ -12,7 +12,6 @@ if (session_status() === PHP_SESSION_NONE) {
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="assets/css/style.css?v=122">
     <link rel="stylesheet" href="assets/css/mobile.css?v=2">
-    <link rel="stylesheet" href="assets/css/chatbot.css?v=20261110_400">
     <link rel="stylesheet" href="assets/css/widgets.css?v=10">
     <link rel="stylesheet" href="assets/css/payment-qr.css?v=1">
     <script src="assets/js/api.js?v=4" defer></script>
