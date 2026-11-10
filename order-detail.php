@@ -10,6 +10,8 @@ include 'includes/header.php';
     </div>
 </div>
 
+<script src="assets/js/vendor/qrcode.js"></script>
+<script src="assets/js/payment-qr.js?v=1"></script>
 <script>
 const formatVND = (price) => new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(price);
 const esc = (v) => String(v ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
@@ -68,8 +70,8 @@ async function loadOrder() {
             <div class="text-muted mb-3">Đặt lúc ${esc(date)}</div>
 
             <div class="row g-3">
-                <div class="col-lg-5">
-                    <div class="card shadow-sm h-100">
+                <div class="col-lg-5 order-lg-2">
+                    <div class="card shadow-sm mb-3">
                         <div class="card-header bg-danger text-white"><h5 class="mb-0">📍 Thông tin nhận hàng</h5></div>
                         <div class="card-body">
                             <dl class="order-info mb-0">
@@ -81,9 +83,14 @@ async function loadOrder() {
                             </dl>
                         </div>
                     </div>
+                    ${o.status === 'Pending' && o.payment_method !== 'COD' ? `
+                    <div class="card shadow-sm">
+                        <div class="card-header bg-success text-white"><h5 class="mb-0">📱 Thanh toán bằng QR</h5></div>
+                        <div class="card-body" id="orderQR"></div>
+                    </div>` : ''}
                 </div>
 
-                <div class="col-lg-7">
+                <div class="col-lg-7 order-lg-1">
                     <div class="card shadow-sm h-100">
                         <div class="card-header bg-dark text-white"><h5 class="mb-0">🛍️ Sản phẩm đã đặt</h5></div>
                         <div class="table-responsive">
@@ -110,6 +117,8 @@ async function loadOrder() {
             </div>
         `;
 
+        const qrBox = document.getElementById('orderQR');
+        if (qrBox) hienQRThanhToan(qrBox, o.total_money, PAYMENT_CONFIG.memoPrefix + ' DH' + o.id, 'Order');
         document.getElementById('cancelBtn')?.addEventListener('click', cancelOrder);
     } catch (err) {
         if (/unauthorized|login|đăng nhập/i.test(err.message)) {

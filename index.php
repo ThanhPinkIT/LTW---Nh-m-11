@@ -116,11 +116,16 @@ include 'includes/header.php';
         </div>
 
     </div>
+    <div class="sidebar-ad" id="sidebarAdWrap" hidden>
+        <div class="sidebar-ad-card" id="sidebarAd"></div>
+    </div>
 </div>
 
 <!-- Cột phải (9 phần) -->
         <div class="col-lg-9">
             
+            <div class="mobile-ad d-lg-none" id="mobileAd" hidden></div>
+
             <!-- 1. Banner Deal -->
             <div class="deal-banner-container">
                 <div class="deal-banner-image-wrap">
@@ -153,571 +158,8 @@ include 'includes/header.php';
             <!-- 3. LƯỚI SẢN PHẨM (CHỨA TOÀN BỘ CÁC THẺ CARD SẢN PHẨM CỦA BẠN) -->
  <!-- 1. LƯỚI SẢN PHẨM 3 CỘT (MỖI HÀNG 3 Ô, KHUNG NHỎ VỪA VẶN) -->
             <div class="product-store-grid" id="mainProductGrid">
-                
-                <!-- SP 1: iPhone 18 Pro Max -->
-                <div class="product-store-card">
-                    <div class="product-thumb-wrap">
-                        <span class="badge-discount">-16%</span>
-                        <span class="badge-hot">HOT</span>
-                        <img src="uploads/iphone18promax.jpg" alt="iPhone 18 Pro Max" class="product-thumb-img">
-                    </div>
-                    <div class="product-card-body">
-                        <div class="product-rating">
-                            <span class="rating-star">★</span>
-                            <span class="rating-score">4.9</span>
-                            <span class="rating-count">(248)</span>
-                        </div>
-                        <h4 class="product-card-title">iPhone 18 Pro Max 256GB Titan Tự Nhiên</h4>
-                        <div class="product-price-wrap">
-                            <span class="price-current">29.490.000 đ</span>
-                            <span class="price-original">34.990.000 đ</span>
-                        </div>
-                        <button type="button" class="btn-add-cart">
-                            Thêm vào giỏ
-                        </button>
-                    </div>
-                </div>
-
-                <!-- SP 2: MacBook Air M2 -->
-                <div class="product-store-card">
-                    <div class="product-thumb-wrap">
-                        <span class="badge-discount">-14%</span>
-                        <span class="badge-hot">HOT</span>
-                        <img src="uploads/macbookm3.jpg" alt="MacBook Air M2" class="product-thumb-img">
-                    </div>
-                    <div class="product-card-body">
-                        <div class="product-rating">
-                            <span class="rating-star">★</span>
-                            <span class="rating-score">4.8</span>
-                            <span class="rating-count">(132)</span>
-                        </div>
-                        <h4 class="product-card-title">Laptop MacBook Air M2 13.6 inch (8GB/256GB)</h4>
-                        <div class="product-price-wrap">
-                            <span class="price-current">23.990.000 đ</span>
-                            <span class="price-original">27.990.000 đ</span>
-                        </div>
-                        <button type="button" class="btn-add-cart">Thêm vào giỏ</button>
-                    </div>
-                </div>
-
-                <!-- SP 3: Tai nghe Sony WH-1000XM5 -->
-                <div class="product-store-card">
-                    <div class="product-thumb-wrap">
-                        <span class="badge-discount">-20%</span>
-                        <img src="uploads/Apple AirPods Max.jpg" alt="Tai nghe Sony" class="product-thumb-img">
-                    </div>
-                    <div class="product-card-body">
-                        <div class="product-rating">
-                            <span class="rating-star">★</span>
-                            <span class="rating-score">5.0</span>
-                            <span class="rating-count">(89)</span>
-                        </div>
-                        <h4 class="product-card-title">Tai nghe Chống Ồn Không Dây Cao Cấp</h4>
-                        <div class="product-price-wrap">
-                            <span class="price-current">6.790.000 đ</span>
-                            <span class="price-original">8.490.000 đ</span>
-                        </div>
-                        <button type="button" class="btn-add-cart">Thêm vào giỏ</button>
-                    </div>
-                </div>
-
-                <!-- SP 4: Apple Watch 10 -->
-                <div class="product-store-card">
-                    <div class="product-thumb-wrap">
-                        <span class="badge-discount">-15%</span>
-                        <img src="uploads/applewatch10.jpg" alt="Apple Watch Series 10" class="product-thumb-img">
-                    </div>
-                    <div class="product-card-body">
-                        <div class="product-rating">
-                            <span class="rating-star">★</span>
-                            <span class="rating-score">4.7</span>
-                            <span class="rating-count">(110)</span>
-                        </div>
-                        <h4 class="product-card-title">Đồng hồ thông minh Apple Watch Series 10</h4>
-                        <div class="product-price-wrap">
-                            <span class="price-current">9.490.000 đ</span>
-                            <span class="price-original">11.290.000 đ</span>
-                        </div>
-                        <button type="button" class="btn-add-cart">Thêm vào giỏ</button>
-                    </div>
-                </div>
-
-                <!-- SP 5: AirPods Pro 2 -->
-                <div class="product-store-card">
-                    <div class="product-thumb-wrap">
-                        <span class="badge-discount">-12%</span>
-                        <span class="badge-hot">HOT</span>
-                        <img src="uploads/airpodspro2.jpg" alt="AirPods Pro 2" class="product-thumb-img">
-                    </div>
-                    <div class="product-card-body">
-                        <div class="product-rating">
-                            <span class="rating-star">★</span>
-                            <span class="rating-score">4.9</span>
-                            <span class="rating-count">(312)</span>
-                        </div>
-                        <h4 class="product-card-title">Tai nghe Apple AirPods Pro 2 MagSafe USB-C</h4>
-                        <div class="product-price-wrap">
-                            <span class="price-current">5.490.000 đ</span>
-                            <span class="price-original">6.290.000 đ</span>
-                        </div>
-                        <button type="button" class="btn-add-cart">Thêm vào giỏ</button>
-                    </div>
-                </div>
-
-                <!-- SP 6: Cáp Cuktech -->
-                <div class="product-store-card">
-                    <div class="product-thumb-wrap">
-                        <span class="badge-discount">-28%</span>
-                        <span class="badge-hot">HOT</span>
-                        <img src="uploads/Cáp Cuktech Type-C to Lightning dài 1m AL870.jpg" alt="Cáp Cuktech" class="product-thumb-img">
-                    </div>
-                    <div class="product-card-body">
-                        <div class="product-rating">
-                            <span class="rating-star">★</span>
-                            <span class="rating-score">4.8</span>
-                            <span class="rating-count">(420)</span>
-                        </div>
-                        <h4 class="product-card-title">Cáp sạc nhanh Type-C to Lightning AL870</h4>
-                        <div class="product-price-wrap">
-                            <span class="price-current">180.000 đ</span>
-                            <span class="price-original">250.000 đ</span>
-                        </div>
-                        <button type="button" class="btn-add-cart">Thêm vào giỏ</button>
-                    </div>
-                </div>
-
-                <!-- SP 7: Samsung S25 Ultra (Sang trang 2) -->
-                <div class="product-store-card">
-                    <div class="product-thumb-wrap">
-                        <span class="badge-discount">-18%</span>
-                        <span class="badge-hot">HOT</span>
-                        <img src="uploads/s25ultra.jpg" alt="Samsung S25 Ultra" class="product-thumb-img">
-                    </div>
-                    <div class="product-card-body">
-                        <div class="product-rating">
-                            <span class="rating-star">★</span>
-                            <span class="rating-score">4.9</span>
-                            <span class="rating-count">(190)</span>
-                        </div>
-                        <h4 class="product-card-title">Samsung Galaxy S25 Ultra 5G AI Phone</h4>
-                        <div class="product-price-wrap">
-                            <span class="price-current">28.500.000 đ</span>
-                            <span class="price-original">33.990.000 đ</span>
-                        </div>
-                        <button type="button" class="btn-add-cart">Thêm vào giỏ</button>
-                    </div>
-                </div>
-
-                <!-- SP 8: Dell UltraSharp 27 (Sang trang 2) -->
-                <div class="product-store-card">
-                    <div class="product-thumb-wrap">
-                        <span class="badge-discount">-10%</span>
-                        <img src="uploads/dellultrasharp.jpg" alt="Dell UltraSharp" class="product-thumb-img">
-                    </div>
-                    <div class="product-card-body">
-                        <div class="product-rating">
-                            <span class="rating-star">★</span>
-                            <span class="rating-score">4.9</span>
-                            <span class="rating-count">(142)</span>
-                        </div>
-                        <h4 class="product-card-title">Màn hình Dell UltraSharp 27 inch 4K</h4>
-                        <div class="product-price-wrap">
-                            <span class="price-current">11.890.000 đ</span>
-                            <span class="price-original">13.200.000 đ</span>
-                        </div>
-                        <button type="button" class="btn-add-cart">Thêm vào giỏ</button>
-                    </div>
-                </div>
-
-                <!-- SP 9: Chuột Logitech G Pro X (Sang trang 2) -->
-                <div class="product-store-card">
-                    <div class="product-thumb-wrap">
-                        <span class="badge-discount">-22%</span>
-                        <span class="badge-hot">HOT</span>
-                        <img src="uploads/logitechgprox.jpg" alt="Logitech G Pro X" class="product-thumb-img">
-                    </div>
-                    <div class="product-card-body">
-                        <div class="product-rating">
-                            <span class="rating-star">★</span>
-                            <span class="rating-score">5.0</span>
-                            <span class="rating-count">(215)</span>
-                        </div>
-                        <h4 class="product-card-title">Chuột Không Dây Logitech G Pro X Superlight</h4>
-                        <div class="product-price-wrap">
-                            <span class="price-current">2.390.000 đ</span>
-                            <span class="price-original">3.090.000 đ</span>
-                        </div>
-                        <button type="button" class="btn-add-cart">Thêm vào giỏ</button>
-                    </div>
-                </div>
-
-                <!-- SP 10: Pin sạc dự phòng Ugreen (Sang trang 2) -->
-                <div class="product-store-card">
-                    <div class="product-thumb-wrap">
-                        <span class="badge-discount">-20%</span>
-                        <img src="uploads/Pin sạc dự phòng Magsafe Ugreen MagFlow 65958 10000mAh 25W.jpg" alt="Pin sạc dự phòng Ugreen" class="product-thumb-img">
-                    </div>
-                    <div class="product-card-body">
-                        <div class="product-rating">
-                            <span class="rating-star">★</span>
-                            <span class="rating-score">4.9</span>
-                            <span class="rating-count">(77)</span>
-                        </div>
-                        <h4 class="product-card-title">Pin sạc dự phòng MagSafe Ugreen 10000mAh</h4>
-                        <div class="product-price-wrap">
-                            <span class="price-current">790.000 đ</span>
-                            <span class="price-original">990.000 đ</span>
-                        </div>
-                        <button type="button" class="btn-add-cart">Thêm vào giỏ</button>
-                    </div>
-                </div>
-
-                <!-- SP 11: iPad Air M3 (Sang trang 2) -->
-                <div class="product-store-card">
-                    <div class="product-thumb-wrap">
-                        <span class="badge-discount">-13%</span>
-                        <span class="badge-hot">HOT</span>
-                        <img src="uploads/ipadairm3.jpg" alt="iPad Air M3" class="product-thumb-img">
-                    </div>
-                    <div class="product-card-body">
-                        <div class="product-rating">
-                            <span class="rating-star">★</span>
-                            <span class="rating-score">4.9</span>
-                            <span class="rating-count">(112)</span>
-                        </div>
-                        <h4 class="product-card-title">Máy tính bảng Apple iPad Air Chip M3</h4>
-                        <div class="product-price-wrap">
-                            <span class="price-current">15.990.000 đ</span>
-                            <span class="price-original">18.400.000 đ</span>
-                        </div>
-                        <button type="button" class="btn-add-cart">Thêm vào giỏ</button>
-                    </div>
-                </div>
-
-                <!-- SP 12: Loa JBL Charge 6 (Sang trang 2) -->
-                <div class="product-store-card">
-                    <div class="product-thumb-wrap">
-                        <span class="badge-discount">-12%</span>
-                        <span class="badge-hot">HOT</span>
-                        <img src="uploads/Loa Bluetooth JBL Charge 6.jpg" alt="Loa JBL Charge 6" class="product-thumb-img">
-                    </div>
-                    <div class="product-card-body">
-                        <div class="product-rating">
-                            <span class="rating-star">★</span>
-                            <span class="rating-score">4.7</span>
-                            <span class="rating-count">(64)</span>
-                        </div>
-                        <h4 class="product-card-title">Loa Bluetooth JBL Charge 6 Chống Nước</h4>
-                        <div class="product-price-wrap">
-                            <span class="price-current">3.490.000 đ</span>
-                            <span class="price-original">3.990.000 đ</span>
-                        </div>
-                        <button type="button" class="btn-add-cart">Thêm vào giỏ</button>
-                    </div>
-                </div>
-                <!-- 13. Apple AirPods Max Hồng -->
-                <div class="product-store-card">
-                    <div class="product-thumb-wrap">
-                        <span class="badge-discount">-15%</span>
-                        <img src="uploads/Apple AirPods Max hồng.jpg" alt="AirPods Max Hồng" class="product-thumb-img">
-                    </div>
-                    <div class="product-card-body">
-                        <div class="product-rating">
-                            <i class="bi bi-star-fill text-warning"></i>
-                            <span class="rating-score">5.0</span>
-                            <span class="rating-count">(89)</span>
-                        </div>
-                        <h4 class="product-card-title">Tai nghe chụp tai Apple AirPods Max Hồng</h4>
-                        <div class="product-price-wrap">
-                            <span class="price-current">12.490.000 đ</span>
-                            <span class="price-original">13.990.000 đ</span>
-                        </div>
-                        <button type="button" class="btn-add-cart">
-                            <i class="bi bi-cart-plus"></i> Thêm vào giỏ
-                        </button>
-                    </div>
-                </div>
-
-                <!-- 14. Apple AirPods Max -->
-                <div class="product-store-card">
-                    <div class="product-thumb-wrap">
-                        <span class="badge-discount">-12%</span>
-                        <img src="uploads/Apple AirPods Max.jpg" alt="Apple AirPods Max" class="product-thumb-img">
-                    </div>
-                    <div class="product-card-body">
-                        <div class="product-rating">
-                            <i class="bi bi-star-fill text-warning"></i>
-                            <span class="rating-score">4.9</span>
-                            <span class="rating-count">(104)</span>
-                        </div>
-                        <h4 class="product-card-title">Tai nghe không dây Apple AirPods Max</h4>
-                        <div class="product-price-wrap">
-                            <span class="price-current">12.290.000 đ</span>
-                            <span class="price-original">13.990.000 đ</span>
-                        </div>
-                        <button type="button" class="btn-add-cart">
-                            <i class="bi bi-cart-plus"></i> Thêm vào giỏ
-                        </button>
-                    </div>
-                </div>
-
-                <!-- 15. Loa Bluetooth JBL Charge 6 -->
-                <div class="product-store-card">
-                    <div class="product-thumb-wrap">
-                        <span class="badge-discount">-12%</span>
-                        <span class="badge-hot"><i class="bi bi-fire"></i> HOT</span>
-                        <img src="uploads/Loa Bluetooth JBL Charge 6.jpg" alt="Loa JBL Charge 6" class="product-thumb-img">
-                    </div>
-                    <div class="product-card-body">
-                        <div class="product-rating">
-                            <i class="bi bi-star-fill text-warning"></i>
-                            <span class="rating-score">4.7</span>
-                            <span class="rating-count">(64)</span>
-                        </div>
-                        <h4 class="product-card-title">Loa Bluetooth JBL Charge 6 Chống Nước IP67</h4>
-                        <div class="product-price-wrap">
-                            <span class="price-current">3.490.000 đ</span>
-                            <span class="price-original">3.990.000 đ</span>
-                        </div>
-                        <button type="button" class="btn-add-cart">
-                            <i class="bi bi-cart-plus"></i> Thêm vào giỏ
-                        </button>
-                    </div>
-                </div>
-
-                <!-- 16. Loa Bluetooth Edifier QD35 -->
-                <div class="product-store-card">
-                    <div class="product-thumb-wrap">
-                        <span class="badge-discount">-17%</span>
-                        <img src="uploads/Loa Bluetooth Edifier QD35.jpg" alt="Edifier QD35" class="product-thumb-img">
-                    </div>
-                    <div class="product-card-body">
-                        <div class="product-rating">
-                            <i class="bi bi-star-fill text-warning"></i>
-                            <span class="rating-score">4.8</span>
-                            <span class="rating-count">(45)</span>
-                        </div>
-                        <h4 class="product-card-title">Loa Bluetooth Edifier QD35 Đèn LED RGB</h4>
-                        <div class="product-price-wrap">
-                            <span class="price-current">2.890.000 đ</span>
-                            <span class="price-original">3.490.000 đ</span>
-                        </div>
-                        <button type="button" class="btn-add-cart">
-                            <i class="bi bi-cart-plus"></i> Thêm vào giỏ
-                        </button>
-                    </div>
-                </div>
-
-                <!-- 17. Loa KEF LSX II LT - White -->
-                <div class="product-store-card">
-                    <div class="product-thumb-wrap">
-                        <span class="badge-discount">-8%</span>
-                        <img src="uploads/Loa KEF LSX II LT - White.jpg" alt="KEF LSX II LT White" class="product-thumb-img">
-                    </div>
-                    <div class="product-card-body">
-                        <div class="product-rating">
-                            <i class="bi bi-star-fill text-warning"></i>
-                            <span class="rating-score">5.0</span>
-                            <span class="rating-count">(32)</span>
-                        </div>
-                        <h4 class="product-card-title">Bộ Loa KEF LSX II LT - White Hi-Fi Cao Cấp</h4>
-                        <div class="product-price-wrap">
-                            <span class="price-current">22.490.000 đ</span>
-                            <span class="price-original">24.500.000 đ</span>
-                        </div>
-                        <button type="button" class="btn-add-cart">
-                            <i class="bi bi-cart-plus"></i> Thêm vào giỏ
-                        </button>
-                    </div>
-                </div>
-
-                <!-- 18. Apple Watch Series 10 -->
-                <div class="product-store-card">
-                    <div class="product-thumb-wrap">
-                        <span class="badge-discount">-15%</span>
-                        <img src="uploads/applewatch10.jpg" alt="Apple Watch 10" class="product-thumb-img">
-                    </div>
-                    <div class="product-card-body">
-                        <div class="product-rating">
-                            <i class="bi bi-star-fill text-warning"></i>
-                            <span class="rating-score">4.9</span>
-                            <span class="rating-count">(95)</span>
-                        </div>
-                        <h4 class="product-card-title">Đồng hồ thông minh Apple Watch Series 10</h4>
-                        <div class="product-price-wrap">
-                            <span class="price-current">10.790.000 đ</span>
-                            <span class="price-original">11.990.000 đ</span>
-                        </div>
-                        <button type="button" class="btn-add-cart">
-                            <i class="bi bi-cart-plus"></i> Thêm vào giỏ
-                        </button>
-                    </div>
-                </div>
-
-                <!-- 19. REDMI Watch 6 -->
-                <div class="product-store-card">
-                    <div class="product-thumb-wrap">
-                        <span class="badge-discount">-25%</span>
-                        <img src="uploads/REDMI Watch 6.jpg" alt="REDMI Watch 6" class="product-thumb-img">
-                    </div>
-                    <div class="product-card-body">
-                        <div class="product-rating">
-                            <i class="bi bi-star-fill text-warning"></i>
-                            <span class="rating-score">4.6</span>
-                            <span class="rating-count">(81)</span>
-                        </div>
-                        <h4 class="product-card-title">Đồng hồ thông minh Xiaomi REDMI Watch 6</h4>
-                        <div class="product-price-wrap">
-                            <span class="price-current">1.490.000 đ</span>
-                            <span class="price-original">1.990.000 đ</span>
-                        </div>
-                        <button type="button" class="btn-add-cart">
-                            <i class="bi bi-cart-plus"></i> Thêm vào giỏ
-                        </button>
-                    </div>
-                </div>
-
-                <!-- 20. Màn hình Dell UltraSharp -->
-                <div class="product-store-card">
-                    <div class="product-thumb-wrap">
-                        <span class="badge-discount">-10%</span>
-                        <img src="uploads/dellultrasharp.jpg" alt="Dell UltraSharp" class="product-thumb-img">
-                    </div>
-                    <div class="product-card-body">
-                        <div class="product-rating">
-                            <i class="bi bi-star-fill text-warning"></i>
-                            <span class="rating-score">4.9</span>
-                            <span class="rating-count">(142)</span>
-                        </div>
-                        <h4 class="product-card-title">Màn hình Dell UltraSharp 27 inch 4K Chuyên Đồ Họa</h4>
-                        <div class="product-price-wrap">
-                            <span class="price-current">11.890.000 đ</span>
-                            <span class="price-original">13.200.000 đ</span>
-                        </div>
-                        <button type="button" class="btn-add-cart">
-                            <i class="bi bi-cart-plus"></i> Thêm vào giỏ
-                        </button>
-                    </div>
-                </div>
-
-                <!-- 21. Màn hình LG UltraGear -->
-                <div class="product-store-card">
-                    <div class="product-thumb-wrap">
-                        <span class="badge-discount">-16%</span>
-                        <img src="uploads/lgultragear.jpg" alt="LG UltraGear" class="product-thumb-img">
-                    </div>
-                    <div class="product-card-body">
-                        <div class="product-rating">
-                            <i class="bi bi-star-fill text-warning"></i>
-                            <span class="rating-score">4.8</span>
-                            <span class="rating-count">(99)</span>
-                        </div>
-                        <h4 class="product-card-title">Màn hình LG UltraGear Gaming 144Hz 1ms</h4>
-                        <div class="product-price-wrap">
-                            <span class="price-current">5.490.000 đ</span>
-                            <span class="price-original">6.500.000 đ</span>
-                        </div>
-                        <button type="button" class="btn-add-cart">
-                            <i class="bi bi-cart-plus"></i> Thêm vào giỏ
-                        </button>
-                    </div>
-                </div>
-
-                <!-- 22. Chuột Logitech G Pro X Superlight -->
-                <div class="product-store-card">
-                    <div class="product-thumb-wrap">
-                        <span class="badge-discount">-22%</span>
-                        <span class="badge-hot"><i class="bi bi-fire"></i> HOT</span>
-                        <img src="uploads/logitechgprox.jpg" alt="Logitech G Pro X" class="product-thumb-img">
-                    </div>
-                    <div class="product-card-body">
-                        <div class="product-rating">
-                            <i class="bi bi-star-fill text-warning"></i>
-                            <span class="rating-score">5.0</span>
-                            <span class="rating-count">(215)</span>
-                        </div>
-                        <h4 class="product-card-title">Chuột Không Dây Logitech G Pro X Superlight</h4>
-                        <div class="product-price-wrap">
-                            <span class="price-current">2.390.000 đ</span>
-                            <span class="price-original">3.090.000 đ</span>
-                        </div>
-                        <button type="button" class="btn-add-cart">
-                            <i class="bi bi-cart-plus"></i> Thêm vào giỏ
-                        </button>
-                    </div>
-                </div>
-
-                <!-- 23. Chuột Logitech G304 -->
-                <div class="product-store-card">
-                    <div class="product-thumb-wrap">
-                        <span class="badge-discount">-30%</span>
-                        <img src="uploads/g304.jpg" alt="Logitech G304" class="product-thumb-img">
-                    </div>
-                    <div class="product-card-body">
-                        <div class="product-rating">
-                            <i class="bi bi-star-fill text-warning"></i>
-                            <span class="rating-score">4.7</span>
-                            <span class="rating-count">(340)</span>
-                        </div>
-                        <h4 class="product-card-title">Chuột Không Dây Logitech G304 Lightspeed</h4>
-                        <div class="product-price-wrap">
-                            <span class="price-current">690.000 đ</span>
-                            <span class="price-original">990.000 đ</span>
-                        </div>
-                        <button type="button" class="btn-add-cart">
-                            <i class="bi bi-cart-plus"></i> Thêm vào giỏ
-                        </button>
-                    </div>
-                </div>
-
-                <!-- 24. Pin sạc dự phòng Ugreen MagFlow 10000mAh -->
-                <div class="product-store-card">
-                    <div class="product-thumb-wrap">
-                        <span class="badge-discount">-20%</span>
-                        <img src="uploads/Pin sạc dự phòng Magsafe Ugreen MagFlow 65958 10000mAh 25W.jpg" alt="Pin sạc dự phòng Ugreen" class="product-thumb-img">
-                    </div>
-                    <div class="product-card-body">
-                        <div class="product-rating">
-                            <i class="bi bi-star-fill text-warning"></i>
-                            <span class="rating-score">4.9</span>
-                            <span class="rating-count">(77)</span>
-                        </div>
-                        <h4 class="product-card-title">Pin sạc dự phòng MagSafe Ugreen MagFlow 10000mAh 25W</h4>
-                        <div class="product-price-wrap">
-                            <span class="price-current">790.000 đ</span>
-                            <span class="price-original">990.000 đ</span>
-                        </div>
-                        <button type="button" class="btn-add-cart">
-                            <i class="bi bi-cart-plus"></i> Thêm vào giỏ
-                        </button>
-                    </div>
-                </div>
-
-                <!-- 25. Cáp sạc Cuktech Type-C to Lightning -->
-                <div class="product-store-card">
-                    <div class="product-thumb-wrap">
-                        <span class="badge-discount">-28%</span>
-                        <span class="badge-hot"><i class="bi bi-fire"></i> HOT</span>
-                        <img src="uploads/Cáp Cuktech Type-C to Lightning dài 1m AL870.jpg" alt="Cáp sạc Cuktech" class="product-thumb-img">
-                    </div>
-                    <div class="product-card-body">
-                        <div class="product-rating">
-                            <i class="bi bi-star-fill text-warning"></i>
-                            <span class="rating-score">4.9</span>
-                            <span class="rating-count">(118)</span>
-                        </div>
-                        <h4 class="product-card-title">Cáp Cuktech Type-C to Lightning Dài 1m AL870</h4>
-                        <div class="product-price-wrap">
-                            <span class="price-current">180.000 đ</span>
-                            <span class="price-original">250.000 đ</span>
-                        </div>
-                        <button type="button" class="btn-add-cart">
-                            <i class="bi bi-cart-plus"></i> Thêm vào giỏ
-                        </button>
-                    </div>
-
-            </div> <!-- Đóng product-store-card (thẻ cuối) -->
-        </div> <!-- Đóng product-store-grid -->
+                <div class="text-center py-5" style="grid-column: 1 / -1;"><div class="spinner-border text-danger" role="status"></div></div>
+            </div>
 
             <!-- Thanh phân trang (chỉ 1 thanh, nằm NGOÀI lưới sản phẩm để luôn căn giữa) -->
             <div class="store-pagination">
@@ -939,8 +381,8 @@ function filterTab(type) {
         // Lấy sản phẩm có nhãn giảm giá (%)
         matched = cards.filter(c => c.querySelector('.badge-discount') !== null);
     } else if (type === 'new') {
-        // Lấy 6 sản phẩm ở đầu
-        matched = cards.slice(0, 6);
+        // Lấy 6 sản phẩm mới nhất (id lớn nhất)
+        matched = cards.slice(-6);
     }
 
     // Nếu không khớp, lấy tạm 6 sản phẩm để không bị trống trang
@@ -952,83 +394,203 @@ function filterTab(type) {
     matched.forEach(card => card.style.setProperty('display', 'flex', 'important'));
 }
 // Khởi chạy khi tải trang
-document.addEventListener('DOMContentLoaded', updatePagination);
 //document.addEventListener('DOMContentLoaded', loadProducts);
 </script>
 
 <script>
-// Gắn từng thẻ sản phẩm với sản phẩm thật trong database:
-// so khớp theo tên file ảnh + giá, rồi theo ảnh, rồi theo tên
-const chuan = s => String(s || '').normalize('NFC').trim().toLowerCase();
-const tenAnh = s => {
-    let f = String(s || '').split(',')[0].trim().split('/').pop();
+const escHtml = (t) => String(t ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const tenFileAnh = (path) => {
+    let f = String(path || '').split(',')[0].trim().split('/').pop();
     try { f = decodeURIComponent(f); } catch (e) {}
-    return chuan(f);
+    return f;
 };
-const soTien = s => Number(String(s).replace(/[^\d]/g, ''));
+const ANH_TRONG = 'https://placehold.co/400x400/eeeeee/999999?text=No+Image';
 
-document.addEventListener('DOMContentLoaded', async () => {
-    const cards = document.querySelectorAll('.product-store-card');
+function veTheSanPham(p) {
+    const gia = Number(p.price) || 0;
+    const giaGoc = Number(p.original_price) || 0;
+    const giam = giaGoc > gia ? Math.round((1 - gia / giaGoc) * 100) : 0;
+    const diem = Number(p.display_rating) || 0;
+    const luot = Number(p.display_review_count) || 0;
+    const hot = luot >= 100;
+    const file = tenFileAnh(p.image);
+    const anh = file ? 'uploads/' + encodeURIComponent(file) : ANH_TRONG;
+    const link = 'product-detail.php?id=' + encodeURIComponent(p.id);
 
+    return `
+    <div class="product-store-card" data-product-id="${escHtml(p.id)}">
+        <div class="product-thumb-wrap">
+            ${giam > 0 ? `<span class="badge-discount">-${giam}%</span>` : ''}
+            ${hot ? '<span class="badge-hot"><i class="bi bi-fire"></i> HOT</span>' : ''}
+            <a href="${link}" class="product-link"><img src="${anh}" alt="${escHtml(p.name)}" class="product-thumb-img" onerror="this.onerror=null;this.src='${ANH_TRONG}';"></a>
+        </div>
+        <div class="product-card-body">
+            ${diem > 0 ? `
+            <div class="product-rating">
+                <span class="rating-star">★</span>
+                <span class="rating-score">${diem.toFixed(1)}</span>
+                ${luot > 0 ? `<span class="rating-count">(${luot})</span>` : ''}
+            </div>` : ''}
+            <h4 class="product-card-title"><a href="${link}">${escHtml(p.name)}</a></h4>
+            <div class="product-price-wrap">
+                <span class="price-current">${gia.toLocaleString('vi-VN')} đ</span>
+                ${giaGoc > gia ? `<span class="price-original">${giaGoc.toLocaleString('vi-VN')} đ</span>` : ''}
+            </div>
+            <button type="button" class="btn-add-cart">Thêm vào giỏ</button>
+        </div>
+    </div>`;
+}
+
+let adTimer = null;
+const AD_EXT = ['jpg', 'png', 'webp', 'jpeg'];
+
+function adAnhLoi(img) {
+    const next = Number(img.dataset.ext) + 1;
+    if (next < AD_EXT.length) {
+        img.dataset.ext = next;
+        img.src = img.src.replace(/\.[a-z]+$/i, '.' + AD_EXT[next]);
+        return;
+    }
+    img.onerror = function () { this.onerror = null; this.src = ANH_TRONG; };
+    img.classList.add('ad-fallback');
+    img.src = img.dataset.fallback;
+}
+
+function chonSanPhamQuangCao(list) {
+    const uuTien = [/iphone/i, /macbook/i, /galaxy|samsung/i, /airpods pro/i, /ipad/i, /watch/i];
+    const chon = [];
+    uuTien.forEach(re => {
+        const sp = list.find(p => re.test(p.name) && !chon.includes(p));
+        if (sp) chon.push(sp);
+    });
+    list.slice().sort((a, b) => {
+        const g = p => Number(p.original_price) > Number(p.price) ? 1 - Number(p.price) / Number(p.original_price) : 0;
+        return g(b) - g(a);
+    }).forEach(p => { if (chon.length < 4 && !chon.includes(p)) chon.push(p); });
+    return chon.slice(0, 4);
+}
+
+function veQuangCao(list) {
+    const wrap = document.getElementById('sidebarAdWrap');
+    const box = document.getElementById('sidebarAd');
+    if (!wrap || !box) return;
+    const items = chonSanPhamQuangCao(list);
+    if (!items.length) { wrap.hidden = true; return; }
+
+    box.innerHTML = items.map((p, i) => {
+        const gia = Number(p.price) || 0;
+        const goc = Number(p.original_price) || 0;
+        const giam = goc > gia ? Math.round((1 - gia / goc) * 100) : 0;
+        const file = tenFileAnh(p.image);
+        const anh = file ? 'uploads/' + encodeURIComponent(file) : ANH_TRONG;
+        const link = 'product-detail.php?id=' + encodeURIComponent(p.id);
+        return `
+        <div class="ad-slide${i === 0 ? ' active' : ''}">
+            <a class="ad-media" href="${link}">
+                ${giam > 0 ? `<span class="ad-tag">Giảm ${giam}%</span>` : '<span class="ad-tag">Mới</span>'}
+                <img src="uploads/ads/${encodeURIComponent(p.id)}.jpg" data-ext="0" data-fallback="${anh}" alt="${escHtml(p.name)}" crossorigin="anonymous" onerror="adAnhLoi(this)">
+            </a>
+            <div class="ad-info">
+                <div class="ad-kicker">NexTech giới thiệu</div>
+                <a class="ad-name" href="${link}">${escHtml(p.name)}</a>
+                <div><span class="ad-price">${gia.toLocaleString('vi-VN')} đ</span>${goc > gia ? `<span class="ad-old">${goc.toLocaleString('vi-VN')} đ</span>` : ''}</div>
+            </div>
+            <a class="ad-btn" href="${link}">Mua ngay</a>
+        </div>`;
+    }).join('') + '<div class="ad-dots">' + items.map((_, i) => `<button type="button" aria-label="Quảng cáo ${i + 1}" class="${i === 0 ? 'active' : ''}"></button>`).join('') + '</div>';
+
+    box.querySelectorAll('.ad-media img').forEach(img => {
+        const tint = () => {
+            try {
+                const c = document.createElement('canvas');
+                c.width = c.height = 4;
+                const g = c.getContext('2d', { willReadFrequently: true });
+                g.drawImage(img, 0, 0, 4, 4);
+                const d = g.getImageData(0, 0, 1, 1).data;
+                img.parentNode.style.background = `rgb(${d[0]},${d[1]},${d[2]})`;
+            } catch (e) {}
+        };
+        if (img.complete) tint(); else img.addEventListener('load', tint);
+    });
+
+    const slides = box.querySelectorAll('.ad-slide');
+    const dots = box.querySelectorAll('.ad-dots button');
+    let cur = 0;
+    const show = (n) => {
+        cur = (n + slides.length) % slides.length;
+        slides.forEach((s, i) => s.classList.toggle('active', i === cur));
+        dots.forEach((d, i) => d.classList.toggle('active', i === cur));
+    };
+    dots.forEach((d, i) => d.addEventListener('click', () => show(i)));
+    clearInterval(adTimer);
+    if (slides.length > 1) {
+        adTimer = setInterval(() => { if (!box.matches(':hover')) show(cur + 1); }, 5000);
+    }
+    wrap.hidden = false;
+    veQuangCaoDiDong(items);
+}
+
+function veQuangCaoDiDong(items) {
+    const m = document.getElementById('mobileAd');
+    if (!m) return;
+    m.innerHTML = items.map(p => {
+        const gia = Number(p.price) || 0;
+        const goc = Number(p.original_price) || 0;
+        const giam = goc > gia ? Math.round((1 - gia / goc) * 100) : 0;
+        const file = tenFileAnh(p.image);
+        const anh = file ? 'uploads/' + encodeURIComponent(file) : ANH_TRONG;
+        const link = 'product-detail.php?id=' + encodeURIComponent(p.id);
+        return `
+        <a class="mobile-ad-item" href="${link}">
+            <span class="mobile-ad-img"><img src="${anh}" alt="${escHtml(p.name)}" loading="lazy" onerror="this.onerror=null;this.src='${ANH_TRONG}';"></span>
+            <span class="mobile-ad-info">
+                ${giam > 0 ? `<span class="mobile-ad-tag">Giảm ${giam}%</span>` : ''}
+                <span class="mobile-ad-name">${escHtml(p.name)}</span>
+                <span class="mobile-ad-price">${gia.toLocaleString('vi-VN')} đ</span>
+            </span>
+        </a>`;
+    }).join('');
+    m.hidden = false;
+}
+
+async function taiSanPhamTrangChu() {
+    const grid = document.getElementById('mainProductGrid');
     try {
-        const res = await fetchAPI('/product/index.php');
-        const dbList = (res.data || []).slice().sort((a, b) => a.id - b.id);
-        const daDung = new Set();
+        const res = await fetchAPI('/product/index.php?_=' + Date.now());
+        const list = (res.data || []).slice().sort((a, b) => a.id - b.id);
 
-        cards.forEach(card => {
-            const anh = tenAnh(card.querySelector('.product-thumb-img')?.getAttribute('src'));
-            const ten = chuan(card.querySelector('.product-card-title')?.textContent);
-            const giaEl = card.querySelector('.price-current');
-            const gia = soTien(giaEl?.textContent);
-
-            const conLai = dbList.filter(p => !daDung.has(p.id));
-            const sp = conLai.find(p => tenAnh(p.image) === anh && Number(p.price) === gia)
-                    || conLai.find(p => tenAnh(p.image) === anh)
-                    || conLai.find(p => chuan(p.name) === ten)
-                    || dbList.find(p => tenAnh(p.image) === anh);
-
-            if (!sp) {
-                console.warn('Chưa có trong database:', ten);
-                return;
-            }
-            card.dataset.productId = sp.id;
-            daDung.add(sp.id);
-
-            // bấm vào ảnh hoặc tên để xem thông số chi tiết
-            const link = 'product-detail.php?id=' + sp.id;
-            const hinh = card.querySelector('.product-thumb-img');
-            const tieuDe = card.querySelector('.product-card-title');
-            if (hinh) {
-                const a = document.createElement('a');
-                a.href = link;
-                a.className = 'product-link';
-                hinh.parentNode.insertBefore(a, hinh);
-                a.appendChild(hinh);
-            }
-            if (tieuDe) {
-                tieuDe.innerHTML = '<a href="' + link + '">' + tieuDe.innerHTML + '</a>';
-            }
-            // giá hiển thị luôn theo database để khớp với giỏ hàng
-            if (giaEl && Number(sp.price) !== gia) {
-                giaEl.textContent = Number(sp.price).toLocaleString('vi-VN') + ' đ';
-            }
-        });
+        if (!list.length) {
+            grid.innerHTML = '<div class="alert alert-warning text-center" style="grid-column: 1 / -1;">Chưa có sản phẩm nào.</div>';
+            return;
+        }
+        grid.innerHTML = list.map(veTheSanPham).join('');
+        currentPage = 1;
+        updatePagination();
+        veQuangCao(list);
     } catch (e) {
         console.error('Không tải được danh sách sản phẩm', e);
+        grid.innerHTML = '<div class="alert alert-danger text-center" style="grid-column: 1 / -1;">Lỗi tải sản phẩm: ' + escHtml(e.message) + '</div>';
     }
+}
 
-    cards.forEach(card => {
-        const button = card.querySelector('.btn-add-cart');
+document.addEventListener('DOMContentLoaded', () => {
+    taiSanPhamTrangChu();
+
+    document.getElementById('mainProductGrid').addEventListener('click', (e) => {
+        const button = e.target.closest('.btn-add-cart');
         if (!button) return;
-        button.addEventListener('click', () => {
-            const id = Number(card.dataset.productId);
-            if (!id) {
-                thongBao('Sản phẩm này hiện chưa thể đặt mua', 'warning');
-                return;
-            }
-            addToCart(id, button);
-        });
+        const card = button.closest('.product-store-card');
+        const id = Number(card?.dataset.productId);
+        if (!id) {
+            thongBao('Sản phẩm này hiện chưa thể đặt mua', 'warning');
+            return;
+        }
+        addToCart(id, button);
     });
+});
+
+window.addEventListener('pageshow', (e) => {
+    if (e.persisted) taiSanPhamTrangChu();
 });
 </script>
 

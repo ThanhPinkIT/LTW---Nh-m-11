@@ -3,6 +3,9 @@
 require_once "../config/database.php";
 require_once "../config/response.php";
 
+header("Cache-Control: no-store, no-cache, must-revalidate");
+header("Pragma: no-cache");
+
 // Xây dựng base URL động để tránh hardcode sai đường dẫn
 $scheme = (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off') ? 'https' : 'http';
 $host   = $_SERVER['HTTP_HOST'];

@@ -13,6 +13,8 @@ include 'includes/header.php';
     </div>
 </div>
 
+<script src="assets/js/vendor/qrcode.js"></script>
+<script src="assets/js/payment-qr.js?v=1"></script>
 <script>
 const formatVND = (price) => new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(price);
 const esc = (t) => String(t ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
@@ -72,6 +74,19 @@ function validateShipping(form) {
     return null;
 }
 
+let checkoutTotal = 0;
+
+function capNhatQR() {
+    const box = document.getElementById('paymentQR');
+    const method = document.querySelector('select[name="payment_method"]')?.value;
+    if (!box) return;
+    if (method === 'COD' || !checkoutTotal) {
+        box.innerHTML = '';
+        return;
+    }
+    hienQRThanhToan(box, checkoutTotal, PAYMENT_CONFIG.memoPrefix + ' THANH TOAN', 'Checkout');
+}
+
 async function loadCheckout() {
     const container = document.getElementById('checkoutContent');
     // Giữ lại phương thức thanh toán đã chọn khi vẽ lại trang (sau khi áp/gỡ mã)
@@ -113,7 +128,47 @@ async function loadCheckout() {
         
         container.innerHTML = `
             <div class="row">
-                <div class="col-md-7">
+                <div class="col-lg-5 order-lg-1 mb-4">
+                    <div class="card shadow-sm checkout-summary-card">
+                        <div class="card-header bg-dark text-white">
+                            <h4 class="mb-0"> Tóm tắt đơn hàng </h4>
+                        </div>
+                        <div class="card-body p-0">
+                            <table class="table table-striped mb-0">
+                                <thead class="table-light">
+                                    <tr>
+                                        <th>Sản phẩm</th>
+                                        <th class="text-center">SL</th>
+                                        <th class="text-end">Thành tiền</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    ${rows}
+                                </tbody>
+                                <tfoot>
+                                    <tr>
+                                        <td colspan="2" class="text-end">Tạm tính:</td>
+                                        <td class="text-end">${formatVND(subtotal)}</td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="2" class="text-end">Phí vận chuyển:</td>
+                                        <td class="text-end">${formatVND(shipping)}</td>
+                                    </tr>
+                                    ${discount > 0 ? `
+                                    <tr class="text-success">
+                                        <td colspan="2" class="text-end">Giảm giá (${esc(voucher ? voucher.code : '')}):</td>
+                                        <td class="text-end">-${formatVND(discount)}</td>
+                                    </tr>` : ''}
+                                    <tr class="table-warning">
+                                        <th colspan="2" class="text-end fs-5"> Tổng thanh toán: </th>
+                                        <th class="text-end text-danger fs-5 fw-bold">${formatVND(finalTotal)}</th>
+                                    </tr>
+                                </tfoot>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-7 order-lg-2">
                     <div class="card shadow-sm mb-4">
                         <div class="card-header bg-danger text-white">
                             <h5 class="mb-0"> 🎟️ Mã giảm giá </h5>
@@ -181,52 +236,12 @@ async function loadCheckout() {
                                 <option value="Banking">Chuyển khoản ngân hàng</option>
                                 <option value="Momo">Ví Momo</option>
                             </select>
+                            <div id="paymentQR"></div>
                             <div id="formError" class="alert alert-danger py-2 mt-3 mb-0 d-none" role="alert"></div>
                             <button type="submit" id="placeOrderBtn" class="btn btn-success btn-lg w-100 mt-3"> Xác nhận đặt hàng </button>
                         </div>
                     </div>
                     </form>
-                </div>
-
-                <div class="col-md-5">
-                    <div class="card shadow-sm">
-                        <div class="card-header bg-dark text-white">
-                            <h4 class="mb-0"> Tóm tắt đơn hàng </h4>
-                        </div>
-                        <div class="card-body p-0">
-                            <table class="table table-striped mb-0">
-                                <thead class="table-light">
-                                    <tr>
-                                        <th>Sản phẩm</th>
-                                        <th class="text-center">SL</th>
-                                        <th class="text-end">Thành tiền</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    ${rows}
-                                </tbody>
-                                <tfoot>
-                                    <tr>
-                                        <td colspan="2" class="text-end">Tạm tính:</td>
-                                        <td class="text-end">${formatVND(subtotal)}</td>
-                                    </tr>
-                                    <tr>
-                                        <td colspan="2" class="text-end">Phí vận chuyển:</td>
-                                        <td class="text-end">${formatVND(shipping)}</td>
-                                    </tr>
-                                    ${discount > 0 ? `
-                                    <tr class="text-success">
-                                        <td colspan="2" class="text-end">Giảm giá (${esc(voucher ? voucher.code : '')}):</td>
-                                        <td class="text-end">-${formatVND(discount)}</td>
-                                    </tr>` : ''}
-                                    <tr class="table-warning">
-                                        <th colspan="2" class="text-end fs-5"> Tổng thanh toán: </th>
-                                        <th class="text-end text-danger fs-5 fw-bold">${formatVND(finalTotal)}</th>
-                                    </tr>
-                                </tfoot>
-                            </table>
-                        </div>
-                    </div>
                 </div>
             </div>
         `;
@@ -234,6 +249,10 @@ async function loadCheckout() {
         if (prevPayment) {
             document.querySelector('select[name="payment_method"]').value = prevPayment;
         }
+        checkoutTotal = Number(finalTotal) || 0;
+        const paySelect = document.querySelector('select[name="payment_method"]');
+        paySelect.addEventListener('change', capNhatQR);
+        capNhatQR();
         await fillShippingForm(prevForm);
 
         if (res.data.voucher_message) {
@@ -271,7 +290,8 @@ async function loadCheckout() {
                     orderId: d.order_id,
                     total: d.total,
                     discount: d.discount,
-                    voucher: d.voucher_code
+                    voucher: d.voucher_code,
+                    payment: formData.get('payment_method')
                 });
             } catch (err) {
                 btn.disabled = false;

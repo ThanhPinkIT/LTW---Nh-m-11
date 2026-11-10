@@ -90,11 +90,16 @@ function hienPopupDatHang(info = {}) {
                 <div class="nt-row"><span>Mã đơn hàng</span><strong>#${ntEsc(info.orderId)}</strong></div>
                 ${info.voucher ? `<div class="nt-row"><span>Mã giảm giá ${ntEsc(info.voucher)}</span><strong>- ${ntTien(info.discount)}</strong></div>` : ''}
                 <div class="nt-row nt-total"><span>Tổng thanh toán</span><strong>${ntTien(info.total)}</strong></div>
-            </div>`,
+            </div>
+            ${info.payment && info.payment !== 'COD' ? '<div id="ntPopupQR"></div>' : ''}`,
         nutPhu: { text: 'Tiếp tục mua sắm', href: info.tiepTuc || 'products.php' },
         nutChinh: { text: 'Xem đơn hàng', href: info.orderId ? 'order-detail.php?id=' + encodeURIComponent(info.orderId) : 'history.php' },
         onClose: info.onClose
     });
+    const qrBox = document.getElementById('ntPopupQR');
+    if (qrBox && typeof hienQRThanhToan === 'function') {
+        hienQRThanhToan(qrBox, info.total, PAYMENT_CONFIG.memoPrefix + ' DH' + info.orderId, 'Popup');
+    }
 }
 
 // popup thêm vào giỏ hàng thành công

@@ -31,15 +31,23 @@ if(isset($_POST['update_product'])){
     $price=floatval($_POST['price']);
     $category=intval($_POST['category_id']);
     $description=trim($_POST['description']);
+    $originalPrice=floatval($_POST['original_price'] ?? 0);
 
     $image=$product['image'];
 
     if(isset($_FILES['image']) && $_FILES['image']['error']==0){
 
-        if($image!="" && file_exists("../uploads/".$image)){
-            unlink("../uploads/".$image);
+        $dung=$conn->prepare("SELECT COUNT(*) c FROM products WHERE image=? AND id<>?");
+        $dung->bind_param("si",$image,$id);
+        $dung->execute();
+        $conLaiDung=$dung->get_result()->fetch_assoc()['c']>0;
+
+        if(!$conLaiDung){
+            if($image!="" && file_exists("../uploads/".$image)){
+                unlink("../uploads/".$image);
+            }
+            xoa_anh_fe($image);
         }
-        xoa_anh_fe($image);
 
         $ext=pathinfo($_FILES['image']['name'],PATHINFO_EXTENSION);
 
@@ -74,6 +82,12 @@ if(isset($_POST['update_product'])){
     );
 
     if($stmt->execute()){
+
+        if(array_key_exists('original_price',$product)){
+            $gp=$conn->prepare("UPDATE products SET original_price=? WHERE id=?");
+            $gp->bind_param("di",$originalPrice,$id);
+            $gp->execute();
+        }
 
         xoa_anh_phu($conn, $id);
         luu_anh_phu($conn, $id);
@@ -136,6 +150,12 @@ value="<?= $c['id'] ?>"
 <label>Giá</label>
 <input type="number" name="price" class="form-control" value="<?= $product['price'] ?>" required>
 </div>
+<?php if(array_key_exists('original_price',$product)): ?>
+<div class="mb-3">
+<label>Giá gốc (để hiện % giảm giá, bỏ trống nếu không giảm)</label>
+<input type="number" name="original_price" class="form-control" value="<?= htmlspecialchars((string)$product['original_price']) ?>">
+</div>
+<?php endif; ?>
 <div class="mb-3">
 <label>Mô tả</label>
 <textarea name="description" rows="6" class="form-control"><?= htmlspecialchars($product['description']) ?></textarea>

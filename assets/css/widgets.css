@@ -1,0 +1,198 @@
+.nt-chat-btn {
+    position: fixed;
+    right: 20px;
+    bottom: 20px;
+    width: 56px;
+    height: 56px;
+    border: 0;
+    border-radius: 50%;
+    background: #dc3545;
+    color: #fff;
+    font-size: 24px;
+    box-shadow: 0 6px 18px rgba(220, 53, 69, .45);
+    cursor: pointer;
+    z-index: 1050;
+}
+.nt-chat-box {
+    position: fixed;
+    right: 20px;
+    bottom: 88px;
+    width: 340px;
+    max-width: calc(100vw - 24px);
+    height: 460px;
+    max-height: calc(100vh - 110px);
+    background: #fff;
+    border-radius: 16px;
+    box-shadow: 0 12px 36px rgba(0, 0, 0, .22);
+    display: none;
+    flex-direction: column;
+    overflow: hidden;
+    z-index: 1050;
+}
+.nt-chat-box.open { display: flex; }
+.nt-chat-head {
+    background: #dc3545;
+    color: #fff;
+    padding: 12px 14px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-weight: 700;
+}
+.nt-chat-head small { display: block; font-weight: 400; opacity: .85; font-size: 12px; }
+.nt-chat-head button { background: none; border: 0; color: #fff; font-size: 20px; cursor: pointer; }
+.nt-chat-log { flex: 1; overflow-y: auto; padding: 12px; background: #f6f7f9; }
+.nt-msg { max-width: 85%; padding: 8px 12px; border-radius: 14px; margin-bottom: 8px; font-size: 14px; line-height: 1.4; word-wrap: break-word; }
+.nt-msg.bot { background: #fff; border: 1px solid #eceef1; border-bottom-left-radius: 4px; }
+.nt-msg.user { background: #dc3545; color: #fff; margin-left: auto; border-bottom-right-radius: 4px; }
+.nt-msg a { color: inherit; font-weight: 600; }
+.nt-msg.bot a { color: #dc3545; }
+.nt-chat-quick { display: flex; flex-wrap: wrap; gap: 6px; padding: 8px 12px 0; background: #f6f7f9; }
+.nt-chat-quick button {
+    border: 1px solid #dc3545;
+    background: #fff;
+    color: #dc3545;
+    border-radius: 999px;
+    font-size: 12px;
+    padding: 3px 10px;
+    cursor: pointer;
+}
+.nt-chat-form { display: flex; gap: 6px; padding: 10px; border-top: 1px solid #eee; background: #fff; }
+.nt-chat-form input { flex: 1; border: 1px solid #ddd; border-radius: 999px; padding: 6px 12px; font-size: 14px; outline: none; }
+.nt-chat-form input:focus { border-color: #dc3545; }
+.nt-chat-form button { border: 0; background: #dc3545; color: #fff; border-radius: 999px; padding: 0 14px; }
+
+.sidebar-ad {
+    position: sticky;
+    top: 90px;
+    margin-top: 16px;
+}
+.sidebar-ad-card {
+    border-radius: 18px;
+    overflow: hidden;
+    background: #0b0b0f;
+    color: #fff;
+    box-shadow: 0 10px 24px rgba(0, 0, 0, .25);
+}
+.ad-slide { display: none; }
+.ad-slide.active { display: block; animation: adFade .5s ease; }
+@keyframes adFade { from { opacity: 0; } to { opacity: 1; } }
+.ad-media {
+    position: relative;
+    display: block;
+    height: 240px;
+    background: #000;
+}
+.ad-media img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.ad-media img.ad-fallback { object-fit: contain; }
+.ad-tag {
+    position: absolute;
+    top: 12px;
+    left: 12px;
+    background: #dc3545;
+    color: #fff;
+    font-weight: 700;
+    font-size: 12px;
+    padding: 3px 10px;
+    border-radius: 999px;
+}
+.ad-info { padding: 14px 16px 6px; }
+.ad-kicker { font-size: 12px; letter-spacing: 1px; opacity: .6; text-transform: uppercase; }
+.ad-name { font-size: 17px; font-weight: 700; line-height: 1.3; margin: 4px 0 8px; color: #fff; text-decoration: none; display: block; }
+.ad-price { font-size: 22px; font-weight: 800; color: #ff6b81; }
+.ad-old { font-size: 13px; text-decoration: line-through; opacity: .55; margin-left: 8px; }
+.ad-btn {
+    display: block;
+    margin: 12px 16px 6px;
+    text-align: center;
+    background: #fff;
+    color: #111;
+    font-weight: 700;
+    padding: 9px 0;
+    border-radius: 999px;
+    text-decoration: none;
+}
+.ad-btn:hover { background: #ffe3e8; color: #b0102a; }
+.ad-dots { display: flex; justify-content: center; gap: 6px; padding: 8px 0 14px; }
+.ad-dots button {
+    width: 8px;
+    height: 8px;
+    border: 0;
+    padding: 0;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, .35);
+    cursor: pointer;
+}
+.ad-dots button.active { background: #fff; width: 20px; border-radius: 999px; }
+
+.mobile-ad {
+    display: flex;
+    gap: 10px;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    -webkit-overflow-scrolling: touch;
+    margin-bottom: 14px;
+    padding-bottom: 4px;
+    scrollbar-width: none;
+}
+.mobile-ad::-webkit-scrollbar { display: none; }
+.mobile-ad[hidden] { display: none; }
+.mobile-ad-item {
+    flex: 0 0 82%;
+    max-width: 340px;
+    scroll-snap-align: start;
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    padding: 8px;
+    background: #fff;
+    border: 1px solid #e3e5e8;
+    border-radius: 8px;
+    text-decoration: none;
+    color: #222;
+}
+.mobile-ad-img {
+    flex: 0 0 84px;
+    height: 84px;
+    background: #f5f5f7;
+    border-radius: 6px;
+    overflow: hidden;
+}
+.mobile-ad-img img { width: 100%; height: 100%; object-fit: contain; display: block; }
+.mobile-ad-info { display: flex; flex-direction: column; gap: 3px; min-width: 0; }
+.mobile-ad-tag { align-self: flex-start; background: #d70018; color: #fff; font-size: 11px; font-weight: 700; padding: 1px 7px; border-radius: 3px; }
+.mobile-ad-name {
+    font-size: 13px;
+    font-weight: 600;
+    line-height: 1.3;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+.mobile-ad-price { color: #d70018; font-weight: 700; font-size: 15px; }
+
+@media (max-width: 767.98px) {
+    .nt-chat-btn {
+        width: 52px;
+        height: 52px;
+        font-size: 22px;
+        right: 12px;
+        bottom: calc(12px + env(safe-area-inset-bottom, 0px));
+    }
+    .nt-chat-box {
+        left: 8px;
+        right: 8px;
+        bottom: calc(76px + env(safe-area-inset-bottom, 0px));
+        width: auto;
+        max-width: none;
+        height: min(70vh, 520px);
+        height: min(70dvh, 520px);
+        max-height: calc(100vh - 100px);
+        border-radius: 14px;
+    }
+    .nt-msg { font-size: 15px; max-width: 90%; }
+    .nt-chat-form input { font-size: 16px; padding: 9px 14px; }
+    .nt-chat-form button { min-width: 44px; }
+    .nt-chat-quick button { font-size: 13px; padding: 5px 12px; }
+}

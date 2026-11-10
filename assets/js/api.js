@@ -20,6 +20,7 @@ async function fetchAPI(endpoint, options = {}) {
     const url = API_BASE_URL + endpoint;
     const defaultOptions = {
         credentials: 'include',
+        cache: 'no-store',
         headers: {
             'Accept': 'application/json',
         }
