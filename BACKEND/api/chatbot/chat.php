@@ -194,49 +194,30 @@ $reply = "";
 $suggestions = [];
 $products = [];
 
-// 1. NHÓM CHÍNH SÁCH VẬN CHUYỂN, GIAO HÀNG
-$isShipping = (
-    str_contains($cleanText, 'giao hang') ||
-    str_contains($cleanText, 'van chuyen') ||
-    str_contains($cleanText, 'phi ship') ||
+// 1. KIỂM TRA CÂU HỎI VỀ VẬN CHUYỂN, BẢO HÀNH, ĐỔI TRẢ (MỤC 3.3 CHATBOT.MD)
+$isShippingOrWarranty = (
     str_contains($cleanText, 'phi van chuyen') ||
+    str_contains($cleanText, 'phi ship') ||
     str_contains($cleanText, 'bao lau nhan') ||
     str_contains($cleanText, 'khi nao nhan') ||
+    str_contains($cleanText, 'giao hang') ||
+    str_contains($cleanText, 'van chuyen') ||
     str_contains($cleanText, 'thoi gian giao') ||
     str_contains($cleanText, 'thoi gian ship') ||
-    str_contains($cleanText, 'hoa toc')
-);
-
-// 2. NHÓM BẢO HÀNH, ĐỔI TRẢ, HOÀN TIỀN
-$isWarrantyOrReturn = (
+    str_contains($cleanText, 'chinh sach doi tra') ||
+    str_contains($cleanText, 'chinh sach bao hanh') ||
+    str_contains($cleanText, 'bao hanh') ||
     str_contains($cleanText, 'doi tra') ||
     str_contains($cleanText, 'tra hang') ||
-    str_contains($cleanText, 'hoan tien') ||
-    str_contains($cleanText, 'bao hanh') ||
-    str_contains($cleanText, '1 doi 1')
+    str_contains($cleanText, 'hoan tien')
 );
 
-if ($isShipping) {
-    $reply = "🚀 **Chính sách giao hàng tại NexTech:**\n\n" .
-             "• **Giao hỏa tốc 2H:** Nội thành nhận ngay trong ngày.\n" .
-             "• **Giao tiêu chuẩn toàn quốc:** Nhận hàng sau 1 - 3 ngày làm việc.\n" .
-             "• **Phí vận chuyển:** 30.000đ cho mỗi đơn hàng (Miễn phí vận chuyển khi áp dụng mã voucher **FREESHIP**).\n\n" .
-             "Bạn có thể theo dõi tiến độ đơn hàng tại mục [Lịch sử đơn hàng](history.php).";
+if ($isShippingOrWarranty) {
+    $reply = "Hiện tại mình chưa có thông tin chính thức về nội dung này. Bạn vui lòng liên hệ cửa hàng qua hotline **0987.654.321** hoặc email **support@shopcuatoi.vn** để được hỗ trợ nhé!";
     $suggestions = [
-        "🏷️ Xem mã Freeship",
-        "📦 Lịch sử đơn hàng",
-        "💳 Phương thức thanh toán"
-    ];
-} elseif ($isWarrantyOrReturn) {
-    $reply = "🛡️ **Chính sách bảo hành & Đổi trả tại NexTech:**\n\n" .
-             "• **Đổi trả 7 ngày:** Thủ tục siêu tốc 1 đổi 1 nếu sản phẩm có lỗi từ nhà sản xuất.\n" .
-             "• **Bảo hành 12 tháng:** 100% sản phẩm chính hãng được bảo hành 12 tháng tại các trung tâm ủy quyền.\n" .
-             "• **Cam kết chất lượng:** Cam kết hàng mới fullbox 100%, hoàn tiền gấp 3 nếu phát hiện fake.\n\n" .
-             "📞 Hotline tiếp nhận bảo hành & khiếu nại: **1900.8899** (08:00 - 22:00 hàng ngày).";
-    $suggestions = [
-        "📞 Hotline bảo hành",
-        "📍 Địa chỉ cửa hàng",
-        "📱 Tìm sản phẩm mới"
+        "📞 Hotline cửa hàng",
+        "📍 Địa chỉ shop",
+        "🛒 Hướng dẫn mua hàng"
     ];
 }
 

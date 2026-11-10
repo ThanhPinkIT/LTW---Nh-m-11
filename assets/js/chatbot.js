@@ -1,17 +1,32 @@
 /**
- * CHATBOT.JS - Tech Assistant Widget (NexTech Store)
- * Rule-based Chatbot cho Website Bán Hàng Công Nghệ
- * Tối ưu hóa đa thiết bị: Desktop, Tablet & Mobile Phone
+ * CHATBOT.JS - Tech Assistant Widget (CellphoneS / CareSoft Style)
+ * Rule-based Chatbot cho Website Bán Hàng Công Nghệ NexTech
+ * Chuẩn Responsive Mobile & Desktop theo đúng chatbot.md
  */
 
 (function () {
     'use strict';
 
-    function initChatbot() {
-        // 1. Khởi tạo DOM nếu chưa có
-        initChatbotDOM();
+    // SVG Mascot phong cách CellphoneS
+    const MASCOT_SVG = `
+        <svg viewBox="0 0 100 100" width="100%" height="100%" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <circle cx="50" cy="50" r="46" fill="#ffffff" stroke="#d70018" stroke-width="4"/>
+            <path d="M18 50 C18 28 82 28 82 50" stroke="#d70018" stroke-width="5" stroke-linecap="round"/>
+            <rect x="12" y="44" width="10" height="18" rx="5" fill="#d70018"/>
+            <rect x="78" y="44" width="10" height="18" rx="5" fill="#d70018"/>
+            <path d="M80 58 C80 72 65 76 56 76" stroke="#d70018" stroke-width="3" stroke-linecap="round"/>
+            <circle cx="54" cy="76" r="4" fill="#d70018"/>
+            <ellipse cx="36" cy="48" rx="5" ry="7" fill="#222"/>
+            <circle cx="38" cy="46" r="2" fill="#fff"/>
+            <ellipse cx="64" cy="48" rx="5" ry="7" fill="#222"/>
+            <circle cx="66" cy="46" r="2" fill="#fff"/>
+            <ellipse cx="28" cy="56" rx="6" ry="3.5" fill="#ff8a80"/>
+            <ellipse cx="72" cy="56" rx="6" ry="3.5" fill="#ff8a80"/>
+            <path d="M42 56 Q50 64 58 56" stroke="#d70018" stroke-width="3.5" stroke-linecap="round" fill="none"/>
+        </svg>
+    `;
 
-        // 2. Lấy các phần tử DOM
+    function initChatbot() {
         const launcher = document.getElementById('chatbotLauncher');
         const windowEl = document.getElementById('chatbotWindow');
         const closeBtn = document.getElementById('chatbotCloseBtn');
@@ -19,10 +34,10 @@
         const formEl = document.getElementById('chatbotForm');
         const inputEl = document.getElementById('chatbotInput');
         const sendBtn = document.getElementById('chatbotSendBtn');
+        const emojiBtn = document.getElementById('chatbotEmojiBtn');
 
         if (!launcher || !windowEl || !formEl || !inputEl) return;
 
-        // Tránh gán sự kiện nhiều lần nếu hàm được gọi lại
         if (launcher.dataset.bound) return;
         launcher.dataset.bound = 'true';
 
@@ -30,15 +45,16 @@
         let isWaitingResponse = false;
         let hasShownWelcome = false;
 
-        // 3. Hàm mở / đóng khung chat
+        // Mở / Đóng Chatbot
         function toggleChat(forceOpen = null) {
             isOpen = forceOpen !== null ? forceOpen : !isOpen;
             if (isOpen) {
                 windowEl.classList.add('is-open');
+                windowEl.style.display = 'flex';
                 launcher.classList.add('is-active');
-                
+
                 if (window.innerWidth > 600) {
-                    inputEl.focus();
+                    setTimeout(() => inputEl.focus(), 150);
                 }
 
                 if (!hasShownWelcome) {
@@ -48,6 +64,7 @@
                 scrollToBottom();
             } else {
                 windowEl.classList.remove('is-open');
+                windowEl.style.display = 'none';
                 launcher.classList.remove('is-active');
                 if (window.innerWidth <= 600) {
                     windowEl.style.height = '';
@@ -57,10 +74,21 @@
 
         launcher.addEventListener('click', () => toggleChat());
         if (closeBtn) {
-            closeBtn.addEventListener('click', () => toggleChat(false));
+            closeBtn.addEventListener('click', (e) => {
+                e.stopPropagation();
+                toggleChat(false);
+            });
         }
 
-        // Tối ưu bàn phím ảo trên mobile
+        // Bấm Emoji
+        if (emojiBtn) {
+            emojiBtn.addEventListener('click', () => {
+                inputEl.value += ' 😊';
+                inputEl.focus();
+            });
+        }
+
+        // Bàn phím ảo mobile
         if (window.visualViewport) {
             window.visualViewport.addEventListener('resize', () => {
                 if (isOpen && window.innerWidth <= 600) {
@@ -70,20 +98,20 @@
             });
         }
 
-        // 4. Lời chào mừng ban đầu
+        // Lời chào mừng ban đầu phong cách CellphoneS
         function showWelcomeMessage() {
-            const welcomeText = "Xin chào! Mình là **Tech Assistant** - Trợ lý ảo của NexTech. Rất vui được hỗ trợ bạn!\n\nBạn có thể hỏi mình về tìm kiếm sản phẩm, tư vấn theo ngân sách, chính sách giao hàng, đổi trả hoặc mã giảm giá nhé!";
+            const welcomeText = "✨ **NEXTECH TECH STORE - CHÀO BẠN** 💥\n\nXin chào! Mình là **Tech Assistant** - Trợ lý ảo của NexTech.\nEm ở đây để hỗ trợ cho mình về tìm kiếm sản phẩm, tư vấn ngân sách, hướng dẫn mua hàng và mã giảm giá nhé!";
             const initialSuggestions = [
                 "📱 Tìm điện thoại hot",
                 "💻 Laptop dưới 25 triệu",
-                "🚚 Chính sách giao hàng",
+                "🛒 Hướng dẫn mua hàng",
                 "🏷️ Xem mã Voucher",
                 "📍 Địa chỉ cửa hàng"
             ];
             appendBotMessage(welcomeText, [], initialSuggestions);
         }
 
-        // 5. Xử lý gửi tin nhắn từ Form
+        // Gửi tin nhắn từ Form
         formEl.addEventListener('submit', (e) => {
             e.preventDefault();
             const text = inputEl.value.trim();
@@ -93,7 +121,7 @@
             handleUserMessage(text);
         });
 
-        // 6. Gửi tin nhắn và gọi Backend API
+        // Xử lý gửi tin nhắn
         async function handleUserMessage(userText) {
             appendUserMessage(userText);
             scrollToBottom();
@@ -146,7 +174,6 @@
             }
         }
 
-        // 7. Hàm xác định URL API linh hoạt
         function getChatbotApiUrl() {
             if (typeof API_BASE_URL !== 'undefined' && API_BASE_URL) {
                 return `${API_BASE_URL}/chatbot/chat.php`;
@@ -162,7 +189,6 @@
             return `${origin}${path}/BACKEND/api/chatbot/chat.php`;
         }
 
-        // 8. Chống XSS an toàn
         function escapeHTML(str) {
             if (!str) return '';
             return String(str)
@@ -173,7 +199,6 @@
                 .replace(/'/g, '&#039;');
         }
 
-        // 9. Format Markdown
         function formatBotText(raw) {
             if (!raw) return '';
             let escaped = escapeHTML(raw);
@@ -184,23 +209,27 @@
             return escaped;
         }
 
-        // 10. Thêm tin nhắn của User
         function appendUserMessage(text) {
             const row = document.createElement('div');
             row.className = 'chatbot-msg-row is-user';
-            row.innerHTML = `<div class="chatbot-bubble">${escapeHTML(text)}</div>`;
+            row.innerHTML = `
+                <div class="chatbot-msg-body">
+                    <div class="chatbot-bubble">${escapeHTML(text)}</div>
+                    <div class="chatbot-timestamp">Bạn · Vừa xong</div>
+                </div>
+            `;
             messagesEl.appendChild(row);
         }
 
-        // 11. Thêm tin nhắn của Bot
         function appendBotMessage(text, products = [], suggestions = []) {
             const row = document.createElement('div');
             row.className = 'chatbot-msg-row is-bot';
 
             let innerContent = `
-                <div class="chatbot-msg-avatar" title="Tech Assistant">🤖</div>
-                <div class="chatbot-msg-content" style="max-width: 100%;">
+                <div class="chatbot-msg-avatar">${MASCOT_SVG}</div>
+                <div class="chatbot-msg-body">
                     <div class="chatbot-bubble">${formatBotText(text)}</div>
+                    <div class="chatbot-timestamp">TECH ASSISTANT · Vừa xong</div>
             `;
 
             if (Array.isArray(products) && products.length > 0) {
@@ -225,7 +254,7 @@
                 innerContent += `</div>`;
             }
 
-            innerContent += `</div></div>`;
+            innerContent += `</div>`;
             row.innerHTML = innerContent;
             messagesEl.appendChild(row);
 
@@ -249,18 +278,19 @@
             scrollToBottom();
         }
 
-        // 12. Typing Indicator
         function showTypingIndicator() {
             hideTypingIndicator();
             const typingEl = document.createElement('div');
             typingEl.id = 'chatbotTypingRow';
             typingEl.className = 'chatbot-msg-row is-bot';
             typingEl.innerHTML = `
-                <div class="chatbot-msg-avatar">🤖</div>
-                <div class="chatbot-typing" title="Đang trả lời...">
-                    <span class="chatbot-typing-dot"></span>
-                    <span class="chatbot-typing-dot"></span>
-                    <span class="chatbot-typing-dot"></span>
+                <div class="chatbot-msg-avatar">${MASCOT_SVG}</div>
+                <div class="chatbot-msg-body">
+                    <div class="chatbot-typing" title="Đang trả lời...">
+                        <span class="chatbot-typing-dot"></span>
+                        <span class="chatbot-typing-dot"></span>
+                        <span class="chatbot-typing-dot"></span>
+                    </div>
                 </div>
             `;
             messagesEl.appendChild(typingEl);
@@ -284,56 +314,8 @@
                 }
             }, 50);
         }
-
-        function initChatbotDOM() {
-            if (document.getElementById('chatbotLauncher')) return;
-
-            const widgetContainer = document.createElement('div');
-            widgetContainer.id = 'chatbotWidgetContainer';
-            widgetContainer.innerHTML = `
-                <button id="chatbotLauncher" class="chatbot-launcher" type="button" aria-label="Mở Tech Assistant Chatbot">
-                    <span class="chatbot-launcher-icon"><i class="bi bi-chat-dots-fill"></i></span>
-                    <span class="chatbot-launcher-badge" title="Đang hoạt động"></span>
-                </button>
-
-                <div id="chatbotWindow" class="chatbot-window" role="dialog" aria-modal="true" aria-label="Hộp thoại Tech Assistant">
-                    <div class="chatbot-header">
-                        <div class="chatbot-header-info">
-                            <div class="chatbot-avatar">🤖</div>
-                            <div>
-                                <h3 class="chatbot-title">Tech Assistant</h3>
-                                <div class="chatbot-status">
-                                    <span class="chatbot-status-dot"></span> Trực tuyến
-                                </div>
-                            </div>
-                        </div>
-                        <div class="chatbot-header-actions">
-                            <button id="chatbotCloseBtn" type="button" title="Đóng chat" aria-label="Đóng chat">
-                                <i class="bi bi-x-lg"></i>
-                            </button>
-                        </div>
-                    </div>
-                    <div id="chatbotMessages" class="chatbot-messages"></div>
-                    <form id="chatbotForm" class="chatbot-input-area" autocomplete="off">
-                        <input 
-                            type="text" 
-                            id="chatbotInput" 
-                            class="chatbot-input" 
-                            placeholder="Hỏi Tech Assistant về sản phẩm, giá..." 
-                            maxlength="300" 
-                            required
-                        />
-                        <button id="chatbotSendBtn" class="chatbot-send-btn" type="submit" aria-label="Gửi tin nhắn">
-                            <i class="bi bi-send-fill"></i>
-                        </button>
-                    </form>
-                </div>
-            `;
-            document.body.appendChild(widgetContainer);
-        }
     }
 
-    // Khởi chạy an toàn ngay khi sẵn sàng
     if (document.readyState === 'loading') {
         document.addEventListener('DOMContentLoaded', initChatbot);
     } else {

@@ -52,48 +52,143 @@
     </div>
 </footer>
 
-<!-- Chatbot Tech Assistant Widget -->
-<link rel="stylesheet" href="assets/css/chatbot.css?v=20261110_99">
+<!-- ==========================================
+     CHATBOT TECH ASSISTANT (CELLPHONES STYLE)
+     ========================================== -->
+<style>
+/* CSS Cố định tránh việc vỡ layout dưới footer */
+#chatbotLauncher {
+    position: fixed !important;
+    bottom: 24px !important;
+    right: 24px !important;
+    width: 60px !important;
+    height: 60px !important;
+    border-radius: 50% !important;
+    background: linear-gradient(135deg, #d70018 0%, #b80014 100%) !important;
+    color: #ffffff !important;
+    box-shadow: 0 6px 20px rgba(215, 0, 24, 0.45) !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    cursor: pointer !important;
+    z-index: 999999 !important;
+    border: 3px solid #ffffff !important;
+    padding: 0 !important;
+    outline: none !important;
+}
+#chatbotWindow {
+    position: fixed !important;
+    bottom: 96px !important;
+    right: 24px !important;
+    width: 370px !important;
+    max-width: calc(100vw - 32px) !important;
+    height: 540px !important;
+    max-height: calc(100vh - 120px) !important;
+    background: #ffffff !important;
+    border-radius: 18px !important;
+    box-shadow: 0 12px 36px rgba(0,0,0,0.2) !important;
+    display: none;
+    flex-direction: column !important;
+    overflow: hidden !important;
+    z-index: 999998 !important;
+    border: 1px solid rgba(0,0,0,0.08) !important;
+}
+#chatbotWindow.is-open {
+    display: flex !important;
+}
+</style>
 
+<link rel="stylesheet" href="assets/css/chatbot.css?v=20261110_105">
+
+<!-- Nút Chatbot nổi -->
 <button id="chatbotLauncher" class="chatbot-launcher" type="button" aria-label="Mở Tech Assistant Chatbot">
-    <span class="chatbot-launcher-icon"><i class="bi bi-chat-dots-fill"></i></span>
+    <div class="chatbot-launcher-inner">
+        <svg viewBox="0 0 100 100" width="38" height="38" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <circle cx="50" cy="50" r="46" fill="#ffffff" stroke="#d70018" stroke-width="4"/>
+            <path d="M18 50 C18 28 82 28 82 50" stroke="#d70018" stroke-width="5" stroke-linecap="round"/>
+            <rect x="12" y="44" width="10" height="18" rx="5" fill="#d70018"/>
+            <rect x="78" y="44" width="10" height="18" rx="5" fill="#d70018"/>
+            <path d="M80 58 C80 72 65 76 56 76" stroke="#d70018" stroke-width="3" stroke-linecap="round"/>
+            <circle cx="54" cy="76" r="4" fill="#d70018"/>
+            <ellipse cx="36" cy="48" rx="5" ry="7" fill="#222"/>
+            <circle cx="38" cy="46" r="2" fill="#fff"/>
+            <ellipse cx="64" cy="48" rx="5" ry="7" fill="#222"/>
+            <circle cx="66" cy="46" r="2" fill="#fff"/>
+            <ellipse cx="28" cy="56" rx="6" ry="3.5" fill="#ff8a80"/>
+            <ellipse cx="72" cy="56" rx="6" ry="3.5" fill="#ff8a80"/>
+            <path d="M42 56 Q50 64 58 56" stroke="#d70018" stroke-width="3.5" stroke-linecap="round" fill="none"/>
+        </svg>
+    </div>
     <span class="chatbot-launcher-badge" title="Đang hoạt động"></span>
 </button>
 
+<!-- Khung cửa sổ Chat CellphoneS Style -->
 <div id="chatbotWindow" class="chatbot-window" role="dialog" aria-modal="true" aria-label="Hộp thoại Tech Assistant">
+    <!-- Header màu đỏ CellphoneS -->
     <div class="chatbot-header">
-        <div class="chatbot-header-info">
-            <div class="chatbot-avatar">🤖</div>
-            <div>
-                <h3 class="chatbot-title">Tech Assistant</h3>
-                <div class="chatbot-status">
-                    <span class="chatbot-status-dot"></span> Trực tuyến
-                </div>
+        <div class="chatbot-header-left">
+            <div class="chatbot-header-avatar">
+                <svg viewBox="0 0 100 100" width="38" height="38" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <circle cx="50" cy="50" r="46" fill="#ffffff" stroke="#d70018" stroke-width="4"/>
+                    <path d="M18 50 C18 28 82 28 82 50" stroke="#d70018" stroke-width="5" stroke-linecap="round"/>
+                    <rect x="12" y="44" width="10" height="18" rx="5" fill="#d70018"/>
+                    <rect x="78" y="44" width="10" height="18" rx="5" fill="#d70018"/>
+                    <path d="M80 58 C80 72 65 76 56 76" stroke="#d70018" stroke-width="3" stroke-linecap="round"/>
+                    <circle cx="54" cy="76" r="4" fill="#d70018"/>
+                    <ellipse cx="36" cy="48" rx="5" ry="7" fill="#222"/>
+                    <circle cx="38" cy="46" r="2" fill="#fff"/>
+                    <ellipse cx="64" cy="48" rx="5" ry="7" fill="#222"/>
+                    <circle cx="66" cy="46" r="2" fill="#fff"/>
+                    <ellipse cx="28" cy="56" rx="6" ry="3.5" fill="#ff8a80"/>
+                    <ellipse cx="72" cy="56" rx="6" ry="3.5" fill="#ff8a80"/>
+                    <path d="M42 56 Q50 64 58 56" stroke="#d70018" stroke-width="3.5" stroke-linecap="round" fill="none"/>
+                </svg>
+            </div>
+            <div class="chatbot-header-text">
+                <h3 class="chatbot-header-title">Xin chào!</h3>
+                <p class="chatbot-header-subtitle">Em ở đây để hỗ trợ cho mình...</p>
             </div>
         </div>
         <div class="chatbot-header-actions">
+            <button type="button" title="Menu" aria-label="Menu">
+                <i class="bi bi-list"></i>
+            </button>
             <button id="chatbotCloseBtn" type="button" title="Đóng chat" aria-label="Đóng chat">
                 <i class="bi bi-x-lg"></i>
             </button>
         </div>
     </div>
+
+    <!-- Danh sách tin nhắn -->
     <div id="chatbotMessages" class="chatbot-messages"></div>
+
+    <!-- Ô nhập tin nhắn CellphoneS Style -->
     <form id="chatbotForm" class="chatbot-input-area" autocomplete="off">
-        <input 
-            type="text" 
-            id="chatbotInput" 
-            class="chatbot-input" 
-            placeholder="Hỏi Tech Assistant về sản phẩm, giá..." 
-            maxlength="300" 
-            required
-        />
-        <button id="chatbotSendBtn" class="chatbot-send-btn" type="submit" aria-label="Gửi tin nhắn">
-            <i class="bi bi-send-fill"></i>
-        </button>
+        <div class="chatbot-input-box">
+            <input 
+                type="text" 
+                id="chatbotInput" 
+                class="chatbot-input" 
+                placeholder="Nhập nội dung..." 
+                maxlength="300" 
+                required
+            />
+            <div class="chatbot-input-icons">
+                <button type="button" id="chatbotEmojiBtn" class="chatbot-emoji-btn" title="Chèn emoji">
+                    <i class="bi bi-emoji-smile"></i>
+                </button>
+                <button id="chatbotSendBtn" class="chatbot-send-btn" type="submit" aria-label="Gửi tin nhắn">
+                    <i class="bi bi-send-fill"></i>
+                </button>
+            </div>
+        </div>
+        <div class="chatbot-footer-brand">
+            NexTech <b>Assistant</b>
+        </div>
     </form>
 </div>
 
-<script src="assets/js/chatbot.js?v=20261110_99" defer></script>
+<script src="assets/js/chatbot.js?v=20261110_105" defer></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
