@@ -131,7 +131,7 @@
 }
 </style>
 
-<link rel="stylesheet" href="assets/css/chatbot.css?v=20261110_300">
+<link rel="stylesheet" href="assets/css/chatbot.css?v=20261110_400">
 
 <!-- Nút Chatbot nổi (CareSoft / CellphoneS Mascot) -->
 <button id="chatbotLauncher" class="chatbot-launcher" type="button" aria-label="Mở Tech Assistant Chatbot" onclick="toggleChatbot(true)">
@@ -216,7 +216,7 @@
             </div>
         </div>
         <div class="chatbot-footer-brand">
-            NexTech <b>Assistant</b>
+            <span class="brand-caresoft"><b style="color: #2e7d32; font-weight: 700;">Care</b><span style="color: #888888; font-weight: 500;">Soft</span></span>
         </div>
     </form>
 </div>
@@ -256,7 +256,7 @@ function toggleChatbot(forceState) {
 window.toggleChatbot = toggleChatbot;
 </script>
 
-<script src="assets/js/chatbot.js?v=20261110_300"></script>
+<script src="assets/js/chatbot.js?v=20261110_400"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

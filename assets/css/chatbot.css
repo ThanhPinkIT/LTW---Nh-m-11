@@ -520,15 +520,16 @@
 .chatbot-footer-brand {
     display: flex;
     justify-content: flex-end;
-    font-size: 10px;
-    color: #9ca3af;
+    font-size: 11px;
     padding-top: 2px;
 }
 
-.chatbot-footer-brand b {
-    color: #22c55e;
-    margin-left: 3px;
-    font-weight: 700;
+.brand-caresoft {
+    display: inline-flex;
+    align-items: center;
+    font-family: system-ui, -apple-system, sans-serif;
+    font-size: 12px;
+    letter-spacing: -0.2px;
 }
 
 /* 9. Tối ưu Responsive Mobile */

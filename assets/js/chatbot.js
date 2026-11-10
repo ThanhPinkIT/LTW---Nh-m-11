@@ -120,9 +120,9 @@
             });
         }
 
-        // Lời chào mừng ban đầu phong cách CellphoneS
+        // Lời chào mừng ban đầu phong cách CellphoneS CareSoft
         function showWelcomeMessage() {
-            const welcomeText = "✨ **NEXTECH TECH STORE - CHÀO BẠN** 💥\n\nXin chào! Mình là **Tech Assistant** - Trợ lý ảo của NexTech.\nEm ở đây để hỗ trợ cho mình về tìm kiếm sản phẩm, tư vấn ngân sách, hướng dẫn mua hàng và mã giảm giá nhé!";
+            const welcomeText = "✨ **BLACK FIRE·DAY - SALE THẬT KHÉT** 💥 !!\n\nSăn sale đến giảm **50%++** và FlashSale **Giảm CỰC SÂU**. 🛒\n\nChào bạn! Mình là **Tech Assistant** - Trợ lý ảo của NexTech.\nEm ở đây để hỗ trợ cho mình về tìm kiếm sản phẩm, tư vấn ngân sách, hướng dẫn mua hàng và mã giảm giá nhé!";
             const initialSuggestions = [
                 "📱 Tìm điện thoại hot",
                 "💻 Laptop dưới 25 triệu",
@@ -251,7 +251,7 @@
                 <div class="chatbot-msg-avatar">${MASCOT_SVG}</div>
                 <div class="chatbot-msg-body">
                     <div class="chatbot-bubble">${formatBotText(text)}</div>
-                    <div class="chatbot-timestamp">TECH ASSISTANT · Vừa xong</div>
+                    <div class="chatbot-timestamp">CELLPHONES · một phút trước.</div>
             `;
 
             if (Array.isArray(products) && products.length > 0) {
