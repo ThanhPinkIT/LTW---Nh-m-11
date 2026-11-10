@@ -52,7 +52,48 @@
     </div>
 </footer>
 
-<script src="assets/js/chatbot.js?v=2" defer></script>
+<!-- Chatbot Tech Assistant Widget -->
+<link rel="stylesheet" href="assets/css/chatbot.css?v=20261110_99">
+
+<button id="chatbotLauncher" class="chatbot-launcher" type="button" aria-label="Mở Tech Assistant Chatbot">
+    <span class="chatbot-launcher-icon"><i class="bi bi-chat-dots-fill"></i></span>
+    <span class="chatbot-launcher-badge" title="Đang hoạt động"></span>
+</button>
+
+<div id="chatbotWindow" class="chatbot-window" role="dialog" aria-modal="true" aria-label="Hộp thoại Tech Assistant">
+    <div class="chatbot-header">
+        <div class="chatbot-header-info">
+            <div class="chatbot-avatar">🤖</div>
+            <div>
+                <h3 class="chatbot-title">Tech Assistant</h3>
+                <div class="chatbot-status">
+                    <span class="chatbot-status-dot"></span> Trực tuyến
+                </div>
+            </div>
+        </div>
+        <div class="chatbot-header-actions">
+            <button id="chatbotCloseBtn" type="button" title="Đóng chat" aria-label="Đóng chat">
+                <i class="bi bi-x-lg"></i>
+            </button>
+        </div>
+    </div>
+    <div id="chatbotMessages" class="chatbot-messages"></div>
+    <form id="chatbotForm" class="chatbot-input-area" autocomplete="off">
+        <input 
+            type="text" 
+            id="chatbotInput" 
+            class="chatbot-input" 
+            placeholder="Hỏi Tech Assistant về sản phẩm, giá..." 
+            maxlength="300" 
+            required
+        />
+        <button id="chatbotSendBtn" class="chatbot-send-btn" type="submit" aria-label="Gửi tin nhắn">
+            <i class="bi bi-send-fill"></i>
+        </button>
+    </form>
+</div>
+
+<script src="assets/js/chatbot.js?v=20261110_99" defer></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
