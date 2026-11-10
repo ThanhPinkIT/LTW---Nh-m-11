@@ -62,30 +62,30 @@
 .nt-chat-form input:focus { border-color: #dc3545; }
 .nt-chat-form button { border: 0; background: #dc3545; color: #fff; border-radius: 999px; padding: 0 14px; }
 
-.sidebar-ad {
+.promo-side {
     position: sticky;
     top: 90px;
     margin-top: 16px;
 }
-.sidebar-ad-card {
+.promo-side-card {
     border-radius: 18px;
     overflow: hidden;
     background: #0b0b0f;
     color: #fff;
     box-shadow: 0 10px 24px rgba(0, 0, 0, .25);
 }
-.ad-slide { display: none; }
-.ad-slide.active { display: block; animation: adFade .5s ease; }
-@keyframes adFade { from { opacity: 0; } to { opacity: 1; } }
-.ad-media {
+.promo-slide { display: none; }
+.promo-slide.active { display: block; animation: promoFade .5s ease; }
+@keyframes promoFade { from { opacity: 0; } to { opacity: 1; } }
+.promo-media {
     position: relative;
     display: block;
     height: 240px;
     background: #000;
 }
-.ad-media img { width: 100%; height: 100%; object-fit: cover; display: block; }
-.ad-media img.ad-fallback { object-fit: contain; }
-.ad-tag {
+.promo-media img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.promo-media img.promo-fallback { object-fit: contain; }
+.promo-tag {
     position: absolute;
     top: 12px;
     left: 12px;
@@ -96,12 +96,12 @@
     padding: 3px 10px;
     border-radius: 999px;
 }
-.ad-info { padding: 14px 16px 6px; }
-.ad-kicker { font-size: 12px; letter-spacing: 1px; opacity: .6; text-transform: uppercase; }
-.ad-name { font-size: 17px; font-weight: 700; line-height: 1.3; margin: 4px 0 8px; color: #fff; text-decoration: none; display: block; }
-.ad-price { font-size: 22px; font-weight: 800; color: #ff6b81; }
-.ad-old { font-size: 13px; text-decoration: line-through; opacity: .55; margin-left: 8px; }
-.ad-btn {
+.promo-info { padding: 14px 16px 6px; }
+.promo-kicker { font-size: 12px; letter-spacing: 1px; opacity: .6; text-transform: uppercase; }
+.promo-name { font-size: 17px; font-weight: 700; line-height: 1.3; margin: 4px 0 8px; color: #fff; text-decoration: none; display: block; }
+.promo-price { font-size: 22px; font-weight: 800; color: #ff6b81; }
+.promo-old { font-size: 13px; text-decoration: line-through; opacity: .55; margin-left: 8px; }
+.promo-btn {
     display: block;
     margin: 12px 16px 6px;
     text-align: center;
@@ -112,9 +112,9 @@
     border-radius: 999px;
     text-decoration: none;
 }
-.ad-btn:hover { background: #ffe3e8; color: #b0102a; }
-.ad-dots { display: flex; justify-content: center; gap: 6px; padding: 8px 0 14px; }
-.ad-dots button {
+.promo-btn:hover { background: #ffe3e8; color: #b0102a; }
+.promo-dots { display: flex; justify-content: center; gap: 6px; padding: 8px 0 14px; }
+.promo-dots button {
     width: 8px;
     height: 8px;
     border: 0;
@@ -123,9 +123,9 @@
     background: rgba(255, 255, 255, .35);
     cursor: pointer;
 }
-.ad-dots button.active { background: #fff; width: 20px; border-radius: 999px; }
+.promo-dots button.active { background: #fff; width: 20px; border-radius: 999px; }
 
-.mobile-ad {
+.promo-mobile {
     display: flex;
     gap: 10px;
     overflow-x: auto;
@@ -135,9 +135,9 @@
     padding-bottom: 4px;
     scrollbar-width: none;
 }
-.mobile-ad::-webkit-scrollbar { display: none; }
-.mobile-ad[hidden] { display: none; }
-.mobile-ad-item {
+.promo-mobile::-webkit-scrollbar { display: none; }
+.promo-mobile[hidden] { display: none; }
+.promo-mobile-item {
     flex: 0 0 82%;
     max-width: 340px;
     scroll-snap-align: start;
@@ -151,17 +151,17 @@
     text-decoration: none;
     color: #222;
 }
-.mobile-ad-img {
+.promo-mobile-img {
     flex: 0 0 84px;
     height: 84px;
     background: #f5f5f7;
     border-radius: 6px;
     overflow: hidden;
 }
-.mobile-ad-img img { width: 100%; height: 100%; object-fit: contain; display: block; }
-.mobile-ad-info { display: flex; flex-direction: column; gap: 3px; min-width: 0; }
-.mobile-ad-tag { align-self: flex-start; background: #d70018; color: #fff; font-size: 11px; font-weight: 700; padding: 1px 7px; border-radius: 3px; }
-.mobile-ad-name {
+.promo-mobile-img img { width: 100%; height: 100%; object-fit: contain; display: block; }
+.promo-mobile-info { display: flex; flex-direction: column; gap: 3px; min-width: 0; }
+.promo-mobile-tag { align-self: flex-start; background: #d70018; color: #fff; font-size: 11px; font-weight: 700; padding: 1px 7px; border-radius: 3px; }
+.promo-mobile-name {
     font-size: 13px;
     font-weight: 600;
     line-height: 1.3;
@@ -170,7 +170,7 @@
     -webkit-box-orient: vertical;
     overflow: hidden;
 }
-.mobile-ad-price { color: #d70018; font-weight: 700; font-size: 15px; }
+.promo-mobile-price { color: #d70018; font-weight: 700; font-size: 15px; }
 
 @media (max-width: 767.98px) {
     .nt-chat-btn {

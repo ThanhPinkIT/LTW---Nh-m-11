@@ -116,15 +116,15 @@ include 'includes/header.php';
         </div>
 
     </div>
-    <div class="sidebar-ad" id="sidebarAdWrap" hidden>
-        <div class="sidebar-ad-card" id="sidebarAd"></div>
+    <div class="promo-side" id="promoSideWrap" hidden>
+        <div class="promo-side-card" id="promoSide"></div>
     </div>
 </div>
 
 <!-- Cột phải (9 phần) -->
         <div class="col-lg-9">
             
-            <div class="mobile-ad d-lg-none" id="mobileAd" hidden></div>
+            <div class="promo-mobile d-lg-none" id="promoMobile" hidden></div>
 
             <!-- 1. Banner Deal -->
             <div class="deal-banner-container">
@@ -452,7 +452,7 @@ function adAnhLoi(img) {
         return;
     }
     img.onerror = function () { this.onerror = null; this.src = ANH_TRONG; };
-    img.classList.add('ad-fallback');
+    img.classList.add('promo-fallback');
     img.src = img.dataset.fallback;
 }
 
@@ -471,8 +471,8 @@ function chonSanPhamQuangCao(list) {
 }
 
 function veQuangCao(list) {
-    const wrap = document.getElementById('sidebarAdWrap');
-    const box = document.getElementById('sidebarAd');
+    const wrap = document.getElementById('promoSideWrap');
+    const box = document.getElementById('promoSide');
     if (!wrap || !box) return;
     const items = chonSanPhamQuangCao(list);
     if (!items.length) { wrap.hidden = true; return; }
@@ -485,21 +485,21 @@ function veQuangCao(list) {
         const anh = file ? 'uploads/' + encodeURIComponent(file) : ANH_TRONG;
         const link = 'product-detail.php?id=' + encodeURIComponent(p.id);
         return `
-        <div class="ad-slide${i === 0 ? ' active' : ''}">
-            <a class="ad-media" href="${link}">
-                ${giam > 0 ? `<span class="ad-tag">Giảm ${giam}%</span>` : '<span class="ad-tag">Mới</span>'}
-                <img src="uploads/ads/${encodeURIComponent(p.id)}.jpg" data-ext="0" data-fallback="${anh}" alt="${escHtml(p.name)}" crossorigin="anonymous" onerror="adAnhLoi(this)">
+        <div class="promo-slide${i === 0 ? ' active' : ''}">
+            <a class="promo-media" href="${link}">
+                ${giam > 0 ? `<span class="promo-tag">Giảm ${giam}%</span>` : '<span class="promo-tag">Mới</span>'}
+                <img src="uploads/promo/${encodeURIComponent(p.id)}.jpg" data-ext="0" data-fallback="${anh}" alt="${escHtml(p.name)}" crossorigin="anonymous" onerror="adAnhLoi(this)">
             </a>
-            <div class="ad-info">
-                <div class="ad-kicker">NexTech giới thiệu</div>
-                <a class="ad-name" href="${link}">${escHtml(p.name)}</a>
-                <div><span class="ad-price">${gia.toLocaleString('vi-VN')} đ</span>${goc > gia ? `<span class="ad-old">${goc.toLocaleString('vi-VN')} đ</span>` : ''}</div>
+            <div class="promo-info">
+                <div class="promo-kicker">NexTech giới thiệu</div>
+                <a class="promo-name" href="${link}">${escHtml(p.name)}</a>
+                <div><span class="promo-price">${gia.toLocaleString('vi-VN')} đ</span>${goc > gia ? `<span class="promo-old">${goc.toLocaleString('vi-VN')} đ</span>` : ''}</div>
             </div>
-            <a class="ad-btn" href="${link}">Mua ngay</a>
+            <a class="promo-btn" href="${link}">Mua ngay</a>
         </div>`;
-    }).join('') + '<div class="ad-dots">' + items.map((_, i) => `<button type="button" aria-label="Quảng cáo ${i + 1}" class="${i === 0 ? 'active' : ''}"></button>`).join('') + '</div>';
+    }).join('') + '<div class="promo-dots">' + items.map((_, i) => `<button type="button" aria-label="Quảng cáo ${i + 1}" class="${i === 0 ? 'active' : ''}"></button>`).join('') + '</div>';
 
-    box.querySelectorAll('.ad-media img').forEach(img => {
+    box.querySelectorAll('.promo-media img').forEach(img => {
         const tint = () => {
             try {
                 const c = document.createElement('canvas');
@@ -513,8 +513,8 @@ function veQuangCao(list) {
         if (img.complete) tint(); else img.addEventListener('load', tint);
     });
 
-    const slides = box.querySelectorAll('.ad-slide');
-    const dots = box.querySelectorAll('.ad-dots button');
+    const slides = box.querySelectorAll('.promo-slide');
+    const dots = box.querySelectorAll('.promo-dots button');
     let cur = 0;
     const show = (n) => {
         cur = (n + slides.length) % slides.length;
@@ -531,7 +531,7 @@ function veQuangCao(list) {
 }
 
 function veQuangCaoDiDong(items) {
-    const m = document.getElementById('mobileAd');
+    const m = document.getElementById('promoMobile');
     if (!m) return;
     m.innerHTML = items.map(p => {
         const gia = Number(p.price) || 0;
@@ -541,12 +541,12 @@ function veQuangCaoDiDong(items) {
         const anh = file ? 'uploads/' + encodeURIComponent(file) : ANH_TRONG;
         const link = 'product-detail.php?id=' + encodeURIComponent(p.id);
         return `
-        <a class="mobile-ad-item" href="${link}">
-            <span class="mobile-ad-img"><img src="${anh}" alt="${escHtml(p.name)}" loading="lazy" onerror="this.onerror=null;this.src='${ANH_TRONG}';"></span>
-            <span class="mobile-ad-info">
-                ${giam > 0 ? `<span class="mobile-ad-tag">Giảm ${giam}%</span>` : ''}
-                <span class="mobile-ad-name">${escHtml(p.name)}</span>
-                <span class="mobile-ad-price">${gia.toLocaleString('vi-VN')} đ</span>
+        <a class="promo-mobile-item" href="${link}">
+            <span class="promo-mobile-img"><img src="${anh}" alt="${escHtml(p.name)}" loading="lazy" onerror="this.onerror=null;this.src='${ANH_TRONG}';"></span>
+            <span class="promo-mobile-info">
+                ${giam > 0 ? `<span class="promo-mobile-tag">Giảm ${giam}%</span>` : ''}
+                <span class="promo-mobile-name">${escHtml(p.name)}</span>
+                <span class="promo-mobile-price">${gia.toLocaleString('vi-VN')} đ</span>
             </span>
         </a>`;
     }).join('');
