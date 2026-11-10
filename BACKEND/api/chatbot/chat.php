@@ -123,67 +123,74 @@ function extractBudget($text) {
 // HÀM TRUY VẤN SẢN PHẨM TỪ MYSQL BẰNG PREPARED STATEMENT
 // -------------------------------------------------------------
 function queryProducts($conn, $keyword = null, $categoryId = null, $budget = null, $limit = 4) {
-    $sql = "SELECT p.id, p.name, p.price, p.original_price, p.quantity, p.image, c.name as category_name
-            FROM products p
-            LEFT JOIN categories c ON p.category_id = c.id
-            WHERE 1=1";
-    $params = [];
-    $types = "";
-
-    if ($categoryId !== null) {
-        $sql .= " AND p.category_id = ?";
-        $params[] = $categoryId;
-        $types .= "i";
-    }
-
-    if (!empty($keyword)) {
-        $sql .= " AND (p.name LIKE ? OR p.description LIKE ?)";
-        $kw = "%" . $keyword . "%";
-        $params[] = $kw;
-        $params[] = $kw;
-        $types .= "ss";
-    }
-
-    if ($budget !== null) {
-        if (!empty($budget['max'])) {
-            $sql .= " AND p.price <= ?";
-            $params[] = $budget['max'];
-            $types .= "d";
-        }
-        if (!empty($budget['min'])) {
-            $sql .= " AND p.price >= ?";
-            $params[] = $budget['min'];
-            $types .= "d";
-        }
-    }
-
-    $sql .= " ORDER BY p.id DESC LIMIT ?";
-    $params[] = $limit;
-    $types .= "i";
-
-    $stmt = $conn->prepare($sql);
-    if (!$stmt) {
+    if (!$conn) {
         return [];
     }
+    try {
+        $sql = "SELECT p.id, p.name, p.price, p.original_price, p.quantity, p.image, c.name as category_name
+                FROM products p
+                LEFT JOIN categories c ON p.category_id = c.id
+                WHERE 1=1";
+        $params = [];
+        $types = "";
 
-    if (!empty($params)) {
-        $stmt->bind_param($types, ...$params);
+        if ($categoryId !== null) {
+            $sql .= " AND p.category_id = ?";
+            $params[] = $categoryId;
+            $types .= "i";
+        }
+
+        if (!empty($keyword)) {
+            $sql .= " AND (p.name LIKE ? OR p.description LIKE ?)";
+            $kw = "%" . $keyword . "%";
+            $params[] = $kw;
+            $params[] = $kw;
+            $types .= "ss";
+        }
+
+        if ($budget !== null) {
+            if (!empty($budget['max'])) {
+                $sql .= " AND p.price <= ?";
+                $params[] = $budget['max'];
+                $types .= "d";
+            }
+            if (!empty($budget['min'])) {
+                $sql .= " AND p.price >= ?";
+                $params[] = $budget['min'];
+                $types .= "d";
+            }
+        }
+
+        $sql .= " ORDER BY p.id DESC LIMIT ?";
+        $params[] = $limit;
+        $types .= "i";
+
+        $stmt = $conn->prepare($sql);
+        if (!$stmt) {
+            return [];
+        }
+
+        if (!empty($params)) {
+            $stmt->bind_param($types, ...$params);
+        }
+
+        $stmt->execute();
+        $result = $stmt->get_result();
+        $products = [];
+
+        // Lấy tên ảnh và link chi tiết
+        while ($row = $result->fetch_assoc()) {
+            $imageName = basename((string)$row['image']);
+            $row['imageUrl'] = $imageName ? "uploads/" . $imageName : "uploads/banner.png";
+            $row['formatted_price'] = number_format((float)$row['price'], 0, ',', '.') . ' đ';
+            $row['detail_url'] = "product-detail.php?id=" . (int)$row['id'];
+            $products[] = $row;
+        }
+        $stmt->close();
+        return $products;
+    } catch (\Throwable $t) {
+        return [];
     }
-
-    $stmt->execute();
-    $result = $stmt->get_result();
-    $products = [];
-
-    // Lấy tên ảnh và link chi tiết
-    while ($row = $result->fetch_assoc()) {
-        $imageName = basename((string)$row['image']);
-        $row['imageUrl'] = $imageName ? "uploads/" . $imageName : "uploads/banner.png";
-        $row['formatted_price'] = number_format((float)$row['price'], 0, ',', '.') . ' đ';
-        $row['detail_url'] = "product-detail.php?id=" . (int)$row['id'];
-        $products[] = $row;
-    }
-    $stmt->close();
-    return $products;
 }
 
 // -------------------------------------------------------------

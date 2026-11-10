@@ -72,9 +72,31 @@
             }
         }
 
-        launcher.addEventListener('click', () => toggleChat());
+        window.toggleChatbot = toggleChat;
+        window.__chatbotOnOpen = function() {
+            if (!hasShownWelcome) {
+                showWelcomeMessage();
+                hasShownWelcome = true;
+            }
+            scrollToBottom();
+        };
+
+        launcher.addEventListener('click', (e) => {
+            e.preventDefault();
+            toggleChat();
+        });
+        launcher.addEventListener('touchend', (e) => {
+            e.preventDefault();
+            toggleChat();
+        });
         if (closeBtn) {
             closeBtn.addEventListener('click', (e) => {
+                e.preventDefault();
+                e.stopPropagation();
+                toggleChat(false);
+            });
+            closeBtn.addEventListener('touchend', (e) => {
+                e.preventDefault();
                 e.stopPropagation();
                 toggleChat(false);
             });

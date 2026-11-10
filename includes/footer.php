@@ -56,7 +56,7 @@
      CHATBOT TECH ASSISTANT (CELLPHONES STYLE)
      ========================================== -->
 <style>
-/* CSS Cố định tránh việc vỡ layout dưới footer */
+/* CSS Cố định Chatbot Widget - Max Z-Index đảm bảo luôn bấm được */
 #chatbotLauncher {
     position: fixed !important;
     bottom: 24px !important;
@@ -80,6 +80,10 @@
     -webkit-tap-highlight-color: transparent !important;
     transform: translateZ(0) !important;
     will-change: transform !important;
+    user-select: none !important;
+}
+#chatbotLauncher * {
+    pointer-events: none !important;
 }
 #chatbotWindow {
     position: fixed !important;
@@ -102,12 +106,35 @@
 #chatbotWindow.is-open {
     display: flex !important;
 }
+@media (max-width: 600px) {
+    #chatbotLauncher {
+        bottom: max(20px, env(safe-area-inset-bottom)) !important;
+        right: 18px !important;
+        width: 56px !important;
+        height: 56px !important;
+    }
+    #chatbotWindow {
+        top: 0 !important;
+        bottom: 0 !important;
+        left: 0 !important;
+        right: 0 !important;
+        width: 100vw !important;
+        max-width: 100vw !important;
+        height: 100vh !important;
+        height: 100dvh !important;
+        max-height: 100dvh !important;
+        border-radius: 0 !important;
+        margin: 0 !important;
+        border: none !important;
+        z-index: 2147483647 !important;
+    }
+}
 </style>
 
-<link rel="stylesheet" href="assets/css/chatbot.css?v=20261110_200">
+<link rel="stylesheet" href="assets/css/chatbot.css?v=20261110_300">
 
-<!-- Nút Chatbot nổi -->
-<button id="chatbotLauncher" class="chatbot-launcher" type="button" aria-label="Mở Tech Assistant Chatbot">
+<!-- Nút Chatbot nổi (CareSoft / CellphoneS Mascot) -->
+<button id="chatbotLauncher" class="chatbot-launcher" type="button" aria-label="Mở Tech Assistant Chatbot" onclick="toggleChatbot(true)">
     <div class="chatbot-launcher-inner">
         <svg viewBox="0 0 100 100" width="38" height="38" fill="none" xmlns="http://www.w3.org/2000/svg">
             <circle cx="50" cy="50" r="46" fill="#ffffff" stroke="#d70018" stroke-width="4"/>
@@ -159,7 +186,7 @@
             <button type="button" title="Menu" aria-label="Menu">
                 <i class="bi bi-list"></i>
             </button>
-            <button id="chatbotCloseBtn" type="button" title="Đóng chat" aria-label="Đóng chat">
+            <button id="chatbotCloseBtn" type="button" title="Đóng chat" aria-label="Đóng chat" onclick="toggleChatbot(false)">
                 <i class="bi bi-x-lg"></i>
             </button>
         </div>
@@ -194,7 +221,42 @@
     </form>
 </div>
 
-<script src="assets/js/chatbot.js?v=20261110_200"></script>
+<!-- Script Inline đảm bảo BẤM LÀ MỞ NGAY LẬP TỨC kể cả khi file ngoài bị cache -->
+<script>
+function toggleChatbot(forceState) {
+    var win = document.getElementById('chatbotWindow');
+    var btn = document.getElementById('chatbotLauncher');
+    if (!win) return;
+    var openNow = (forceState !== undefined && forceState !== null) 
+        ? forceState 
+        : !win.classList.contains('is-open');
+
+    if (openNow) {
+        win.classList.add('is-open');
+        win.style.display = 'flex';
+        if (btn) btn.classList.add('is-active');
+        if (window.innerWidth > 600) {
+            setTimeout(function() {
+                var inp = document.getElementById('chatbotInput');
+                if (inp) inp.focus();
+            }, 120);
+        }
+        if (window.__chatbotOnOpen) {
+            window.__chatbotOnOpen();
+        }
+    } else {
+        win.classList.remove('is-open');
+        win.style.display = 'none';
+        if (btn) btn.classList.remove('is-active');
+        if (window.innerWidth <= 600) {
+            win.style.height = '';
+        }
+    }
+}
+window.toggleChatbot = toggleChatbot;
+</script>
+
+<script src="assets/js/chatbot.js?v=20261110_300"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

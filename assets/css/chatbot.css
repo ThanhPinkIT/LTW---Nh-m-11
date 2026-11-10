@@ -31,6 +31,10 @@
     will-change: transform !important;
 }
 
+.chatbot-launcher * {
+    pointer-events: none !important;
+}
+
 .chatbot-launcher:hover {
     transform: scale(1.08) translateY(-2px) !important;
     box-shadow: 0 10px 26px rgba(215, 0, 24, 0.55) !important;
